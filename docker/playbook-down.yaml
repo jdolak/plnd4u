@@ -1,8 +1,8 @@
 ---
-- name: jachobs-mind-bot config
-  hosts: oracleweb
+- name: plnd4u - take down web server
+  hosts: plnd4u-1
   tasks:
-   - name: Shut down bot
+   - name: Shut down webserver
      shell:
        cmd: make down
        chdir: ~/plnd4u
