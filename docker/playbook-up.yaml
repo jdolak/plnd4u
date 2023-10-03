@@ -6,7 +6,7 @@
      shell:
        cmd: make pull
        chdir: ~/plnd4u
-   - name: Run bot
+   - name: Run web server
      shell:
        cmd: make up
        chdir: ~/plnd4u
