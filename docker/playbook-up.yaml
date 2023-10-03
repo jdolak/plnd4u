@@ -1,0 +1,12 @@
+---
+- name: plnd4u website config
+  hosts: plnd4u-1
+  tasks:
+   - name: Pull changes from github
+     shell:
+       cmd: make pull
+       chdir: ~/plnd4u
+   - name: Run bot
+     shell:
+       cmd: make up
+       chdir: ~/plnd4u
