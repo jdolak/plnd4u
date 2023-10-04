@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      .custom-font {
+        font-family: "Roboto", sans-serif;
+      }
+    </style>
+  </head>
+  <body style="margin-left: 70px; margin-right: 70px">
+    <div style="font-size: 80px">
+      <center>
+        <h1
+          class="badge"
+          style="border-radius: 20px; background-color: #0c193c"
+        >
+          plND4u
+        </h1>
+      </center>
+    </div>
+    <div>
+      <h2>Relational Schema</h2>
+    </div>
+    <div style="font-size: 30px; margin-bottom: 40px">
+      <ul style="list-style-type: circle" class="custom-font">
+        <li>
+          <code>
+            <text class="badge" style="background-color: #fa7d7d"
+              >Course(<span><u>code</u></span
+              >, title)</text
+            >
+          </code>
+        </li>
+        <li>
+          <code>
+            <text class="badge" style="background-color: #fa7d7d">
+              Semester(<span><u>year</u></span
+              >, <span><u>season</u></span
+              >)
+            </text>
+          </code>
+        </li>
+        <li>
+          <code>
+            <text class="badge" style="background-color: #fa7d7d">
+              Major(<span><u>name</u></span
+              >)
+            </text>
+          </code>
+        </li>
+        <li>
+          <code>
+            <text class="badge" style="background-color: #fa7d7d">
+              Section(<span><u>crn</u></span
+              >, <span><u>belong_course_code</u></span
+              >, professor, days, times)
+            </text>
+          </code>
+        </li>
+        <li>
+          <code>
+            <text class="badge" style="background-color: #fa7d7d">
+              BelongsTo(<span><u>course_code</u></span
+              >, <span><u>semester_year</u></span
+              >, <span><u>semester_season</u></span
+              >)
+            </text>
+          </code>
+        </li>
+        <li>
+          <code>
+            <text class="badge" style="background-color: #fa7d7d">
+              Prerequisite(<span><u>course_code</u></span
+              >, <span><u>prereq_code</u></span
+              >)
+            </text>
+          </code>
+        </li>
+        <li>
+          <code>
+            <text class="badge" style="background-color: #fa7d7d">
+              Corequisite(<span><u>course_code</u></span
+              >, <span><u>coreq_code</u></span
+              >)
+            </text>
+          </code>
+        </li>
+        <li>
+          <code>
+            <text class="badge" style="background-color: #fa7d7d">
+              Requires(<span><u>course_code</u></span
+              >, <span><u>major_name</u></span
+              >)
+            </text>
+          </code>
+        </li>
+        <li>
+          <code>
+            <text class="badge" style="background-color: #fa7d7d">
+              Student(<span><u>netid</u></span
+              >, name, year, major)
+            </text>
+          </code>
+        </li>
+        <li>
+          <code>
+            <text class="badge" style="background-color: #fa7d7d">
+              Enrollment(<span><u>semester</u></span
+              >, <span><u>course_number</u></span
+              >)
+            </text>
+          </code>
+        </li>
+        <li>
+          <code>
+            <text class="badge" style="background-color: #fa7d7d">
+              Have(<span><u>student_netid</u></span
+              >, <span><u>enrollment_semester</u></span
+              >, <span><u>enrollment_course_number</u></span
+              >)
+            </text>
+          </code>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h2>Technologies Used</h2>
+    </div>
+    <div
+      style="margin-bottom: 40px; font-size: 20px; font-weight: 400"
+      class="custom-font"
+    >
+      <ul style="list-style-type: circle">
+        <li>AWS/Azure to host our application</li>
+        <li>Flask Framework to build our app</li>
+        <li>MySQL for our database</li>
+        <li>Bootstrap for some of the CSS on the site</li>
+        <li>Python (Flask)</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Data</h2>
+    </div>
+    <div style="margin-bottom: 40px; font-size: 20px" class="custom-font">
+      <p class="custom-font">
+        We will be scraping our course data from existing Notre Dame sites (e.g.
+        PATH, Novo, etc.). We have looked through PATH's html and concluded that
+        we will indeed be able to scrape the required data.
+      </p>
+    </div>
+    <div>
+      <h2>Labor Division</h2>
+    </div>
+    <div style="margin-bottom: 40px; font-size: 20px" class="custom-font">
+      <p style="margin: 5px; margin-right: 0">Jachob: Development Operations</p>
+      <p style="margin: 5px; margin-right: 0">Sam: Database Administrator</p>
+      <p style="margin: 5px; margin-right: 0">Callie: Web Developer</p>
+      <p style="margin: 5px; margin-right: 0">Andrew: Web Developer</p>
+    </div>
+    <div>
+      <h2>Timeline</h2>
+    </div>
+    <div style="margin-bottom: 40px; font-size: 20px" class="custom-font">
+      <ul style="list-style-type: circle">
+        <li>Meeting each Tuesday from 6:30 - 8:30 PM</li>
+        <li>Weekly sprints with work for each member to complete</li>
+        <li>
+          10/02: Home page built in Flask, course data scraped from PATH,
+          establish infrastructure of the app (cloud and database running), and
+          database built and semi-populated, wireframe done
+        </li>
+        <li>
+          10/09: At least one query implemented, insert functionality
+          implemented, database fully populated
+        </li>
+        <li>10/16: Fall Break</li>
+        <li>
+          10/23: Update and delete records implemented, all navigation tabs
+          implemented, authentication done
+        </li>
+        <li>10/30: Be prepared to present and finish any incomplete work</li>
+        <li>11/06: Implement an advanced function</li>
+        <li>11/13: Implement second advanced function</li>
+        <li>11/20: Have video filmed</li>
+        <li>11/27: Have video done and final report written</li>
+      </ul>
+    </div>
+  </body>
+</html>
