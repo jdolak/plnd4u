@@ -3,7 +3,20 @@ version: '3.1'
 services: 
   flask-python:
     image: plnd4u-image
-    #image: nginx
     ports:
       - 80:80
     restart: always
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports: 
+      - 9123:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: goirish
+    volumes:
+      - mysqldata:/var/lib/mysql
+
+volumes:
+  mysqldata:

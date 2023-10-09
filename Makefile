@@ -22,3 +22,6 @@ deploy:
 
 destroy:
 	ansible-playbook ./docker/playbook-down.yaml
+
+db-term:
+	docker exec -it plnd4u-db-1 bash
