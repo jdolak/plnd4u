@@ -11,37 +11,38 @@
 
 ## Past Course Tables (User-Unmodifiable)
 
-course(_course_id char(10)_, title varchar(50))
+course(course_id char(10) NOT NULL, title varchar(200), deleted int default 1, primary key(course_id))
  - 'course_id' is a 2/3/4-letter major code, a space, and a 5 digit number, e.g. "CSE 30246"
 
-section(_crn char(5)_, _sem char(4)_, course_id char(10), prof varchar(50), days char(5), time varchar(20))
+section(crn char(5) NOT NULL, sem char(4) NOT NULL, course_id char(10), prof varchar(50), times varchar(20), deleted int default 1, primary key(crn, sem))
+ - Section days and times 'times', e.g. "TTh 3:30-4:45p"
  - 4-letter semester code 'sem', e.g. "FA23"
 
-sectionBelongsCourse(_crn char(5)_, _sem char(4)_, _course_id char(10)_)
+sectionBelongsCourse(crn char(5) NOT NULL, sem char(4) NOT NULL, course_id char(10) NOT NULL, deleted int default 1, primary key(crn, sem))
 
-courseHasPrereq(_course_id char(10)_, prereq_id char(10))
+courseHasPrereq(course_id char(10) NOT NULL, prereq_id char(10) NOT NULL, deleted int default 1, primary key(course_id, prereq_id))
 
-courseHasCoreq(_course_id char(10)_, coreq_id char(10))
+courseHasCoreq(course_id char(10) NOT NULL, coreq_id char(10) NOT NULL, deleted int default 1, primary key(course_id, coreq_id))
 
-major(_major_code char(4)_)
+major(major_code char(4) NOT NULL, deleted int default 1, primary key(major_code))
  - 2/3/4-letter major codes from PATH, e.g. "EG", "CSE", "ACMS"
  - I can make a doc with all possible major codes if needed
 
-coreReq(_req_code char(5)_)
- - 4/5-letter core requirement codes from PATH, e.g. "WRRH" for writing & rhetoric
+coreReq(req_code char(4) NOT NULL, deleted int default 1, primary key(req_code))
+ - 4-letter core requirement codes from PATH, e.g. "WRRH" for writing & rhetoric
  - I can also compile all of these if needed
  - Also planning to use this for any requirement fulfilled by many courses, e.g. CSE electives
 
-majorRequiresCourse(_major_code char(4)_, _course_id char(10)_)
+majorRequiresCourse(major_code char(4) NOT NULL, course_id char(10) NOT NULL, deleted int default 1, primary key(major_code, course_id))
  - For courses that are *explicitly* required by a major
  - i.e. CSE explicitly requires Discrete, but not Databases
 
-majorRequiresCoreReq(_major_code char(4)_, _req_code char(5)_)
+majorRequiresCoreReq(major_code char(4) NOT NULL, req_code char(5) NOT NULL, deleted int default 1, primary key(major_code, req_code))
 
-courseFulfillsCoreReq(_req_code char(5)_, _course_id char(10)_)
+courseFulfillsCoreReq(req_code char(5) NOT NULL, course_id char(10) NOT NULL, deleted int default 1, primary key(req_code, course_id))
 
 ## Future Planning Tables (User-Modifiable)
 
-student(_netid char(8)_, name varchar(50), major_code char(4), int gradyear)
+student(netid char(8) NOT NULL, name varchar(50) NOT NULL, major_code char(4), int gradyear, deleted int default 1, primary key(netid))
 
-hasEnrollment(_netid char(8)_, _course_id char(10)_, _sem char(4)_)
+hasEnrollment(netid char(8) NOT NULL, course_id char(10) NOT NULL, sem char(4) NOT NULL, deleted int default 1, primary key(netid, course_id, sem))
