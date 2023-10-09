@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block navigation %}
+{% endblock %}
+
+{% block content %}
+
+<section class="page-section">
+    <div class="register-container">
+        <div class="register-container-2">
+            <div class="register-container-3">
+                <div class="register-text-fields">
+                    <h1 class="page-heading">Register</h1>
+                    <form class="register-text-fields" action="">
+                        <div class="text-frame">
+                            <label class="text-label" for="first_name">First name</label>
+                            <input class="text-input" type="text" id="first_name" name="first_name">
+                        </div>
+                        <div class="text-frame">
+                            <label class="text-label" for="last_name">Last name</label>
+                            <input class="text-input" type="text" id="last_name" name="last_name">
+                        </div>
+                        <div class="text-select">
+                            <div class="text-frame">
+                                <label class="text-label" for="grad">Graduation year</label>
+                                <select class="text-option" id="grad" name="grad">
+                                    <option value="none">Select one</option>
+                                    <option value="2023">2024</option>
+                                    <option value="2023">2025</option>
+                                    <option value="2023">2026</option>
+                                    <option value="2023">2027</option>
+                                </select>
+                            </div>
+                            <div class="text-frame">
+                                <label class="text-label" for="major">Major</label>
+                                <select class="text-option" id="major" name="major">
+                                    <option value="none">Select one</option>
+                                    <option value="2023">Computer Science</option>
+                                    <option value="2023">Computer Engineering</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="text-frame">
+                            <label class="text-label" for="netid">Netid</label>
+                            <input class="text-input" type="text" id="netid" name="netid">
+                        </div>
+                        <div class="text-frame">
+                            <label class="text-label" for="pw">Password</label>
+                            <input class="text-input" type="password" id="pw" name="pw">
+                        </div>
+                    </form>
+                </div>
+                <a href="plan" class="register-button">Start planning!</a>
+            </div>
+            <div class="register-redirect">
+                <a class="normal-text">Registered with us?</a>
+                <a href="login" class="normal-text-bold">Log in here.</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
