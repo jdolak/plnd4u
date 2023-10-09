@@ -5,12 +5,12 @@ services:
     image: plnd4u-image
     ports:
       - 80:80
-    restart: always
+    restart: no
 
   db:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
-    restart: always
+    restart: no
     ports: 
       - 9123:3306
     environment:
