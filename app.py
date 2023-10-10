@@ -11,7 +11,12 @@ def index():
 def home():
     css_url = url_for('static', filename='css/styles.css')
     return render_template('home.html', css_url=css_url)
-
+ 
+@app.route("/register")
+def login():
+    css_url = url_for('static', filename='css/styles.css')
+    return render_template('register.html', css_url=css_url)
+ 
 @app.route("/devplan")
 def devplan():
     return render_template('devplan.html')
