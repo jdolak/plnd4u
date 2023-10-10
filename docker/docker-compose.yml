@@ -17,6 +17,11 @@ services:
       MYSQL_ROOT_PASSWORD: goirish
     volumes:
       - mysqldata:/var/lib/mysql
+      - ../data:/mnt/data
+    deploy:
+      resources:    
+        limits:
+          memory: 450MB
 
 volumes:
   mysqldata:
