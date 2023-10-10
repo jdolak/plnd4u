@@ -47,6 +47,6 @@
 
 ## Future Planning Tables (User-Modifiable)
 
-`student(netid char(8) NOT NULL, name varchar(50) NOT NULL, major_code char(4), int gradyear, deleted int default 0, primary key(netid))`
+`student(netid char(8) NOT NULL, name varchar(50), major_code char(4), gradyear int, deleted int default 0, primary key(netid))`
 
 `has_enrollment(netid char(8) NOT NULL, course_id char(10) NOT NULL, sem char(4) NOT NULL, deleted int default 0, primary key(netid, course_id, sem))`
