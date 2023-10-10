@@ -1,7 +1,14 @@
 # Relational Database Schema
 
-## Notes TBD
+## Notes
  - Last Updated 10/10/23
+ - Many classes in the dataset have `TBA` for unknown meeting times, `TBD` for unknown profs
+
+## Data-Containing Tables (User-Inaccessible)
+`pathData(code char(10) NOT NULL, title varchar(200), crn char(5) NOT NULL, meets varchar(20), professor varchar(50), start_date char(10) deleted int default 0)`
+ - This table has the same schema as the .csv data scraped from PATH
+ - All data will be inserted into this table, then other tables populated from custom queries of this table
+ - After all population has been done, this table will be unnecessary and should be able to be deleted
 
 ## Past Course Tables (User-Unmodifiable)
 
