@@ -25,7 +25,7 @@
 
 `course_has_rereq(course_id char(10) NOT NULL, prereq_id char(10) NOT NULL, deleted int default 0, primary key(course_id, prereq_id))`
 
-`courseHasCoreq(course_id char(10) NOT NULL, coreq_id char(10) NOT NULL, deleted int default 0, primary key(course_id, coreq_id))`
+`course_has_coreq(course_id char(10) NOT NULL, coreq_id char(10) NOT NULL, deleted int default 0, primary key(course_id, coreq_id))`
 
 `major(major_code char(4) NOT NULL, deleted int default 0, primary key(major_code))`
  - 2/3/4-letter `major_code` from PATH, e.g. "EG", "CSE", "ACMS"
