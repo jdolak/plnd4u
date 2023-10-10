@@ -1,6 +1,7 @@
 # Relational Database Schema
 
 ## Notes
+ - Implementing this schema on Azure as it is below
  - Last Updated 10/10/23
  - Many classes in the dataset have `TBA` for unknown meeting times, `TBD` for unknown profs
  - Data has ~100 instances of courses with same class code and different titles
@@ -23,7 +24,7 @@
 
 `section_belongs_course(crn char(5) NOT NULL, sem char(4) NOT NULL, course_id char(10) NOT NULL, deleted int default 0, primary key(crn, sem))`
 
-`course_has_rereq(course_id char(10) NOT NULL, prereq_id char(10) NOT NULL, deleted int default 0, primary key(course_id, prereq_id))`
+`course_has_prereq(course_id char(10) NOT NULL, prereq_id char(10) NOT NULL, deleted int default 0, primary key(course_id, prereq_id))`
 
 `course_has_coreq(course_id char(10) NOT NULL, coreq_id char(10) NOT NULL, deleted int default 0, primary key(course_id, coreq_id))`
 
