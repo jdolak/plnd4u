@@ -7,7 +7,7 @@
  - Data has ~100 instances of courses with same class code and different titles
 
 ## Data-Containing Tables (User-Inaccessible)
-`path_data(code char(10) NOT NULL, title varchar(200), crn char(5) NOT NULL, meets varchar(20), professor varchar(50), start_date char(10) NOT NULL, deleted int default 0, primary key(crn))`
+`path_data(code char(10) NOT NULL, title varchar(200), crn char(5) NOT NULL, meets varchar(25), professor varchar(50), start_date char(10) NOT NULL, deleted int default 0, primary key(crn))`
  - This table has the same schema as the .csv data scraped from PATH
  - All data will be inserted into this table, then other tables populated from custom queries of this table
  - After all population has been done, this table will be unnecessary and should be able to be deleted
