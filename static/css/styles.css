@@ -167,6 +167,38 @@ h1, h2, h3, h4, h5, h6, p {
     align-items: center;
 }
 
+/* Log In */
+
+.login-container {
+    display: flex;
+    padding: 69px 487px;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+}
+
+.login-container-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+}
+
+.login-container-3 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 48px;
+}
+
+.login-text-fields {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+}
+
 /* Buttons */
 
 .home-button {
