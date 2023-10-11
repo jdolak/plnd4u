@@ -25,3 +25,6 @@ destroy:
 
 db-term:
 	docker exec -it plnd4u-db-1 bash
+
+mysql-remote:
+	mysql -h dev.plnd4u.com -P 9123 -u root -p
