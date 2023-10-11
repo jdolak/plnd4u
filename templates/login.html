@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block navigation %}
+{% endblock %}
+
+{% block content %}
+
+    <section class="page-section">
+        <div class="login-container">
+            <div class="login-container-2">
+                <div class="login-container-3">
+                    <div class="login-text-fields">
+                        <h2 class="page-heading">Welcome back!</h2>
+                        <form class="register-text-fields">
+                            <div class="text-frame">
+                                <label class="text-label" for="netid">Netid</label>
+                                <input class="text-input" type="text" id="netid" name="netid">
+                            </div>
+                            <div class="text-frame">
+                                <label class="text-label" for="pw">Password</label>
+                                <input class="text-input" type="password" id="pw" name="pw">
+                            </div>
+                        </form>
+                    </div>
+                    <a href="plan" class="register-button">Log in</a> 
+                </div>
+                <div class="register-redirect">
+                    <a class="normal-text">New account?</a>
+                    <a href="register" class="normal-text-bold">Register here.</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
