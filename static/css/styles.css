@@ -199,6 +199,45 @@ h1, h2, h3, h4, h5, h6, p {
     gap: 32px;
 }
 
+/* Class Database */
+
+.classes-container {
+    display: flex;
+    padding: 4px 122px 8px 122px;
+    justify-content: center;
+    align-items: center;
+}
+
+.classes-container-2 {
+    display: flex;
+    padding: 32px 0px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 32px;
+}
+
+.classes-container-3 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 32px;
+}
+
+.search-filter-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.search-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+}
+
 /* Buttons */
 
 .home-button {
@@ -232,6 +271,26 @@ h1, h2, h3, h4, h5, h6, p {
     border-radius: 8px;
     background: var(--Accent-3, #FFD15E);
     text-decoration: none;
+}
+
+.search-bar {
+    display: flex;
+    width: 466px;
+    height: 51px;
+    padding: 7px 13px 8px 417px;
+    justify-content: flex-end;
+    align-items: center;
+    border-radius: 5px;
+    border: 3px solid var(--Primary, #0D5044);
+}
+
+.create-course {
+    display: flex;
+    padding: 14px 25px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 5px;
+    background: var(--Accent-3, #FFD15E);
 }
 
 /* Features */
