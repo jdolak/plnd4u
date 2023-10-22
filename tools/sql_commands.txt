@@ -1,0 +1,52 @@
+relevant SQL code
+MySQL 8.1
+
+ - to load into Azure server
+LOAD DATA INFILE '/mnt/data/data.csv' 
+INTO TABLE path_data 
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(code,title,crn,meets,professor,start_date);
+
+ - to load into db8
+LOAD DATA LOCAL INFILE '/escnfs/home/smarti39/databases/plnd4u/data/data.csv' 
+INTO TABLE path_data 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(code,title,crn,meets,professor,start_date);
+
+ - to get list of violating titles
+SELECT DISTINCT dup.code, path_data.title 
+FROM path_data,
+(SELECT code
+FROM (SELECT DISTINCT code, title FROM path_data) dis 
+GROUP BY code 
+HAVING COUNT(*) > 1) dup
+WHERE path_data.code = dup.code
+ORDER BY dup.code;
+
+ - to get list of updated titles
+SELECT DISTINCT dup.code, path_data.title, SUBSTRING_INDEX(path_data.title, ":", 1) as new_title
+FROM path_data,
+(SELECT code
+FROM (SELECT DISTINCT code, title FROM path_data) dis 
+GROUP BY code 
+HAVING COUNT(*) > 1) dup
+WHERE path_data.code = dup.code
+ORDER BY dup.code;
+
+ - to update titles themselves
+UPDATE path_data, 
+(SELECT DISTINCT dup.code, path_data.title, SUBSTRING_INDEX(path_data.title, ":", 1) as new_title
+FROM path_data,
+(SELECT code
+FROM (SELECT DISTINCT code, title FROM path_data) dis 
+GROUP BY code 
+HAVING COUNT(*) > 1) dup
+WHERE path_data.code = dup.code
+ORDER BY dup.code) new
+SET path_data.title = new.new_title
+WHERE path_data.title = new.title;
