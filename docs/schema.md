@@ -19,7 +19,7 @@
 `course(course_id char(10) NOT NULL, title varchar(200), deleted int default 0, primary key(course_id))`
  - `course_id` is a 2/3/4-letter major code, a space, and a 5 digit number, e.g. "CSE 30246"
 
-`section(crn char(5) NOT NULL, sem char(4) NOT NULL, course_id char(10), prof varchar(50), meets varchar(20), deleted int default 0, primary key(crn, sem))`
+`section(crn char(5) NOT NULL, sem char(4) NOT NULL, course_id char(10), prof varchar(50), meets varchar(75), deleted int default 0, primary key(crn, sem))`
  - Section days and times `meets`, e.g. "TTh 3:30-4:45p"
  - 4-letter semester code `sem`, e.g. "FA23"
 
