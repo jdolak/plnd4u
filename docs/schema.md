@@ -14,6 +14,8 @@
  - `code`, `crn`, and `start_date` are all primary keys in other tables
  - `meets` has to be 75 characters due to oddly-formatted law research courses
 
+`login(netid char(8) NOT NULL, salt varchar(100) NOT NULL, salted_hash varchar(100) NOT NULL)`
+
 ## Past Course Tables (User-Unmodifiable)
 
 `course(course_id char(10) NOT NULL, title varchar(200), deleted int default 0, primary key(course_id))`
@@ -22,8 +24,6 @@
 `section(crn char(5) NOT NULL, sem char(4) NOT NULL, course_id char(10), prof varchar(50), meets varchar(75), deleted int default 0, primary key(crn, sem))`
  - Section days and times `meets`, e.g. "TTh 3:30-4:45p"
  - 4-letter semester code `sem`, e.g. "FA23"
-
-`section_belongs_course(crn char(5) NOT NULL, sem char(4) NOT NULL, course_id char(10) NOT NULL, deleted int default 0, primary key(crn, sem))`
 
 `course_has_prereq(course_id char(10) NOT NULL, prereq_id char(10) NOT NULL, deleted int default 0, primary key(course_id, prereq_id))`
 
