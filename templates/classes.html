@@ -5,8 +5,55 @@
 {% block content %}
 
     <section class="page-section">
-        <p>Classes Database</p>
+
+        <div class="classes-container">
+            <div class="classes-container-2">
+                <h1 class="page-heading">Class Search</h1>
+                <div class="classes-container-3">
+                    <div class="search-filter-container">
+                        <div class="search-container">
+                            <input class="search-bar" type="text" placeholder="Search">
+                            <button class="create-course" onclick="createCourseOverlayOn()">
+                                Create unlisted course
+                                <img src="../static/images/edit.svg">
+                            </button>
+                        </div>
+                        <div class="filter-container">
+                            <div class="class-filter">
+                                <p class="text-filter">Semester</p>
+                                <a class="filter-icon"><img src="../static/images/filter.svg"></a>
+                            </div>
+                            <div class="class-filter">
+                                <p class="text-filter">Level</p>
+                                <a class="filter-icon"><img src="../static/images/filter.svg"></a>
+                            </div>
+                            <div class="class-filter">
+                                <p class="text-filter">Requirements</p>
+                                <a class="filter-icon"><img src="../static/images/filter.svg"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="class-database-container">
+                        <div class="each-class">
+                            <div class="class-text-container">
+                                <h2 class="class-heading">CSE 10001</h2>
+                                <p class="normal-text">Principles of Computing</p>
+                            </div>
+                            <button class="add-button">
+                                Add
+                                <img src="../static/images/add.svg">
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="user-input-display">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
+
 
 {% endblock %}
 

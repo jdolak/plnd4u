@@ -16,8 +16,29 @@
 
         <!-- Bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+        <!-- Javascript -->
+        <script type="text/javascript" src="{{ js_url }}"></script>
     </head>
     <body>
+
+        <!-- Create Course Overlay -->
+        <div id="unlisted-course-overlay-container" onclick="createCourseOverlayOff(event)">
+            <div id="unlisted-course-overlay-content">
+                <div class="unlisted-text-fields">
+                    <div class="text-frame">
+                        <label class="text-label">Course name</label>
+                        <input class="unlisted-text-input" type="text" name="course-name">
+                    </div>
+                    <div class="text-frame">
+                        <label class="text-label">Credits fulfilled</label>
+                        <input class="unlisted-text-input" type="float" name="credits-fulfilled">
+                    </div>
+                </div>
+                <button class="unlisted-add-button" onclick="addCourse()">Add course</button>
+            </div>
+        </div>
+
         <nav class="nav-bar">
             <div>
                 <a class="nav-text" href="home">
