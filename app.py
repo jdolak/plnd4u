@@ -20,7 +20,9 @@ def register():
 @app.route("/classes")
 def classes():
     css_url = url_for('static', filename='css/styles.css')
-    return render_template('classes.html', css_url=css_url)
+    js_url = url_for('static', filename='js/script.js')
+    return render_template('classes.html', css_url=css_url, js_url=js_url)
+
 
 @app.route("/plan")
 def plan():
