@@ -28,3 +28,7 @@ db-term:
 
 mysql-remote:
 	mysql -h dev.plnd4u.com -P 9123 -u root -p
+
+dump:
+	docker exec plnd4u-db-1 /bin/bash -c "mysql -u root -p plnd4u < /mnt/data/dump.sql"
+
