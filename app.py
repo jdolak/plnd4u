@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, url_for
+from flask import Flask, render_template, request, url_for, jsonify
 
 # instance of flask application
 app = Flask(__name__)
@@ -24,15 +24,21 @@ def classes():
     return render_template('classes.html', css_url=css_url, js_url=js_url)
 
 
-@app.route("/plan")
+@app.route('/plan')
 def plan():
     css_url = url_for('static', filename='css/styles.css')
-    return render_template('plan.html', css_url=css_url)
+    js_url = url_for('static', filename='js/script.js')
+    return render_template('plan.html', css_url=css_url, js_url=js_url)
 
-@app.route("/login")
+@app.route("/login", methods=['POST', 'GET'])
 def login():
+    if request.method == 'POST':
+        data = request.get_json()
+        netid = data.get('netid')
+        return jsonify(netid=netid)
     css_url = url_for('static', filename='css/styles.css')
-    return render_template('login.html', css_url=css_url)
+    js_url = url_for('static', filename='js/script.js')
+    return render_template('login.html', css_url=css_url, js_url=js_url)
 
 @app.route("/devplan")
 def devplan():
