@@ -12,29 +12,21 @@ function createCourseOverlayOff(event) {
     }
 }
 
-const userInputs = [];
-
 function addCourse() {
-    const courseNameInput = document.querySelector(".unlisted-text-input[name='course-name']");
-    const equivalentCourseInput = document.querySelector(".unlisted-text-input[name='eq-course']");
-    const userInputDisplay = document.getElementById("user-input-display");
-    const overlay = document.getElementById("unlisted-course-overlay-container");
-
-    const courseName = courseNameInput.value; 
-    const equivalentCourse = equivalentCourseInput.value;
-
-    userInputs.push({courseName, equivalentCourse});
-
-    let displayContent = '';
-    for (let i = 0; i < userInputs.length; i++) {
-        displayContent += `Course Name: ${userInputs[i].courseName}, Equivalent Course: ${userInputs[i].equivalentCourse}<br>`;
-    }
-    userInputDisplay.innerHTML = displayContent;
-
-    courseNameInput.value = "";
-    equivalentCourseInput.value = "";
-
-    overlay.style.display = "none";
+    const courseName = document.getElementById('course-name').value;
+    const courseCode = document.getElementById('course-code').value;
+    $.ajax({
+        url: '/classes',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({  'course_name': courseName, 'course_code': courseCode    }),
+        success: function(response) {
+            document.getElementById('unlisted-course-output').innerHTML = response.course_name + ' is a replacement for ' + response.course_code;
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    })
 }
 
 function sendLoginData() { 

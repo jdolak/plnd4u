@@ -17,12 +17,16 @@ def register():
     css_url = url_for('static', filename='css/styles.css')
     return render_template('register.html', css_url=css_url)
 
-@app.route("/classes")
+@app.route("/classes", methods=['POST', 'GET'])
 def classes():
+    if request.method == 'POST':
+        data = request.get_json()
+        course_name = data.get('course_name')
+        course_code = data.get('course_code')
+        return jsonify(course_name=course_name, course_code=course_code)
     css_url = url_for('static', filename='css/styles.css')
     js_url = url_for('static', filename='js/script.js')
     return render_template('classes.html', css_url=css_url, js_url=js_url)
-
 
 @app.route('/plan')
 def plan():
