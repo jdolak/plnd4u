@@ -1,4 +1,12 @@
 from flask import Flask, render_template, request, url_for, jsonify
+import sys
+sys.path.append('/plnd4u/src')
+from func_basic import *
+
+import sys
+
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
 
 # instance of flask application
 app = Flask(__name__)
@@ -39,6 +47,7 @@ def login():
     if request.method == 'POST':
         data = request.get_json()
         netid = data.get('netid')
+        db_register_student(netid,"XXXX", "XXX", "0000")
         return jsonify(netid=netid)
     css_url = url_for('static', filename='css/styles.css')
     js_url = url_for('static', filename='js/script.js')

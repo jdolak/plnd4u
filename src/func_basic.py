@@ -8,8 +8,8 @@ load_dotenv()
 DB_PASSWD = os.getenv('MYSQL_ROOT_PASSWORD')
 
 db = mysql.connector.connect(
-    host="localhost",
-    port="9123",
+    host="plnd4u-db-1",
+    port="3306",
     user="root",
     password=DB_PASSWD,
     database="plnd4u"
