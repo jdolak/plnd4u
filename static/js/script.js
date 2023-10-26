@@ -15,6 +15,7 @@ function createCourseOverlayOff(event) {
 function addCourse() {
     const courseName = document.getElementById('course-name').value;
     const courseCode = document.getElementById('course-code').value;
+    const overlay = document.getElementById("unlisted-course-overlay-container");
     $.ajax({
         url: '/classes',
         type: 'POST',
@@ -27,6 +28,8 @@ function addCourse() {
             console.log(error);
         }
     })
+
+    overlay.style.display = "none";
 }
 
 function sendLoginData() { 
