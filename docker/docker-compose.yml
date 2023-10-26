@@ -5,7 +5,7 @@ services:
     image: plnd4u-image
     ports:
       - 80:80
-    restart: no
+    restart: on-failure
     deploy:
       resources:    
         limits:
