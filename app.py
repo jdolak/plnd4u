@@ -1,12 +1,8 @@
 from flask import Flask, render_template, request, url_for, jsonify
 import sys
+
 sys.path.append('/plnd4u/src')
 from func_basic import *
-
-import sys
-
-def eprint(*args, **kwargs):
-    print(*args, file=sys.stderr, **kwargs)
 
 # instance of flask application
 app = Flask(__name__)
@@ -31,6 +27,7 @@ def classes():
         data = request.get_json()
         course_name = data.get('course_name')
         course_code = data.get('course_code')
+        db_enroll_class("XXX",course_code, "XXXX")
         return jsonify(course_name=course_name, course_code=course_code)
     css_url = url_for('static', filename='css/styles.css')
     js_url = url_for('static', filename='js/script.js')
