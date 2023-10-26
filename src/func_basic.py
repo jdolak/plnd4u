@@ -3,6 +3,10 @@
 import os
 import mysql.connector
 from dotenv import load_dotenv
+import logging
+
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+LOGGER = logging.getLogger()
 
 load_dotenv()
 DB_PASSWD = os.getenv('MYSQL_ROOT_PASSWORD')
@@ -30,9 +34,11 @@ def db_enroll_class(netid, course_id, sem):
     try:
         mycursor.execute(sql, val)
         db.commit()
-        return 0
-    except:
+        LOGGER.info(f"Class Enrolled : {netid} - {course_id} - {sem}")
         return 1
+    except Exception as e:
+        LOGGER.error(e)
+        return e
 
 def db_register_student(netid, name, major_code, gradyear):
     mycursor = db.cursor()
