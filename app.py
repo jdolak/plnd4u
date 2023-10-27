@@ -30,6 +30,12 @@ def classes():
         search_input = data.get('search_input')
         db_enroll_class("XXX",course_code, "XXXX")
         search_output = db_search_past_classes(search_input)
+
+        msg = ""
+        for i in search_output:
+            msg = f"{msg}{i[0]} {i[1]} {i[2]} {i[3]} {i[4]} {i[5]}<br>"
+        search_output = msg
+
         return jsonify(course_name=course_name, course_code=course_code, search_output=search_output)
     css_url = url_for('static', filename='css/styles.css')
     js_url = url_for('static', filename='js/script.js')
