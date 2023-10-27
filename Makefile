@@ -4,7 +4,7 @@ up: build
 	docker compose -f ./docker/docker-compose.yml -p plnd4u up -d
 
 build:
-	docker build -t plnd4u-image .
+	docker build -t plnd4u-image ./docker
 
 down:
 	docker compose -f ./docker/docker-compose.yml -p plnd4u down
