@@ -12,7 +12,10 @@
                 <div class="classes-container-3">
                     <div class="search-filter-container">
                         <div class="search-container">
-                            <input class="search-bar" type="event" placeholder="Search">
+                            <div class="search-bar-icon">
+                                <input class="search-bar" id="search-bar" name="search-bar" onkeydown="handleKeyPress(event)" placeholder="Search">
+                                <button class="search-icon" onclick="searchClasses()"><img src="../static/images/search.svg"></button>
+                            </div>
                             <button class="create-course" onclick="createCourseOverlayOn()">
                                 Create unlisted course
                                 <img src="../static/images/edit.svg">
@@ -46,9 +49,9 @@
                         </div>
                     </div>
 
-                    <div id="unlisted-course-output">
-                        
+                    <div id="unlisted-course-output">     
                     </div>
+                    <div id="search-course-output"></div>
                 </div>
             </div>
         </div>

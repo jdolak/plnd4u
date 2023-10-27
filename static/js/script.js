@@ -50,5 +50,23 @@ function sendLoginData() {
 } 
 
 function searchClasses() {
-    const 
+    const searchInput = document.getElementById('search-bar').value;
+    $.ajax({ 
+        url: '/classes',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify( {'search_input': searchInput }),
+        success: function(response) {
+            document.getElementById('search-course-output').innerHTML = response.search_output;
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    })
+}
+
+function handleKeyPress(event) {
+    if (event.key === "Enter") {
+        searchClasses();
+    }
 }
