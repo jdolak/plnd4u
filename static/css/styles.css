@@ -294,6 +294,20 @@ h1, h2, h3, h4, h5, h6, p {
     align-self: stretch;
 }
 
+/* About Page */
+
+.about-text {
+    color: black;
+    font-family: Nunito Sans;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding: 80px;
+    text-align: left;
+    text-decoration: none;
+}
+
 /* Buttons */
 
 .home-button {

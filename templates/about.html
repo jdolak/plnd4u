@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block navigation %}
+{% endblock %}
+
+{% block content %}
+
+    <section class="page-section">
+        <div class="about-text">
+            <h1 id="plnd4u-planned-for-you">PLND4U (Planned For You)</h1>
+
+            <h3 id="project-description">Project Description</h3>
+
+            <p>PLND4U is a four-year planner that allows students to search courses
+            that have been taught in past semesters at Notre Dame, and assign them
+            to openings in their personal eight-semester plan. PLND4U will consider
+            the major requirements of its user, as well as the
+            prerequisites/corequisites of the selected courses, and inform the user
+            if their four-year plan is valid.</p>
+
+
+            <h3 id="Related Links">Related Links</h3>
+
+
+            <a href="/devplan">Development Plan</a> <br>
+            <a href="/home">App Homepage</a> <br>
+            <a href="https://github.com/users/jdolak/projects/2">Project Timeline</a>
+
+
+            <h3 id="usefulness">Usefulness</h3>
+
+            <p>PLND4U will allow student to create a roadmap of their upcoming years
+            at Notre Dame. This will allow for more academic confidence and help
+            students navigate into potential concentrations and fields they enjoy.
+            Currently, PATH class search allows you to create plans for Notre Dame
+            classes for a single semester. Additionally, there are third party site
+            that you can use to make 4 year plans. However, there does not exist a
+            platform which both are combined together to create a catered
+            experience.</p>
+
+            <h3 id="realness">Realness</h3>
+
+            <p>Data will include information on courses offered and user inputed
+            data. Information on course include class title, class code, CRN,
+            Professors, and prerequisites. We would like to obtain an existing
+            database for courses offered in the past. However, if we do not have
+            access to this we can scrape class data from the PATH class search html
+            file.</p>
+
+            <h3 id="functionality">Functionality</h3>
+
+            <h4 id="basic-functions">Basic Functions</h4>
+
+            <ol type="1">
+            <li>Adding and updating courses to your 4 year plan will insert, update,
+            and delete records to the database</li>
+            <li>Searching for past classes will search the database and list the
+            results
+            <ul>
+            <li>This will include a join as data will be joined between the previous
+            courses database, and the user’s plan database</li>
+            </ul></li>
+            </ol>
+
+            <h4 id="advanced-functions">Advanced Functions</h4>
+
+            <ul>
+            <li>Auto creating a plan based off of required courses for your major
+            and alerting if you do not meet the requirements</li>
+            <li>Color coding and auto suggesting courses based on pre and
+            corerequisites</li>
+            </ul>
+
+            <h2 id="team-members">Team Members</h2>
+
+            <p>Jachob Dolak <a href="mailto:jdolak@nd.edu"
+            class="email">jdolak@nd.edu</a></p>
+            <p>Sam Martin <a href="mailto:smarti39@nd.edu"
+            class="email">smarti39@nd.edu</a></p>
+            <p>Andrew Myers <a href="mailto:amyers9@nd.edu"
+            class="email">amyers9@nd.edu</a></p>
+            <p>Calista Suwita <a href="mailto:csuwita@nd.edu"
+            class="email">csuwita@nd.edu</a></p>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
