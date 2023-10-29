@@ -49,6 +49,39 @@ function sendLoginData() {
     }); 
 } 
 
+function searchClassElement(classCourse, className) {
+    const eachClass = document.createElement('div');
+    eachClass.classList.add('each-class');
+
+    const textContainer = document.createElement('div');
+    textContainer.classList.add('class-text-container');
+
+    const heading = document.createElement('h2');
+    heading.classList.add('class-heading');
+    heading.textContent = classCourse;
+
+    const normalTextNode = document.createElement('p');
+    normalTextNode.classList.add('normal-text');
+    normalTextNode.textContent = className;
+
+    textContainer.appendChild(heading);
+    textContainer.appendChild(normalTextNode);
+
+    const addButton = document.createElement('button');
+    addButton.classList.add('add-button');
+    addButton.textContent = 'Add';
+
+    const img = document.createElement('img');
+    img.src = '../static/images/add.svg';
+
+    addButton.appendChild(img);
+
+    eachClass.appendChild(textContainer);
+    eachClass.appendChild(addButton);
+
+    return eachClass;
+}
+
 function searchClasses() {
     const searchInput = document.getElementById('search-bar').value;
     $.ajax({ 
@@ -57,12 +90,19 @@ function searchClasses() {
         contentType: 'application/json',
         data: JSON.stringify( {'search_input': searchInput }),
         success: function(response) {
-            document.getElementById('search-course-output').innerHTML = response.search_output;
+
+            const searchOutputContainer = document.getElementById('class-database-container');
+            searchOutputContainer.innerHTML = '';
+
+            response.search_output.forEach(function (item) {
+                const classDiv = searchClassElement(item[0], item[1]);
+                searchOutputContainer.appendChild(classDiv);
+            });
         },
         error: function(error) {
             console.log(error);
         }
-    })
+    });
 }
 
 function handleKeyPress(event) {
