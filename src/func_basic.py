@@ -2,6 +2,7 @@
 
 from plnd4u_db_connect import *
 
+# internal - don't use in prod
 def db_show(limit):
     mycursor = DB.cursor()
     sql = "SELECT * FROM path_data LIMIT %s"
@@ -38,15 +39,24 @@ def db_register_student(netid, name, major_code, gradyear):
 def db_search_past_classes(search):
     mycursor = DB.cursor()
     search = f"%{search}%"
-    sql = "SELECT * FROM path_data WHERE title LIKE %s or code LIKE %s or crn LIKE %s AND deleted <> 1"
-    val = (search, search, search)
-    mycursor.execute(sql, val) 
-    results = list(mycursor)
+    sql = "SELECT course_id, title FROM course WHERE title LIKE %s or course_id LIKE %s AND deleted <> 1"
+    val = (search, search) 
 
-    if not len(results):
-        return 0
-    else:
-        return results
+    try:
+        mycursor.execute(sql, val)
+        results = list(mycursor)
+
+        LOG.info(f"Class searched : {search}")
+        if not len(results):
+            return 0
+        else:
+            return results
+        
+    except Exception as e:
+        LOG.error(e)
+        return e
+
+    
 
 def db_del_enrollment(netid, course_id, sem):
     mycursor = DB.cursor()
