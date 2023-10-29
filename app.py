@@ -57,5 +57,10 @@ def login():
 def devplan():
     return render_template('devplan.html')
 
+@app.route("/about")
+def about():
+    css_url = url_for('static', filename='css/styles.css')
+    js_url = url_for('static', filename='js/script.js')
+    return render_template('about.html', css_url=css_url, js_url=js_url)
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0', port=80)
