@@ -214,8 +214,7 @@ h1, h2, h3, h4, h5, h6, p {
 .classes-container {
     display: flex;
     padding: 4px 122px 8px 122px;
-    justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .classes-container-2 {
