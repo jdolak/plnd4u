@@ -8,9 +8,6 @@ from func_basic import *
 app = Flask(__name__)
  
 @app.route("/")
-def index():
-    return render_template('index.html')
-
 @app.route("/home")
 def home():
     css_url = url_for('static', filename='css/styles.css')
@@ -36,7 +33,7 @@ def classes():
     js_url = url_for('static', filename='js/script.js')
     return render_template('classes.html', css_url=css_url, js_url=js_url)
 
-@app.route('/plan')
+@app.route("/plan")
 def plan():
     css_url = url_for('static', filename='css/styles.css')
     js_url = url_for('static', filename='js/script.js')
