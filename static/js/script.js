@@ -22,7 +22,7 @@ function addCourse() {
         contentType: 'application/json',
         data: JSON.stringify({  'course_name': courseName, 'course_code': courseCode    }),
         success: function(response) {
-            document.getElementById('unlisted-course-output').innerHTML = response.course_name + ' is a replacement for ' + response.course_code;
+            console.log('success');
         },
         error: function(error) {
             console.log(error);
