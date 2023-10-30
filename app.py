@@ -25,7 +25,7 @@ def classes():
         course_name = data.get('course_name')
         course_code = data.get('course_code')
         search_input = data.get('search_input')
-        db_enroll_class("XXX",course_code, "XXXX")
+        db_enroll_class("XXX",course_code, "FA00")
         search_output = db_search_past_classes(search_input)
 
         return jsonify(course_name=course_name, course_code=course_code, search_output=search_output)
@@ -35,6 +35,15 @@ def classes():
 
 @app.route("/plan")
 def plan():
+    
+    enrollments = db_show_student_enrollments("XXX")
+
+    if request.method == 'POST':
+        data = request.get_json()
+        course_code = data.get('course_code')
+        db_del_enrollment("XXX", course_code, "FA00")
+        return jsonify(course_code=course_code)
+    
     css_url = url_for('static', filename='css/styles.css')
     js_url = url_for('static', filename='js/script.js')
     return render_template('plan.html', css_url=css_url, js_url=js_url)
