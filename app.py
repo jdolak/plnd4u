@@ -35,16 +35,15 @@ def classes():
 
 @app.route("/plan", methods=['POST', 'GET'])
 def plan():
+    if request.method == 'POST':
+        db_del_all_enrollments("XXX")
+        LOG.debug("u have sent a post to plan")
     enrollments = db_show_student_enrollments("XXX")
     css_url = url_for('static', filename='css/styles.css')
     js_url = url_for('static', filename='js/script.js')
     return render_template('plan.html', css_url=css_url, js_url=js_url, enrollments=enrollments)
 
-    #  if request.method == 'POST':
-        # data = request.get_json()
-        # course_code = data.get('course_code')
-        # db_del_enrollment("XXX", course_code, "FA00")
-        # return jsonify(enrollments=enrollments)
+    
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():

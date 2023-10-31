@@ -133,3 +133,16 @@ def db_show_student_enrollments(netid):
         return list(mycursor)
     except:
         return 1
+    
+def db_del_all_enrollments(netid):
+    mycursor = DB.cursor()
+    sql = "UPDATE has_enrollment SET deleted = 1 WHERE netid = %s"
+    val = (netid, )
+    try:
+        mycursor.execute(sql, val)
+        DB.commit()
+        LOG.debug("Deleted all enrollments")
+        return 0
+    except:
+        LOG.error("Did not delete all enrollments")
+        return 1

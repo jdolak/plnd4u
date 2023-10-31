@@ -110,3 +110,18 @@ function handleKeyPress(event) {
         searchClasses();
     }
 }
+
+function courseDel() {
+    $.ajax({ 
+        url: '/plan',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify("hello"),
+        success: function(response) {
+            console.log('success');
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
