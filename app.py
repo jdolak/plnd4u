@@ -39,6 +39,10 @@ def plan():
         db_del_all_enrollments("XXX")
         LOG.debug("u have sent a post to plan")
     enrollments = db_show_student_enrollments("XXX")
+    msg = ""
+    for i in enrollments:
+        msg = f"{msg}{i[0]} {i[1]}, "
+    enrollments = msg
     css_url = url_for('static', filename='css/styles.css')
     js_url = url_for('static', filename='js/script.js')
     return render_template('plan.html', css_url=css_url, js_url=js_url, enrollments=enrollments)
