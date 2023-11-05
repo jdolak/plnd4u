@@ -4,6 +4,68 @@
 
 {% block content %}
 
+<!-- Overlays -->
+
+<div id="semester-filter-overlay-container">
+    <div class="semester-filter">
+        <div class="semester-filter-list">
+            <input class="checkbox" type="checkbox" name="fall-semester" value="Fall">
+            <label for="fall-semester" class="checkbox-text">Fall</label><br>
+        </div>
+        <div class="semester-filter-list">
+            <input class="checkbox" type="checkbox" name="spring-semester" value="Fall">
+            <label for="spring-semester" class="checkbox-text">Spring</label><br>
+        </div>
+    </div>
+</div>
+
+<div id="level-filter-overlay-container">
+    <div class="semester-filter">
+        <div class="semester-filter-list">
+            <input class="checkbox" type="checkbox" name="10000" value="10000">
+            <label for="10000" class="checkbox-text">10000-19999</label><br>
+        </div>
+        <div class="semester-filter-list">
+            <input class="checkbox" type="checkbox" name="20000" value="20000">
+            <label for="20000" class="checkbox-text">20000-29999</label><br>
+        </div>
+        <div class="semester-filter-list">
+            <input class="checkbox" type="checkbox" name="30000" value="30000">
+            <label for="30000" class="checkbox-text">30000-39999</label><br>
+        </div>
+        <div class="semester-filter-list">
+            <input class="checkbox" type="checkbox" name="40000" value="40000">
+            <label for="40000" class="checkbox-text">40000-49999</label><br>
+        </div>
+    </div>
+</div>
+
+<div id="req-filter-overlay-container">
+    <div class="semester-filter">
+        <div class="semester-filter-list">
+            <input class="checkbox" type="checkbox" name="uni-req" value="uni-req">
+            <label for="uni-req" class="checkbox-text">University Requirement</label><br>
+        </div>
+        <div class="semester-filter-list">
+            <input class="checkbox" type="checkbox" name="college-req" value="college-req">
+            <label for="college-req" class="checkbox-text">College Requirement</label><br>
+        </div>
+        <div class="semester-filter-list">
+            <input class="checkbox" type="checkbox" name="major-req" value="major-req">
+            <label for="major-req" class="checkbox-text">Major Requirement</label><br>
+        </div>
+        <div class="semester-filter-list">
+            <input class="checkbox" type="checkbox" name="major-elective" value="major-elective">
+            <label for="major-elective" class="checkbox-text">Major Elective</label><br>
+        </div>
+        <div class="semester-filter-list">
+            <input class="checkbox" type="checkbox" name="tech-elective" value="tech-elective">
+            <label for="tech-elective" class="checkbox-text">Technical Elective</label><br>
+        </div>
+    </div>
+</div>
+
+
     <section class="page-section">
 
         <div class="classes-container">
@@ -22,17 +84,23 @@
                             </button>
                         </div>
                         <div class="filter-container">
-                            <div class="class-filter">
+                            <div class="class-filter" id="semester-filter-container">
                                 <p class="text-filter">Semester</p>
-                                <a class="filter-icon"><img src="../static/images/filter.svg"></a>
+                                <div class="filter-icon">
+                                    <button class="filter-button" id="semester-filter"><img src="../static/images/filter.svg"></button>
+                                </div>
                             </div>
-                            <div class="class-filter">
+                            <div class="class-filter" id="level-filter-container">
                                 <p class="text-filter">Level</p>
-                                <a class="filter-icon"><img src="../static/images/filter.svg"></a>
+                                <div class="filter-icon">
+                                    <button class="filter-button" id="level-filter"><img src="../static/images/filter.svg"></button>
+                                </div>
                             </div>
-                            <div class="class-filter">
+                            <div class="class-filter" id="req-filter-container">
                                 <p class="text-filter">Requirements</p>
-                                <a class="filter-icon"><img src="../static/images/filter.svg"></a>
+                                <div class="filter-icon">
+                                    <button class="filter-button" id="req-filter"><img src="../static/images/filter.svg"></button>
+                                </div>
                             </div>
                         </div>
                     </div>

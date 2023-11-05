@@ -256,15 +256,13 @@ h1, h2, h3, h4, h5, h6, p {
 .filter-container {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 48px;
 }
 
 .class-filter {
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 16px;
+    gap: 12px;
 }
 
 .class-database-container {
@@ -373,9 +371,11 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .filter-icon {
+    width: 20px;
     align-self: stretch;
-    padding: 0;
-    margin: 0;
+}
+
+.filter-button {
     border: none;
     background-color: #F6F6F6;
 }
@@ -509,6 +509,64 @@ h1, h2, h3, h4, h5, h6, p {
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+}
+
+#semester-filter-overlay-container {
+    display: none;
+    position: absolute;
+    z-index: 1;
+}
+
+.semester-filter {
+    display: flex;
+    width: 220px;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid var(--Grey-300, #D7D7D7);
+    background: #FFF;
+    box-sizing: border-box;
+}
+
+.semester-filter-list {
+    display: flex;
+    width: 100%;
+    padding: 8px 16px;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--gray-300, #DEE2E6);
+    background: var(--default-white, #FFF);
+    box-sizing: border-box;
+}
+
+.semester-filter-list:last-child {
+    border-bottom: none;
+}
+
+.checkbox-text {
+    color: var(--gray-800, #343A40);
+    font-family: Nunito Sans;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.checkbox {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+#level-filter-overlay-container {
+    display: none;
+    position: absolute;
+    z-index: 1;
+}
+
+#req-filter-overlay-container {
+    display: none;
+    position: absolute;
+    z-index: 1;
 }
 
 /* Footer */

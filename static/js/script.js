@@ -1,17 +1,3 @@
-function createCourseOverlayOn() {
-    const overlay = document.getElementById("unlisted-course-overlay-container");
-    overlay.style.display = "block";
-}
-
-function createCourseOverlayOff(event) {
-    const overlay = document.getElementById("unlisted-course-overlay-container");
-    const content = document.getElementById("unlisted-course-overlay-content");
-
-    if (event.target === overlay && !content.contains(event.target)) {
-        overlay.style.display = "none";
-    }
-}
-
 function addCourse() {
     const courseName = document.getElementById('course-name').value;
     const courseCode = document.getElementById('course-code').value;
@@ -125,3 +111,79 @@ function courseDel() {
         }
     });
 }
+
+// Overlays
+
+function createCourseOverlayOn() {
+    const overlay = document.getElementById("unlisted-course-overlay-container");
+    overlay.style.display = "block";
+}
+
+function createCourseOverlayOff(event) {
+    const overlay = document.getElementById("unlisted-course-overlay-container");
+    const content = document.getElementById("unlisted-course-overlay-content");
+
+    if (event.target === overlay && !content.contains(event.target)) {
+        overlay.style.display = "none";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    const button = document.getElementById("semester-filter");
+    const overlay = document.getElementById("semester-filter-overlay-container");
+
+    button.addEventListener("click", function() {
+        const buttonRect = document.getElementById("semester-filter-container").getBoundingClientRect();
+        const containerTop = buttonRect.bottom + window.scrollY;
+        const containerLeft = buttonRect.left + window.scrollX;
+
+        overlay.style.top = `${containerTop}px`;
+        overlay.style.left = `${containerLeft}px`;
+
+        if (overlay.style.display === "block") {
+            overlay.style.display = "none";
+        } else {
+            overlay.style.display = "block";
+        }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const button = document.getElementById("level-filter");
+    const overlay = document.getElementById("level-filter-overlay-container");
+
+    button.addEventListener("click", function() {
+        const buttonRect = document.getElementById("level-filter-container").getBoundingClientRect();
+        const containerTop = buttonRect.bottom + window.scrollY;
+        const containerLeft = buttonRect.left + window.scrollX;
+
+        overlay.style.top = `${containerTop}px`;
+        overlay.style.left = `${containerLeft}px`;
+
+        if (overlay.style.display === "block") {
+            overlay.style.display = "none";
+        } else {
+            overlay.style.display = "block";
+        }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const button = document.getElementById("req-filter");
+    const overlay = document.getElementById("req-filter-overlay-container");
+
+    button.addEventListener("click", function() {
+        const buttonRect = document.getElementById("req-filter-container").getBoundingClientRect();
+        const containerTop = buttonRect.bottom + window.scrollY;
+        const containerLeft = buttonRect.left + window.scrollX;
+
+        overlay.style.top = `${containerTop}px`;
+        overlay.style.left = `${containerLeft}px`;
+
+        if (overlay.style.display === "block") {
+            overlay.style.display = "none";
+        } else {
+            overlay.style.display = "block";
+        }
+    });
+});
