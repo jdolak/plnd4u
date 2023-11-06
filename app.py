@@ -36,8 +36,16 @@ def classes():
 @app.route("/plan", methods=['POST', 'GET'])
 def plan():
     if request.method == 'POST':
+
+        data = request.get_json()
+        course_year = data.get('year')
+        course_semester = data.get('semester')
+        course_code = data.get('course')
         db_del_all_enrollments("XXX")
         LOG.debug("u have sent a post to plan")
+
+        return jsonify(course_year=course_year, course_semester=course_semester, course_code=course_code)
+
     enrollments = db_show_student_enrollments("XXX")
     msg = ""
     for i in enrollments:

@@ -68,6 +68,44 @@ function searchClassElement(classCourse, className) {
     return eachClass;
 }
 
+function addToPlan(className) {
+    const overlay = document.getElementById('add-to-plan-overlay-container');
+    const content = document.getElementById('add-to-plan-overlay-content');
+    const courseHeading = document.querySelector('.add-to-plan-course-heading');
+
+    courseHeading.textContent = className;
+
+    overlay.style.display = 'block';
+
+    const addButton = document.getElementById('add-to-plan-button');
+    addButton.addEventListener('click', function() {
+        const year = document.getElementById('add-course-year').value;
+        const semester = document.getElementById('add-course-semester').value;
+
+        $.ajax({
+            url: '/plan',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({  'year': year, 'semester': semester, 'course': className   }),
+            success: function(response) {
+                console.log('success');
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        })
+
+        overlay.style.display = 'none';
+    });
+
+    document.body.addEventListener('click', function(event) {
+        if (event.target === overlay && !content.contains(event.target)) {
+            overlay.style.display = "none";
+        }
+    });
+
+}
+
 function searchClasses() {
     const searchInput = document.getElementById('search-bar').value;
     $.ajax({ 
@@ -83,6 +121,10 @@ function searchClasses() {
             response.search_output.forEach(function (item) {
                 const classDiv = searchClassElement(item[0], item[1]);
                 searchOutputContainer.appendChild(classDiv);
+
+                classDiv.querySelector('.add-button').addEventListener('click', function() {
+                    addToPlan(item[0]);
+                });
             });
         },
         error: function(error) {
@@ -111,6 +153,7 @@ function courseDel() {
         }
     });
 }
+
 
 // Overlays
 

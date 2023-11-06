@@ -569,6 +569,56 @@ h1, h2, h3, h4, h5, h6, p {
     z-index: 1;
 }
 
+#add-to-plan-overlay-container {
+    display: none;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 2;
+}
+
+#add-to-plan-overlay-content {
+    top: 50%;
+    left: 50%;
+    display: flex;
+    position: absolute;
+    width: 394px;
+    padding: 32px;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    border-radius: 10px;
+    background: #F6F6F6;
+    transform: translate(-50%,-50%);
+}
+
+.add-to-plan-text-option {
+    width: 325px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1.5px solid var(--Primary, #0D5044);
+    padding: 0px 8px;
+    gap: 32px;
+}
+
+.add-to-plan-course-container {
+    align-items: center;
+    gap: 32px;
+}
+
+.add-to-plan-course-heading {
+    color: #000;
+    font-family: Open Sans;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+
 /* Footer */
 
 #footer {
