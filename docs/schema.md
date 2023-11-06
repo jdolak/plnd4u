@@ -27,9 +27,9 @@ path_data(
 
 ```SQL
 login(
-    netid char(8) NOT NULL, 
-    salt char(32) NOT NULL, 
-    hash char(32) NOT NULL
+    netid CHAR(8) NOT NULL, 
+    salt CHAR(32) NOT NULL, 
+    hash CHAR(32) NOT NULL
 )
 ```
 
