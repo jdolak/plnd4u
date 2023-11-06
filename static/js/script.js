@@ -6,7 +6,7 @@ function addCourse() {
         url: '/classes',
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({  'course_name': courseName, 'course_code': courseCode    }),
+        data: JSON.stringify({  'action': 'add', 'course_name': courseName, 'course_code': courseCode    }),
         success: function(response) {
             console.log('success');
         },
@@ -86,7 +86,7 @@ function addToPlan(className) {
             url: '/plan',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({  'year': year, 'semester': semester, 'course': className   }),
+            data: JSON.stringify({  'action': 'add_to_plan', 'year': year, 'semester': semester, 'course': className   }),
             success: function(response) {
                 console.log('success');
             },
@@ -112,7 +112,7 @@ function searchClasses() {
         url: '/classes',
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify( {'search_input': searchInput }),
+        data: JSON.stringify({  'action': 'search', 'search_input': searchInput }),
         success: function(response) {
 
             const searchOutputContainer = document.getElementById('class-database-container');

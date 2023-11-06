@@ -22,13 +22,19 @@ def register():
 def classes():
     if request.method == 'POST':
         data = request.get_json()
-        course_name = data.get('course_name')
-        course_code = data.get('course_code')
-        search_input = data.get('search_input')
-        db_enroll_class("XXX",course_code, "FA00")
-        search_output = db_search_past_classes(search_input)
+        action = data.get('action')
 
-        return jsonify(course_name=course_name, course_code=course_code, search_output=search_output)
+        if action == 'add':
+            course_name = data.get('course_name')
+            course_code = data.get('course_code')
+            db_enroll_class("XXX",course_code, "FA00")
+            return jsonify(course_name=course_name, course_code=course_code)
+        
+        elif action == 'search':
+            search_input = data.get('search_input')
+            search_output = db_search_past_classes(search_input)
+            return jsonify(search_output=search_output)
+
     css_url = url_for('static', filename='css/styles.css')
     js_url = url_for('static', filename='js/script.js')
     return render_template('classes.html', css_url=css_url, js_url=js_url)
@@ -36,15 +42,18 @@ def classes():
 @app.route("/plan", methods=['POST', 'GET'])
 def plan():
     if request.method == 'POST':
-
         data = request.get_json()
-        course_year = data.get('year')
-        course_semester = data.get('semester')
-        course_code = data.get('course')
-        db_del_all_enrollments("XXX")
-        LOG.debug("u have sent a post to plan")
+        action = data.get('action')
 
-        return jsonify(course_year=course_year, course_semester=course_semester, course_code=course_code)
+        if action == 'add_to_plan':
+            course_year = data.get('year')
+            course_semester = data.get('semester')
+            course_code = data.get('course')
+            return jsonify(course_year=course_year, course_semester=course_semester, course_code=course_code)
+        
+        else:
+            db_del_all_enrollments("XXX")
+            LOG.debug("u have sent a post to plan")
 
     enrollments = db_show_student_enrollments("XXX")
     msg = ""
