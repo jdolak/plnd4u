@@ -2,7 +2,7 @@
 
 ## Notes
  - Implementing this schema on Azure as it is below
- - Last Updated 10/30/23
+ - Last Updated 11/5/23
  - Many classes in the dataset have `TBA` for unknown meeting times, `TBD` for unknown profs
  - Data has ~100 instances of courses with same class code and different titles
 
@@ -25,7 +25,13 @@ path_data(
  - `code`, `crn`, and `start_date` are all primary keys in other tables
  - `meets` has to be 75 characters due to oddly-formatted law research courses
 
-`login(netid char(8) NOT NULL, salt varchar(100) NOT NULL, salted_hash varchar(100) NOT NULL)`
+```SQL
+login(
+    netid char(8) NOT NULL, 
+    salt char(32) NOT NULL, 
+    hash char(32) NOT NULL
+)
+```
 
 ## Past Course Tables (User-Unmodifiable)
 
