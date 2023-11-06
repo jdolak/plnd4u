@@ -29,7 +29,8 @@ path_data(
 login(
     netid CHAR(8) NOT NULL, 
     salt CHAR(32) NOT NULL, 
-    hash CHAR(32) NOT NULL
+    hash CHAR(32) NOT NULL,
+    PRIMARY KEY(netid)
 )
 ```
 
