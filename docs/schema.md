@@ -61,6 +61,17 @@ section(
  - 4-letter semester code `sem`, e.g. "FA23"
 
 ```SQL
+description(
+    course_id CHAR(10) NOT NULL,
+    desc VARCHAR(5000),
+    deleted INT DEFAULT 0,
+    PRIMARY KEY(course_id)
+)
+```
+ - Description length could be changed
+ - Not yet implemented on prod
+
+```SQL
 course_has_prereq(
     course_id CHAR(10) NOT NULL,
     prereq_id CHAR(10) NOT NULL,
