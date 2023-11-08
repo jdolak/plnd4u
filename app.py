@@ -27,6 +27,7 @@ def classes():
         if action == 'add':
             course_name = data.get('course_name')
             course_code = data.get('course_code')
+            netid = data.get('global_netid')
             db_enroll_class("XXX",course_code, "FA00")
             return jsonify(course_name=course_name, course_code=course_code)
         
@@ -49,9 +50,11 @@ def plan():
             course_year = data.get('year')
             course_semester = data.get('semester')
             course_code = data.get('course')
+            netid = data.get('global_netid')
             return jsonify(course_year=course_year, course_semester=course_semester, course_code=course_code)
         
         else:
+            netid = data.get('global_netid')
             db_del_all_enrollments("XXX")
             LOG.debug("u have sent a post to plan")
 

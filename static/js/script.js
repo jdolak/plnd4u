@@ -1,3 +1,5 @@
+var globalNetId = "";
+
 function addCourse() {
     const courseName = document.getElementById('course-name').value;
     const courseCode = document.getElementById('course-code').value;
@@ -6,7 +8,7 @@ function addCourse() {
         url: '/classes',
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({  'action': 'add', 'course_name': courseName, 'course_code': courseCode    }),
+        data: JSON.stringify({  'action': 'add', 'course_name': courseName, 'course_code': courseCode, 'global_netid': globalNetId    }),
         success: function(response) {
             console.log('success');
         },
@@ -20,6 +22,7 @@ function addCourse() {
 
 function sendLoginData() { 
     const netid = document.getElementById('netid').value; 
+    globalNetId = netid;
     const password = document.getElementById('pw').value;
     $.ajax({ 
         url: '/login', 
@@ -86,7 +89,7 @@ function addToPlan(className) {
             url: '/plan',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({  'action': 'add_to_plan', 'year': year, 'semester': semester, 'course': className   }),
+            data: JSON.stringify({  'action': 'add_to_plan', 'year': year, 'semester': semester, 'course': className, 'global_netid': globalNetId   }),
             success: function(response) {
                 console.log('success');
             },
@@ -144,7 +147,7 @@ function courseDel() {
         url: '/plan',
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify("hello"),
+        data: JSON.stringify({'global_netid': globalNetId }),
         success: function(response) {
             console.log('success');
         },
