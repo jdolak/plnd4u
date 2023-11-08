@@ -63,7 +63,7 @@ section(
 ```SQL
 description(
     course_id CHAR(10) NOT NULL,
-    desc VARCHAR(5000),
+    description VARCHAR(5000),
     deleted INT DEFAULT 0,
     PRIMARY KEY(course_id)
 )
