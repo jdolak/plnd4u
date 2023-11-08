@@ -33,6 +33,18 @@ def classes():
         
         elif action == 'search':
             search_input = data.get('search_input')
+            filter_input = data.get('filter_data')
+
+            fall_semester = filter_input.get('fall-semester')
+            spring_semester = filter_input.get('spring-semester')
+            level_one = filter_input.get('10000')
+            level_two = filter_input.get('20000')
+            level_three = filter_input.get('30000')
+            level_four = filter_input.get('40000')
+            uni_req = filter_input.get('uni-req')
+            major_req = filter_input.get('major-req')
+            major_elective = filter_input.get('major-elective')
+
             search_output = db_search_past_classes(search_input)
             return jsonify(search_output=search_output)
 

@@ -111,11 +111,34 @@ function addToPlan(className) {
 
 function searchClasses() {
     const searchInput = document.getElementById('search-bar').value;
+    
+    const fallSemesterCheckbox = document.querySelector('input[name="fall-semester"]');
+    const springSemesterCheckbox = document.querySelector('input[name="spring-semester"]');
+    const levelOneCheckbox = document.querySelector('input[name="10000"]');
+    const levelTwoCheckbox = document.querySelector('input[name="20000"]');
+    const levelThreeCheckbox = document.querySelector('input[name="30000"]');
+    const levelFourCheckbox = document.querySelector('input[name="40000"]');
+    const uniReqCheckbox = document.querySelector('input[name="uni-req"]');
+    const majorReqCheckbox = document.querySelector('input[name="major-req"]');
+    const majorElectiveCheckbox = document.querySelector('input[name="major-elective"]');
+
+    const filterData = {
+        'fall-semester': fallSemesterCheckbox.checked,
+        'spring-semester': springSemesterCheckbox.checked,
+        '10000': levelOneCheckbox.checked,
+        '20000': levelTwoCheckbox.checked,
+        '30000': levelThreeCheckbox.checked,
+        '40000': levelFourCheckbox.checked,
+        'uni-req': uniReqCheckbox.checked,
+        'major-req': majorReqCheckbox.checked,
+        'major-elective': majorElectiveCheckbox.checked
+    }
+
     $.ajax({ 
         url: '/classes',
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({  'action': 'search', 'search_input': searchInput }),
+        data: JSON.stringify({  'action': 'search', 'search_input': searchInput, 'filter_data': filterData }),
         success: function(response) {
 
             const searchOutputContainer = document.getElementById('class-database-container');
