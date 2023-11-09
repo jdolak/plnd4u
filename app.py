@@ -1,11 +1,14 @@
-from flask import Flask, render_template, request, url_for, jsonify
+from flask import Flask, render_template, request, url_for, jsonify, session, redirect
 import sys
+import time
 
 sys.path.append('/plnd4u/src')
 from func_basic import *
 
 # instance of flask application
 app = Flask(__name__)
+
+app.secret_key= str(time.time())
  
 @app.route("/")
 @app.route("/home")
@@ -20,6 +23,13 @@ def register():
 
 @app.route("/classes", methods=['POST', 'GET'])
 def classes():
+
+    if "netid" not in session:
+                LOG.info("redirecting to login...")
+                return redirect(url_for("login"))
+    
+    netid = session['netid']
+    
     if request.method == 'POST':
         data = request.get_json()
         action = data.get('action')
@@ -27,8 +37,8 @@ def classes():
         if action == 'add':
             course_name = data.get('course_name')
             course_code = data.get('course_code')
-            netid = data.get('global_netid')
-            db_enroll_class("XXX",course_code, "FA00")
+            
+            db_enroll_class(netid,course_code, "FA00")
             return jsonify(course_name=course_name, course_code=course_code)
         
         elif action == 'search':
@@ -42,6 +52,13 @@ def classes():
 
 @app.route("/plan", methods=['POST', 'GET'])
 def plan():
+
+    if "netid" not in session:
+                LOG.info("redirecting to login...")
+                return redirect(url_for("login"))
+    
+    netid = session['netid']
+
     if request.method == 'POST':
         data = request.get_json()
         action = data.get('action')
@@ -50,15 +67,13 @@ def plan():
             course_year = data.get('year')
             course_semester = data.get('semester')
             course_code = data.get('course')
-            netid = data.get('global_netid')
             return jsonify(course_year=course_year, course_semester=course_semester, course_code=course_code)
         
         else:
-            netid = data.get('global_netid')
-            db_del_all_enrollments("XXX")
+            db_del_all_enrollments(netid)
             LOG.debug("u have sent a post to plan")
 
-    enrollments = db_show_student_enrollments("XXX")
+    enrollments = db_show_student_enrollments(netid)
     msg = ""
     for i in enrollments:
         msg = f"{msg}{i[0]} {i[1]}, "
@@ -74,8 +89,10 @@ def login():
     if request.method == 'POST':
         data = request.get_json()
         netid = data.get('netid')
+        session['netid'] = netid
         db_register_student(netid,"XXXX", "XXX", "0000")
         return jsonify(netid=netid)
+
     css_url = url_for('static', filename='css/styles.css')
     js_url = url_for('static', filename='js/script.js')
     return render_template('login.html', css_url=css_url, js_url=js_url)
