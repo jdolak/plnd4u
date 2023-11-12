@@ -10,15 +10,29 @@ def db_show(limit):
     mycursor.execute(sql,val)
     return list(mycursor)
 
-def db_enroll_class(netid, course_id, sem):
+def db_check_class_in_enrollment(netid, course_id, sem, title):
     mycursor = DB.cursor()
 
-    sql = "INSERT INTO has_enrollment (netid, course_id, sem) VALUES (%s, %s, %s)"
-    val = (netid, course_id, sem)
+    sql = "SELECT enrollment_id, deleted FROM has_enrollment WHERE netid = %s AND course_id = %s AND sem = %s AND title = %s"
+    val = (netid, course_id, sem, title)
+    try:
+        mycursor.execute(sql, val)
+        result = list(mycursor)
+    except Exception as e:
+        LOG.error(e)
+        return e
+
+    return(result)
+
+def db_enroll_class(netid, course_id, sem, title):
+    mycursor = DB.cursor()
+
+    sql = "INSERT INTO has_enrollment (enrollment_id, netid, course_id, sem, title) SELECT COUNT(*), %s, %s, %s, %s FROM has_enrollment"
+    val = (netid, course_id, sem, title)
     try:
         mycursor.execute(sql, val)
         DB.commit()
-        LOG.info(f"Class Enrolled : {netid} - {course_id} - {sem}")
+        LOG.info(f"Class Enrolled : {netid} - {course_id} - {sem} - {title}")
         return 1
     except Exception as e:
         LOG.error(e)
@@ -38,11 +52,11 @@ def db_register_student(netid, name, major_code, gradyear):
         LOG.error(e)
         return 1
     
-def db_search_past_classes(search):
+def db_search_past_classes(search, level):
     mycursor = DB.cursor()
     search = f"%{search}%"
-    sql = "SELECT course_id, title FROM course WHERE title LIKE %s or course_id LIKE %s AND deleted <> 1"
-    val = (search, search) 
+    sql = "SELECT course_id, title FROM course WHERE deleted <> 1 AND (title LIKE %s or course_id LIKE %s)"
+    val = (search, search)
 
     try:
         mycursor.execute(sql, val)
@@ -60,10 +74,10 @@ def db_search_past_classes(search):
 
     
 
-def db_del_enrollment(netid, course_id, sem):
+def db_del_enrollment(enrollment_id):
     mycursor = DB.cursor()
-    sql = "UPDATE has_enrollment SET deleted = 1 WHERE netid = %s AND course_id = %s AND sem = %s"
-    val = (netid, course_id, sem)
+    sql = "UPDATE has_enrollment SET deleted = 1 WHERE enrollment_id = %s"
+    val = (enrollment_id, )
     try:
         mycursor.execute(sql, val)
         DB.commit()
@@ -71,10 +85,10 @@ def db_del_enrollment(netid, course_id, sem):
     except:
         return 1
 
-def db_del_enrollment_permanent(netid, course_id, sem):
+def db_del_enrollment_permanent(enrollment_id):
     mycursor = DB.cursor()
-    sql = "DELETE FROM has_enrollment WHERE netid = %s AND course_id = %s AND sem = %s"
-    val = (netid, course_id, sem)
+    sql = "DELETE FROM has_enrollment WHERE enrollment_id = %s"
+    val = (enrollment_id, )
     try:
         mycursor.execute(sql, val)
         DB.commit()
@@ -128,7 +142,7 @@ def db_update_student_gradyear(netid, gradyear):
     
 def db_show_student_enrollments(netid):
     mycursor = DB.cursor()
-    sql = "SELECT course_id, sem FROM has_enrollment WHERE netid = %s AND deleted <> 1"
+    sql = "SELECT enrollment_id, course_id, sem, title, user_created FROM has_enrollment WHERE netid = %s AND deleted <> 1"
     val = (netid, ) 
     try:
         mycursor.execute(sql, val)
