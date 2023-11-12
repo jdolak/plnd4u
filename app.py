@@ -127,4 +127,9 @@ def about():
     js_url = url_for('static', filename='js/script.js')
     return render_template('about.html', css_url=css_url, js_url=js_url)
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0', port=80)
+
+    if DEPLOY_ENV == 'prod':
+        from waitress import serve
+        serve(app, host="0.0.0.0", port=80)
+    else:
+        app.run(debug=True,host='0.0.0.0', port=80)

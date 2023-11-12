@@ -2,3 +2,4 @@ flask
 python-dotenv
 mysql.connector
 retry
+waitress

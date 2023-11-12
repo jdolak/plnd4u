@@ -13,12 +13,21 @@ LOG = logging.getLogger()
 
 load_dotenv()
 DB_PASSWD = os.getenv('MYSQL_ROOT_PASSWORD')
+DEPLOY_ENV = os.getenv('DEPLOY_ENV')
+
+if DEPLOY_ENV == 'prod':
+    FLASK_DEBUG = False
+else:
+    if not DEPLOY_ENV:
+        DEPLOY_ENV = 'dev'
+    FLASK_DEBUG = True
 
 
 
 @retry(delay=0.5, backoff=2)
 def _db_establish_connection():
     global DB
+    global FLASK_DEBUG
     cwd = os.getenv('PWD')
     if cwd == "/plnd4u" or cwd == None:
         DB = mysql.connector.connect(
@@ -35,7 +44,7 @@ def _db_establish_connection():
             user="root",
             password=DB_PASSWD,
             database="plnd4u"
-    )
+        )
 
 def _db_keep_alive(length):
     while True:
