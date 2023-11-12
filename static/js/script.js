@@ -29,10 +29,12 @@ function sendLoginData() {
         type: 'POST', 
         contentType: 'application/json', 
         data: JSON.stringify({ 'netid': netid }), 
-        success: function(response) { 
-            document.getElementById('login-output').innerHTML = response.netid; 
+        success: function(response) {
+            document.getElementById('login-output').innerHTML = response.netid;
+            window.location.replace("/home");  
         }, 
         error: function(error) { 
+            window.location.replace("/home"); 
             console.log(error); 
         } 
     }); 
@@ -51,9 +53,10 @@ function sendRegisterData() {
         contentType: 'application/json', 
         data: JSON.stringify({ 'first_name' : first_name, 'last_name' : last_name, 'grad' : grad, 'major' : major, 'netid': netid, 'pw' : pw }), 
         success: function(response) { 
-            document.getElementById('login-output').innerHTML = response.netid; 
+            window.location.replace("/home"); 
         }, 
         error: function(error) { 
+            window.location.replace("/home"); 
             console.log(error); 
         } 
     }); 

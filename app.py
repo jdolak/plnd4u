@@ -20,10 +20,12 @@ def home():
 def register():
     if request.method == 'POST':
         data = request.get_json()
-        session['netid'] = data.get('netid')
+        netid = data.get('netid')
 
-        db_register_student(data.get('netid'), f"{data.get('first_name')} {data.get('last_name')}", data.get("major"), data.get("grad"))
-        return jsonify()
+        session['netid'] = netid
+
+        db_register_student(netid, f"{data.get('first_name')} {data.get('last_name')}", data.get("major"), data.get("grad"))
+        return jsonify(netid=netid)
 
     css_url = url_for('static', filename='css/styles.css')
     js_url = url_for('static', filename='js/script.js')
