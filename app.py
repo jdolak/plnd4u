@@ -16,10 +16,18 @@ def home():
     css_url = url_for('static', filename='css/styles.css')
     return render_template('home.html', css_url=css_url)
  
-@app.route("/register")
+@app.route("/register", methods=['POST', 'GET'])
 def register():
+    if request.method == 'POST':
+        data = request.get_json()
+        session['netid'] = data.get('netid')
+
+        db_register_student(data.get('netid'), f"{data.get('first_name')} {data.get('last_name')}", data.get("major"), data.get("grad"))
+        return jsonify()
+
     css_url = url_for('static', filename='css/styles.css')
-    return render_template('register.html', css_url=css_url)
+    js_url = url_for('static', filename='js/script.js')
+    return render_template('register.html', css_url=css_url, js_url=js_url)
 
 @app.route("/classes", methods=['POST', 'GET'])
 def classes():

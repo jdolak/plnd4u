@@ -36,6 +36,27 @@ function sendLoginData() {
             console.log(error); 
         } 
     }); 
+}
+
+function sendRegisterData() { 
+    const first_name = document.getElementById('first_name').value; 
+    const last_name = document.getElementById('last_name').value; 
+    const grad = document.getElementById('grad').value; 
+    const major = document.getElementById('major').value; 
+    const netid = document.getElementById('netid').value; 
+    const pw = document.getElementById('pw').value; 
+    $.ajax({ 
+        url: '/register', 
+        type: 'POST', 
+        contentType: 'application/json', 
+        data: JSON.stringify({ 'first_name' : first_name, 'last_name' : last_name, 'grad' : grad, 'major' : major, 'netid': netid, 'pw' : pw }), 
+        success: function(response) { 
+            document.getElementById('login-output').innerHTML = response.netid; 
+        }, 
+        error: function(error) { 
+            console.log(error); 
+        } 
+    }); 
 } 
 
 function searchClassElement(classCourse, className) {

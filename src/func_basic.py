@@ -32,8 +32,10 @@ def db_register_student(netid, name, major_code, gradyear):
     try:
         mycursor.execute(sql, val)
         DB.commit()
+        LOG.info(f"Student Registered : {netid}")
         return 0
-    except:
+    except Exception as e:
+        LOG.error(e)
         return 1
     
 def db_search_past_classes(search):
