@@ -10,7 +10,36 @@ function addCourse() {
         contentType: 'application/json',
         data: JSON.stringify({  'action': 'add', 'course_name': courseName, 'course_code': courseCode, 'global_netid': globalNetId    }),
         success: function(response) {
-            console.log('success');
+            const planCardContainer = document.getElementById("unlisted-courses-plan-card-container");
+
+            const courseCard = document.createElement('div');
+            courseCard.className = "plan-card-single-course";
+
+            const courseCardContent = document.createElement("div");
+            courseCardContent.className = "plan-card-single-course-content";
+
+            const courseCardContentText = document.createElement("div");
+            courseCardContentText.className = "plan-card-single-course-text";
+
+            const courseCodeElement = document.createElement("h4");
+            courseCodeElement.className = "plan-card-single-course-code";
+            courseCodeElement.textContent = courseCode;
+
+            const courseNameElement = document.createElement("p");
+            courseNameElement.className = "plan-card-single-course-name";
+            courseNameElement.textContent = courseName;
+
+            const removeButton = document.createElement("button");
+            removeButton.className = "remove-button";
+            removeButton.innerHTML = '<img src="../static/images/remove.svg">';
+
+            courseCardContentText.appendChild(courseCodeElement);
+            courseCardContentText.appendChild(courseNameElement);
+            courseCardContent.appendChild(courseCardContentText);
+            courseCardContent.appendChild(removeButton);
+            courseCard.appendChild(courseCardContent);
+
+            planCardContainer.appendChild(courseCard);
         },
         error: function(error) {
             console.log(error);

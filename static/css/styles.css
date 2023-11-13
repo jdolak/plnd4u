@@ -310,7 +310,7 @@ h1, h2, h3, h4, h5, h6, p {
 .plan-container {
     display: flex;
     width: 1440px;
-    height: 735px;
+    height: auto;
     flex-direction: column;
     flex-shrink: 0;
 }
