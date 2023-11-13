@@ -50,13 +50,13 @@
                                                 <button class="remove-button"><img src="../static/images/remove.svg"></button>
                                             </div>
                                         </div>
-                                        <div class="plan-card-single-course">
+                                        <div class="plan-card-single-course" id="cse-20311">
                                             <div class="plan-card-single-course-content">
                                                 <div class="plan-card-single-course-text">
                                                     <h4 class="plan-card-single-course-code">CSE 20311</h4>
                                                     <p class="plan-card-single-course-name">Fundamentals of C...</p>
                                                 </div>
-                                                <button class="remove-button"><img src="../static/images/remove.svg"></button>
+                                                <button class="remove-button" onclick="removeCourse('cse-20311')"><img src="../static/images/remove.svg"></button>
                                             </div>
                                         </div>
                                         <div class="plan-card-single-course">
@@ -180,11 +180,11 @@
 
 
         <div id="unlisted-course-output">
-            {{ enrollments }}
+            {% for enrollment in enrollments %}
+                <p>{{ enrollment }}</p>
+            {% endfor %}
         </div>
-        <div id="added-courses">
-            
-        </div>
+
         <button onclick="courseDel()">Delete unlisted course</button>
     </section>
 

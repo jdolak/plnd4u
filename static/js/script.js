@@ -233,6 +233,13 @@ function courseDel() {
     });
 }
 
+function removeCourse(courseId) {
+    const courseElement = document.getElementById(courseId);
+    if (courseElement) {
+        courseElement.remove();
+    }
+}
+
 
 // Overlays
 

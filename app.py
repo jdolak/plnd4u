@@ -74,7 +74,6 @@ def classes():
 
 @app.route("/plan", methods=['POST', 'GET'])
 def plan():
-
     if "netid" not in session:
                 LOG.info("redirecting to login...")
                 return redirect(url_for("login"))
