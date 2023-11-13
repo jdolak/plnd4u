@@ -48,7 +48,7 @@ def classes():
             course_name = data.get('course_name')
             course_code = data.get('course_code')
             
-            db_enroll_class(netid,course_code, "FA00")
+            db_enroll_class(netid,course_code, "XX00", course_name)
             return jsonify(course_name=course_name, course_code=course_code)
         
         elif action == 'search':
