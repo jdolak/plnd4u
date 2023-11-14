@@ -65,7 +65,9 @@ def classes():
             major_req = filter_input.get('major-req')
             major_elective = filter_input.get('major-elective')
 
-            search_output = db_search_past_classes(search_input)
+            filters = (fall_semester, spring_semester, level_one, level_two, level_three, level_four, uni_req, major_req, major_elective)
+
+            search_output = db_search_past_classes(search_input, filters)
             return jsonify(search_output=search_output)
 
     css_url = url_for('static', filename='css/styles.css')
@@ -95,10 +97,6 @@ def plan():
             LOG.debug("u have sent a post to plan")
 
     enrollments = db_show_student_enrollments(netid)
-    msg = ""
-    for i in enrollments:
-        msg = f"{msg}{i[0]} {i[1]}, "
-    enrollments = msg
     css_url = url_for('static', filename='css/styles.css')
     js_url = url_for('static', filename='js/script.js')
     return render_template('plan.html', css_url=css_url, js_url=js_url, enrollments=enrollments)
