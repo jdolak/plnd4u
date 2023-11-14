@@ -111,7 +111,6 @@ def login():
         data = request.get_json()
         netid = data.get('netid')
         session['netid'] = netid
-        db_register_student(netid,"XXXX", "XXX", "0000")
         return jsonify(netid=netid)
 
     css_url = url_for('static', filename='css/styles.css')
