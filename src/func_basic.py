@@ -78,18 +78,54 @@ def db_register_student(netid, name, major_code, gradyear):
         LOG.error(e)
         return 1
     
-def db_search_past_classes(search, level):
+def db_search_past_classes(search, filters):
     mycursor = DB.cursor()
     search = f"%{search}%"
-    sql = "SELECT course_id, title FROM course WHERE deleted <> 1 AND (title LIKE %s or course_id LIKE %s)"
+
+    levels = ""
+    suffix = ""
+
+    fall_semester   = filters[0] 
+    spring_semester = filters[1] 
+    level_one       = filters[2]
+    level_two       = filters[3]
+    level_three     = filters[4]
+    level_four      = filters[5]
+    uni_req         = filters[6]
+    major_req       = filters[7]
+    major_elective  = filters[8]
+
+    if fall_semester:
+        suffix = suffix
+    if spring_semester:
+        suffix = suffix
+    if level_one:
+        levels = levels + " OR course_id LIKE '%1____'"
+    if level_two:
+        levels = levels + " OR course_id LIKE '%2____'"
+    if level_three:
+        levels = levels + " OR course_id LIKE '%3____'"
+    if level_four:
+        levels = levels + " OR course_id LIKE '%4____'"
+    """
+    if uni_req:
+        suffix = f""
+    if major_req:
+        suffix = f""
+    if major_elective:
+        suffix = f""
+    """
+
+    sql = f"SELECT course_id, title FROM course WHERE deleted <> 1 AND (title LIKE %s or course_id LIKE %s) AND (0=1{levels})"
     val = (search, search)
 
     try:
         # list comprehension to shorten course titles to max 80 chars
         # jachob dared me to do it
         mycursor.execute(sql, val)
-        return [tuple([row[i] if (i != 1 or len(str(row[i])) <= 80) else f'{row[1][:77]}...' for i in range(len(row))]) for row in list(mycursor)]
+        results = [tuple([row[i] if (i != 1 or len(str(row[i])) <= 80) else f'{row[1][:77]}...' for i in range(len(row))]) for row in list(mycursor)]
 
+        LOG.info(sql)
         LOG.info(f"Class searched : {search}")
         if not len(results):
             return 0
@@ -178,7 +214,7 @@ def db_show_student_enrollments(netid, sem):
     except:
         return 1
 
-def db_show_student_enrollments(netid, sem):
+def db_show_student_enrollments_short(netid, sem):
     mycursor = DB.cursor()
     sql = "SELECT enrollment_id, course_id, sem, title, user_created FROM has_enrollment WHERE netid = %s AND sem = %s AND deleted <> 1"
     val = (netid, sem) 
