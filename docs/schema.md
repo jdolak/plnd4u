@@ -163,6 +163,8 @@ has_enrollment(
     user_created INT DEFAULT 0, 
     deleted INT DEFAULT 0, 
     PRIMARY KEY(enrollment_id), 
-    FOREIGN KEY(netid) REFERENCES student(netid) ON UPDATE CASCADE
+    FOREIGN KEY(netid) REFERENCES student(netid) ON UPDATE CASCADE,
+    CONSTRAINT uc_enrollment UNIQUE (netid, course_id, sem, title)
 )
 ```
+ - `sem` does not include years here, instead formatted with grades ("FAFR", "SPJR")
