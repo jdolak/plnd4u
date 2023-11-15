@@ -166,13 +166,25 @@ def db_update_student_gradyear(netid, gradyear):
     except:
         return 1
     
-def db_show_student_enrollments(netid):
+def db_show_student_enrollments(netid, sem):
     mycursor = DB.cursor()
-    sql = "SELECT enrollment_id, course_id, sem, title, user_created FROM has_enrollment WHERE netid = %s AND deleted <> 1"
-    val = (netid, ) 
+    sql = "SELECT enrollment_id, course_id, sem, title, user_created FROM has_enrollment WHERE netid = %s AND sem = %s AND deleted <> 1"
+    val = (netid, sem) 
     try:
         mycursor.execute(sql, val)
         return list(mycursor)
+    except:
+        return 1
+
+def db_show_student_enrollments(netid, sem):
+    mycursor = DB.cursor()
+    sql = "SELECT enrollment_id, course_id, sem, title, user_created FROM has_enrollment WHERE netid = %s AND sem = %s AND deleted <> 1"
+    val = (netid, sem) 
+    try:
+        # list comprehension to shorten course titles to max 20 chars
+        # jachob dared me to do it
+        mycursor.execute(sql, val)
+        return [tuple([row[i] if (i != 3 or len(str(row[i])) <= 20) else f'{row[3][:17]}...' for i in range(len(row))]) for row in list(mycursor)]
     except:
         return 1
     
