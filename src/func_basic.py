@@ -85,8 +85,10 @@ def db_search_past_classes(search, level):
     val = (search, search)
 
     try:
+        # list comprehension to shorten course titles to max 80 chars
+        # jachob dared me to do it
         mycursor.execute(sql, val)
-        results = list(mycursor)
+        return [tuple([row[i] if (i != 1 or len(str(row[i])) <= 80) else f'{row[1][:77]}...' for i in range(len(row))]) for row in list(mycursor)]
 
         LOG.info(f"Class searched : {search}")
         if not len(results):
