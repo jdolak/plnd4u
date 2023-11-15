@@ -60,6 +60,7 @@ def db_check_login(netid, password_attempt):
 
     # fail if netid not in login table
     if len(result) == 0:
+        LOG.error("Password check, password has no length")
         return 1
     
     # if salt hash pair found, convert to bytes
@@ -69,8 +70,9 @@ def db_check_login(netid, password_attempt):
     # hash the password attempt and compare
     try:
         password_attempt_bytes = password_attempt.encode()
-    except UnicodeError:
+    except UnicodeError as e:
         # invalid password
+        LOG.error(f"Password check : {e}")
         return 1
     
     h = hashlib.new("sha256")
@@ -80,6 +82,7 @@ def db_check_login(netid, password_attempt):
 
     if not compare_digest(hash_attempt, hash_correct):
         # invalid match
+        LOG.info("Password invalid match")
         return 1
 
     return 0

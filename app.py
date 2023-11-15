@@ -24,7 +24,7 @@ def register():
 
         session['netid'] = netid
 
-        register_student(netid, f"{data.get('first_name')} {data.get('last_name')}", data.get("major"), data.get("grad"), data.get("pw"))
+        status = register_student(netid, f"{data.get('first_name')} {data.get('last_name')}", data.get("major"), data.get("grad"), data.get("pw"))
         return jsonify(netid=netid)
 
     css_url = url_for('static', filename='css/styles.css')
@@ -108,8 +108,12 @@ def login():
     if request.method == 'POST':
         data = request.get_json()
         netid = data.get('netid')
-        session['netid'] = netid
-        return jsonify(netid=netid)
+
+        status = db_check_login(netid, data.get('pw'))
+        if not status:    
+            session['netid'] = netid
+
+        return jsonify(netid=netid, status=status)
 
     css_url = url_for('static', filename='css/styles.css')
     js_url = url_for('static', filename='js/script.js')
