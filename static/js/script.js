@@ -57,7 +57,7 @@ function sendLoginData() {
         url: '/login', 
         type: 'POST', 
         contentType: 'application/json', 
-        data: JSON.stringify({ 'netid': netid }), 
+        data: JSON.stringify({ 'netid': netid , 'pw' : password}), 
         success: function(response) {
             document.getElementById('login-output').innerHTML = response.netid;
             window.location.replace("/home");  

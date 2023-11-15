@@ -85,6 +85,7 @@ def db_check_login(netid, password_attempt):
         LOG.info("Password invalid match")
         return 1
 
+    LOG.info(f"Login success: logged in {netid}")
     return 0
 
 def register_student(netid, name, major_code, gradyear, password):
