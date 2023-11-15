@@ -3,7 +3,7 @@ import sys
 import time
 
 sys.path.append('/plnd4u/src')
-from func_basic import *
+from func_adv import *
 
 # instance of flask application
 app = Flask(__name__)
@@ -24,7 +24,7 @@ def register():
 
         session['netid'] = netid
 
-        db_register_student(netid, f"{data.get('first_name')} {data.get('last_name')}", data.get("major"), data.get("grad"))
+        register_student(netid, f"{data.get('first_name')} {data.get('last_name')}", data.get("major"), data.get("grad"), data.get("pw"))
         return jsonify(netid=netid)
 
     css_url = url_for('static', filename='css/styles.css')

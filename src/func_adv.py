@@ -3,7 +3,7 @@
 import hashlib
 from hmac import compare_digest
 import secrets
-from plnd4u_db_connect import *
+from func_basic import *
 
 # Advanced Function: Secure login
 
@@ -13,12 +13,14 @@ def db_create_login(netid, password):
 
     if len(password) == 0:
         # invalid password
+        LOG.error(f"Invalid password, has no length: {password}")
         return 1
 
     try:
         password_bytes = password.encode()
-    except UnicodeError:
+    except UnicodeError as e:
         # invalid password
+        LOG.error(f"Invalid password: {password} : {e}")
         return 1
     
     # generate salt and salted hash
@@ -36,7 +38,8 @@ def db_create_login(netid, password):
         mycursor.execute(sql, val)
         DB.commit()
         return 0
-    except:
+    except Exception as e:
+        LOG.error(f"Failed to create login : {e}")
         return 1
 
 def db_check_login(netid, password_attempt):
@@ -79,6 +82,25 @@ def db_check_login(netid, password_attempt):
         # invalid match
         return 1
 
+    return 0
+
+def register_student(netid, name, major_code, gradyear, password):
+    """
+    Abstraction function that resisters a student by added them to the 
+    student database and generates password hash
+
+    RETURN VAULES:
+        0   Success
+        1   Student in database
+        2   Password creation failed
+    """
+    if db_register_student(netid, name, major_code, gradyear):
+        LOG.error("Failed to register student.")
+        return 1
+    if db_create_login(netid,password):
+        LOG.error("Failed to create login.")
+        return 2
+    LOG.info(f"Student registration success: {netid}")
     return 0
 
 
