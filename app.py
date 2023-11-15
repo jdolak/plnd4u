@@ -96,7 +96,7 @@ def plan():
             db_del_all_enrollments(netid)
             LOG.debug("u have sent a post to plan")
 
-    enrollments = db_show_student_enrollments(netid)
+    enrollments = db_show_student_enrollments(netid,00000000)
     css_url = url_for('static', filename='css/styles.css')
     js_url = url_for('static', filename='js/script.js')
     return render_template('plan.html', css_url=css_url, js_url=js_url, enrollments=enrollments)
