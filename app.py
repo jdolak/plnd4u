@@ -80,6 +80,19 @@ def classes():
     js_url = url_for('static', filename='js/script.js')
     return render_template('classes.html', css_url=css_url, js_url=js_url)
 
+@app.route("/getdata", methods=['GET'])
+def getdata():
+    if "netid" not in session:
+                LOG.info("redirecting to login...")
+                return redirect(url_for("login"))
+    
+    netid = session['netid']
+
+    if request.method == 'GET':
+        enrollments = db_show_student_enrollments(netid, 00000000)
+        return jsonify(enrollments=enrollments)
+
+
 @app.route("/plan", methods=['POST', 'GET'])
 def plan():
     if "netid" not in session:
@@ -87,25 +100,16 @@ def plan():
                 return redirect(url_for("login"))
     
     netid = session['netid']
-
-    if request.method == 'POST':
-        data = request.get_json()
-        action = data.get('action')
-
-        if action == 'add_to_plan':
-            course_year = data.get('year')
-            course_semester = data.get('semester')
-            course_code = data.get('course')
-            return jsonify(course_year=course_year, course_semester=course_semester, course_code=course_code)
         
-        else:
-            db_del_all_enrollments(netid)
-            LOG.debug("u have sent a post to plan")
+        # else:
+        #     db_del_all_enrollments(netid)
+        #     LOG.debug("u have sent a post to plan")
 
     enrollments = db_show_student_enrollments(netid,00000000)
     css_url = url_for('static', filename='css/styles.css')
     js_url = url_for('static', filename='js/script.js')
     return render_template('plan.html', css_url=css_url, js_url=js_url, enrollments=enrollments)
+
 
     
 

@@ -134,7 +134,7 @@ function addToPlan(className) {
 
 function getEnrollmentsData() {
     $.ajax({
-        url: '/plan',
+        url: '/getdata',
         method: 'GET',
         dataType: 'json',
         success: function (data) {
