@@ -51,6 +51,12 @@ def classes():
             db_enroll_class(netid,course_code, "XX00", course_name)
             return jsonify(course_name=course_name, course_code=course_code)
         
+        elif action == 'add_to_plan':
+            course_year = data.get('year')
+            course_semester = data.get('semester')
+            course_code = data.get('course')
+            return jsonify(course_year=course_year, course_semester=course_semester, course_code=course_code)
+        
         elif action == 'search':
             search_input = data.get('search_input')
             filter_input = data.get('filter_data')

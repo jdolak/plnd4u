@@ -10,36 +10,7 @@ function addCourse() {
         contentType: 'application/json',
         data: JSON.stringify({  'action': 'add', 'course_name': courseName, 'course_code': courseCode, 'global_netid': globalNetId    }),
         success: function(response) {
-            const planCardContainer = document.getElementById("unlisted-courses-plan-card-container");
-
-            const courseCard = document.createElement('div');
-            courseCard.className = "plan-card-single-course";
-
-            const courseCardContent = document.createElement("div");
-            courseCardContent.className = "plan-card-single-course-content";
-
-            const courseCardContentText = document.createElement("div");
-            courseCardContentText.className = "plan-card-single-course-text";
-
-            const courseCodeElement = document.createElement("h4");
-            courseCodeElement.className = "plan-card-single-course-code";
-            courseCodeElement.textContent = courseCode;
-
-            const courseNameElement = document.createElement("p");
-            courseNameElement.className = "plan-card-single-course-name";
-            courseNameElement.textContent = courseName;
-
-            const removeButton = document.createElement("button");
-            removeButton.className = "remove-button";
-            removeButton.innerHTML = '<img src="../static/images/remove.svg">';
-
-            courseCardContentText.appendChild(courseCodeElement);
-            courseCardContentText.appendChild(courseNameElement);
-            courseCardContent.appendChild(courseCardContentText);
-            courseCardContent.appendChild(removeButton);
-            courseCard.appendChild(courseCardContent);
-
-            planCardContainer.appendChild(courseCard);
+            console.log('success');
         },
         error: function(error) {
             console.log(error);
@@ -139,7 +110,7 @@ function addToPlan(className) {
         const semester = document.getElementById('add-course-semester').value;
 
         $.ajax({
-            url: '/plan',
+            url: '/classes',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({  'action': 'add_to_plan', 'year': year, 'semester': semester, 'course': className, 'global_netid': globalNetId   }),
@@ -159,8 +130,64 @@ function addToPlan(className) {
             overlay.style.display = "none";
         }
     });
-
 }
+
+function getEnrollmentsData() {
+    $.ajax({
+        url: '/plan',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            showInPlan(data.enrollments);
+        },
+        error: function (error) {
+            console.error('Error fetching enrollments:', error);
+        }
+    });
+}
+
+function showInPlan(enrollments) {
+    const planCardContainer = document.getElementById("unlisted-courses-plan-card-container");
+
+    enrollments.forEach(function (enrollment) {
+        const courseCode = enrollment[1];
+        const courseName = enrollment[3];
+
+        const courseCard = document.createElement('div');
+        courseCard.className = "plan-card-single-course";
+    
+        const courseCardContent = document.createElement("div");
+        courseCardContent.className = "plan-card-single-course-content";
+    
+        const courseCardContentText = document.createElement("div");
+        courseCardContentText.className = "plan-card-single-course-text";
+    
+        const courseCodeElement = document.createElement("h4");
+        courseCodeElement.className = "plan-card-single-course-code";
+        courseCodeElement.textContent = courseCode;
+    
+        const courseNameElement = document.createElement("p");
+        courseNameElement.className = "plan-card-single-course-name";
+        courseNameElement.textContent = courseName;
+    
+        const removeButton = document.createElement("button");
+        removeButton.className = "remove-button";
+        removeButton.innerHTML = '<img src="../static/images/remove.svg">';
+    
+        courseCardContentText.appendChild(courseCodeElement);
+        courseCardContentText.appendChild(courseNameElement);
+        courseCardContent.appendChild(courseCardContentText);
+        courseCardContent.appendChild(removeButton);
+        courseCard.appendChild(courseCardContent);
+    
+        planCardContainer.appendChild(courseCard);
+    });
+}
+
+
+$(document).ready(function() {
+    getEnrollmentsData();
+});
 
 function searchClasses() {
     const searchInput = document.getElementById('search-bar').value;
@@ -316,3 +343,5 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
+
