@@ -37,6 +37,8 @@ def _db_establish_connection():
             password=DB_PASSWD,
             database="plnd4u"
         )
+        db_keep_alive_thread = threading.Thread(target=_db_keep_alive, args=(7200,), daemon=True)
+        db_keep_alive_thread.start()
     else:
         DB = mysql.connector.connect(
             host="localhost",
@@ -59,6 +61,3 @@ def _db_keep_alive(length):
         time.sleep(length)
 
 _db_establish_connection()
-
-db_keep_alive_thread = threading.Thread(target=_db_keep_alive, args=(7200,), daemon=True)
-db_keep_alive_thread.start()

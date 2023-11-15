@@ -10,11 +10,26 @@ def db_show(limit):
     mycursor.execute(sql,val)
     return list(mycursor)
 
-def db_check_class_in_enrollment(netid, course_id, sem, title):
+def db_enroll_class(netid, course_id, sem, title):
+    # check if enrollment exists
+    if(len(db_check_class_in_enrollment(netid, course_id, sem, title, 0))):
+        return 1
+
+    # check if enrollment exists but has been deleted
+    already_deleted_list = db_check_class_in_enrollment(netid, course_id, sem, title, 1)
+    if(len(already_deleted_list)):
+        enrollment_id = already_deleted_list[0][0]
+        return db_undel_enrollment(enrollment_id)
+
+    # if not, create the enrollment
+    return db_create_enrollment(netid, course_id, sem, title)
+
+
+def db_check_class_in_enrollment(netid, course_id, sem, title, deleted):
     mycursor = DB.cursor()
 
-    sql = "SELECT enrollment_id, deleted FROM has_enrollment WHERE netid = %s AND course_id = %s AND sem = %s AND title = %s"
-    val = (netid, course_id, sem, title)
+    sql = "SELECT enrollment_id FROM has_enrollment WHERE netid = %s AND course_id = %s AND sem = %s AND title = %s AND deleted = %s"
+    val = (netid, course_id, sem, title, deleted)
     try:
         mycursor.execute(sql, val)
         result = list(mycursor)
@@ -24,7 +39,7 @@ def db_check_class_in_enrollment(netid, course_id, sem, title):
 
     return(result)
 
-def db_enroll_class(netid, course_id, sem, title):
+def db_create_enrollment(netid, course_id, sem, title):
     mycursor = DB.cursor()
 
     sql = "INSERT INTO has_enrollment (enrollment_id, netid, course_id, sem, title) SELECT COUNT(*), %s, %s, %s, %s FROM has_enrollment"
@@ -33,10 +48,21 @@ def db_enroll_class(netid, course_id, sem, title):
         mycursor.execute(sql, val)
         DB.commit()
         LOG.info(f"Class Enrolled : {netid} - {course_id} - {sem} - {title}")
-        return 1
+        return 0
     except Exception as e:
         LOG.error(e)
         return e
+
+def db_undel_enrollment(enrollment_id):
+    mycursor = DB.cursor()
+    sql = "UPDATE has_enrollment SET deleted = 0 WHERE enrollment_id = %s"
+    val = (enrollment_id, )
+    try:
+        mycursor.execute(sql, val)
+        DB.commit()
+        return 0
+    except:
+        return 1
 
 def db_register_student(netid, name, major_code, gradyear):
     mycursor = DB.cursor()
