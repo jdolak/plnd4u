@@ -250,9 +250,28 @@ function searchClasses() {
     });
 }
 
+function onClassesPage() {
+    return window.location.href.includes("classes");
+}
+
+function onLoginPage() {
+    console.log("currently on: ", window.location.href);
+    return window.location.href.includes("login");
+}
+
+function onRegisterPage() {
+    return window.location.href.includes("register");
+}
+
 function handleKeyPress(event) {
     if (event.key === "Enter") {
-        searchClasses();
+        if (onClassesPage()) {
+            searchClasses();
+        } else if (onLoginPage()) {
+            sendLoginData();
+        } else if (onRegisterPage()) {
+            sendRegisterData();
+        }
     }
 }
 
