@@ -44,7 +44,12 @@ def db_create_login(netid, password):
 
 def db_check_login(netid, password_attempt):
     """Checks if hash of login exists in database
-    :returns: 1 on login failure, 0 on login success"""
+    RETURN VALUES
+        0   login succes
+        1   login failure
+        2   error
+        3   netid not matched
+    """
     
     # obtain salt and hash from DB if they exist
     mycursor = DB.cursor()
@@ -56,12 +61,12 @@ def db_check_login(netid, password_attempt):
         result = list(mycursor)
     except Exception as e:
         LOG.error(e)
-        return 1
+        return 2
 
     # fail if netid not in login table
     if len(result) == 0:
-        LOG.error("Password check, password has no length")
-        return 1
+        LOG.error("Netid not in login table")
+        return 3
     
     # if salt hash pair found, convert to bytes
     salt_bytes = bytes.fromhex(result[0][0])
@@ -73,7 +78,7 @@ def db_check_login(netid, password_attempt):
     except UnicodeError as e:
         # invalid password
         LOG.error(f"Password check : {e}")
-        return 1
+        return 2
     
     h = hashlib.new("sha256")
     h.update(password_attempt_bytes)

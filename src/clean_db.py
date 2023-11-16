@@ -60,7 +60,18 @@ def main():
         print(e)
         return 1
     
+    sql = "DELETE FROM login"
+    
+    try:
+        mycursor.execute(sql)
+        DB.commit()
+        print("Deleted login data")
+    except Exception as e:
+        print(e)
+        return 1
+    
     return 0
+    
 
 
 if __name__ == '__main__':

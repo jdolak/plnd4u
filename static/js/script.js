@@ -30,11 +30,17 @@ function sendLoginData() {
         contentType: 'application/json', 
         data: JSON.stringify({ 'netid': netid , 'pw' : password}), 
         success: function(response) {
-            document.getElementById('login-output').innerHTML = response.netid;
-            window.location.replace("/home");  
+            if (response.status == 0) {
+                window.location.replace("/home");
+            } else if (response.status == 1){
+                document.getElementById('login-output').innerHTML = "Password does not match"
+            } else if (response.status == 3){
+                document.getElementById('login-output').innerHTML = "User not registered"
+            } else {
+                document.getElementById('login-output').innerHTML = "error."
+            }
         }, 
-        error: function(error) { 
-            window.location.replace("/home"); 
+        error: function(error) {  
             console.log(error); 
         } 
     }); 
@@ -53,10 +59,15 @@ function sendRegisterData() {
         contentType: 'application/json', 
         data: JSON.stringify({ 'first_name' : first_name, 'last_name' : last_name, 'grad' : grad, 'major' : major, 'netid': netid, 'pw' : pw }), 
         success: function(response) { 
-            window.location.replace("/home"); 
+            if (response.status == 0) {
+                window.location.replace("/home");
+            } else if (response.status == 1){
+                document.getElementById('register-output').innerHTML = "User account already exists."
+            } else {
+                document.getElementById('register-output').innerHTML = "error."
+            }
         }, 
-        error: function(error) { 
-            window.location.replace("/home"); 
+        error: function(error) {  
             console.log(error); 
         } 
     }); 
