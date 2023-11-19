@@ -326,10 +326,17 @@ h1, h2, h3, h4, h5, h6, p {
     flex-shrink: 0;
 }
 
+.plan-container-button {
+    display: flex;
+    align-items: center;
+    padding: 24px 0 0 122px;
+}
+
 .plan-container-heading {
     display: flex;
     padding: 36px 0px 0px 122px;
     align-items: center;
+    gap: 16px;
 }
 
 .plan-content {
@@ -509,8 +516,9 @@ h1, h2, h3, h4, h5, h6, p {
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-    display: flex;
     padding: 14px 25px;
+    width: 271px;
+    height: 53px;
     align-items: flex-start;
     gap: 10px;
     border: none;
