@@ -97,6 +97,17 @@ def getdata():
 
     if request.method == 'GET':
         enrollments = db_show_student_enrollments(netid, 0)
+
+        unlt = db_show_student_enrollments(netid, "UNLT")
+        frfa = db_show_student_enrollments(netid, "FRFA")
+        frsp = db_show_student_enrollments(netid, "FRSP")
+        sofa = db_show_student_enrollments(netid, "SOFA")
+        sosp = db_show_student_enrollments(netid, "SOSP")
+        jufa = db_show_student_enrollments(netid, "JUFA")
+        jusp = db_show_student_enrollments(netid, "JUSP")
+        sefa = db_show_student_enrollments(netid, "SEFA")
+        sesp = db_show_student_enrollments(netid, "SESP")
+
         return jsonify(enrollments=enrollments)
 
 
