@@ -108,7 +108,8 @@ def getdata():
         sefa = db_show_student_enrollments(netid, "SEFA")
         sesp = db_show_student_enrollments(netid, "SESP")
 
-        return jsonify(enrollments=enrollments)
+        return jsonify(enrollments=enrollments, unlt=unlt, frfa=frfa, 
+                       frsp=frsp, sofa=sofa, sosp=sosp, jufa=jufa, jusp=jusp, sefa=sefa, sesp=sesp)
 
 
 @app.route("/plan", methods=['POST', 'GET'])
