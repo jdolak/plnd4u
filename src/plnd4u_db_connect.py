@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 import logging
 import threading
 import time
-from retry import retry
+from retry import retry # type: ignore
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(funcName)s() - %(message)s')
 LOG = logging.getLogger()

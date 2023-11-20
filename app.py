@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, jsonify, session, redirect
+from flask import Flask, render_template, request, url_for, jsonify, session, redirect # type: ignore
 import sys
 import time
 
@@ -141,7 +141,7 @@ def about():
 if __name__ == '__main__':
 
     if DEPLOY_ENV == 'prod':
-        from waitress import serve
+        from waitress import serve # type: ignore
         serve(app, host="0.0.0.0", port=80)
     else:
         app.run(debug=True,host='0.0.0.0', port=80)
