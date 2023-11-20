@@ -2,10 +2,10 @@
 - name: plnd4u website config
   hosts: plnd4u-1
   tasks:
-   - name: Pull changes from github
-     shell:
-       cmd: make pull
-       chdir: ~/plnd4u
+   - name: Pull source code from repository
+     git:
+       repo: git@github.com:jdolak/plnd4u.git
+       dest: /home/plnd4u-admin/plnd4u/
    - name: Run web server
      shell:
        cmd: make up
