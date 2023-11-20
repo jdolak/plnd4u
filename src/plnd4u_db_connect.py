@@ -35,7 +35,8 @@ def _db_establish_connection():
             port="3306",
             user="root",
             password=DB_PASSWD,
-            database="plnd4u"
+            database="plnd4u",
+            auth_plugin='mysql_native_password'
         )
         db_keep_alive_thread = threading.Thread(target=_db_keep_alive, args=(7200,), daemon=True)
         db_keep_alive_thread.start()
@@ -45,7 +46,8 @@ def _db_establish_connection():
             port="3306",
             user="root",
             password=DB_PASSWD,
-            database="plnd4u"
+            database="plnd4u",
+            auth_plugin='mysql_native_password'
         )
 
 def _db_keep_alive(length):
