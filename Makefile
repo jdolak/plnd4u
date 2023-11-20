@@ -9,14 +9,6 @@ build:
 down:
 	docker compose -f ./docker/docker-compose.yml -p plnd4u down
 
-pull:
-	git pull --rebase
-
-push:
-	git add .
-	git commit
-	git push -u origin main
-
 deploy:
 	ansible-playbook ./docker/playbook-up.yaml
 
