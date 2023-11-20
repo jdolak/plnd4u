@@ -49,13 +49,17 @@ def classes():
                 course_name = data.get('course_name')
                 course_code = data.get('course_code')
                 
-                db_enroll_class(netid,course_code, "XX00", course_name)
+                db_enroll_class(netid,course_code, "UNLT", course_name)
                 return jsonify(course_name=course_name, course_code=course_code)
             
             case 'add_to_plan':
                 course_year = data.get('year')
                 course_semester = data.get('semester')
                 course_code = data.get('course')
+                
+                sem = f"{course_year[0:2].upper()}{course_semester[0:2].upper()}"
+                db_enroll_class(netid, course_code, sem, course_code)
+
                 return jsonify(course_year=course_year, course_semester=course_semester, course_code=course_code)
             
             case 'search':
@@ -92,7 +96,7 @@ def getdata():
     netid = session['netid']
 
     if request.method == 'GET':
-        enrollments = db_show_student_enrollments(netid, 00000000)
+        enrollments = db_show_student_enrollments(netid, 0)
         return jsonify(enrollments=enrollments)
 
 
@@ -103,7 +107,7 @@ def plan():
         return redirect(url_for("login"))
     
     netid = session['netid']
-    enrollments = db_show_student_enrollments(netid,00000000)
+    enrollments = db_show_student_enrollments(netid,0)
 
     css_url = url_for('static', filename='css/styles.css')
     js_url = url_for('static', filename='js/script.js')
