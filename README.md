@@ -25,7 +25,8 @@ Data will include information on courses offered and user inputed data. Informat
 * Auto creating a plan based off of required courses for your major and alerting if you do not meet the requirements
 * Color coding and auto suggesting courses based on pre and corerequisites
 
-
+## Getting Started
+Visit the [dev wiki](docs/dev-wiki.md)
 
 ## Team Members
 
