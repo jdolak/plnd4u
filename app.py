@@ -5,7 +5,6 @@ import time
 sys.path.append('/plnd4u/src')
 from func_adv import *
 
-# instance of flask application
 app = Flask(__name__)
 app.secret_key= str(time.time())
  

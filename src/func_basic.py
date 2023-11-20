@@ -2,14 +2,6 @@
 
 from plnd4u_db_connect import *
 
-# internal - don't use in prod
-def db_show(limit):
-    mycursor = DB.cursor()
-    sql = "SELECT * FROM path_data LIMIT %s"
-    val =  (limit, )
-    mycursor.execute(sql,val)
-    return list(mycursor)
-
 def db_enroll_class(netid, course_id, sem, title):
     # check if enrollment exists
     if(len(db_check_class_in_enrollment(netid, course_id, sem, title, 0))):
@@ -39,6 +31,7 @@ def db_check_class_in_enrollment(netid, course_id, sem, title, deleted):
 
     return(result)
 
+
 def db_create_enrollment(netid, course_id, sem, title):
     mycursor = DB.cursor()
 
@@ -63,6 +56,7 @@ def db_undel_enrollment(enrollment_id):
         return 0
     except:
         return 1
+    
 
 def db_register_student(netid, name, major_code, gradyear):
     mycursor = DB.cursor()
@@ -77,6 +71,7 @@ def db_register_student(netid, name, major_code, gradyear):
     except Exception as e:
         LOG.error(e)
         return 1
+    
     
 def db_search_past_classes(search, filters):
     mycursor = DB.cursor()
@@ -136,7 +131,6 @@ def db_search_past_classes(search, filters):
         LOG.error(e)
         return e
 
-    
 
 def db_del_enrollment(enrollment_id):
     mycursor = DB.cursor()
@@ -148,6 +142,7 @@ def db_del_enrollment(enrollment_id):
         return 0
     except:
         return 1
+    
 
 def db_del_enrollment_permanent(enrollment_id):
     mycursor = DB.cursor()
@@ -160,6 +155,7 @@ def db_del_enrollment_permanent(enrollment_id):
     except:
         return 1
     
+    
 def db_del_student(netid):
     mycursor = DB.cursor()
     sql = "UPDATE student SET deleted = 1 WHERE netid = %s"
@@ -170,6 +166,7 @@ def db_del_student(netid):
         return 0
     except:
         return 1
+    
 
 def db_del_student_permanent(netid):
     mycursor = DB.cursor()
@@ -182,6 +179,7 @@ def db_del_student_permanent(netid):
     except:
         return 1
     
+    
 def db_update_student_major(netid, major_code):
     mycursor = DB.cursor()
     sql = "UPDATE student SET major_code = %s WHERE netid = %s"
@@ -192,6 +190,7 @@ def db_update_student_major(netid, major_code):
         return 0
     except:
         return 1
+    
 
 def db_update_student_gradyear(netid, gradyear):
     mycursor = DB.cursor()
@@ -204,6 +203,7 @@ def db_update_student_gradyear(netid, gradyear):
     except:
         return 1
     
+    
 def db_show_student_enrollments(netid, sem):
     mycursor = DB.cursor()
     sql = "SELECT enrollment_id, course_id, sem, title, user_created FROM has_enrollment WHERE netid = %s AND sem = %s AND deleted <> 1"
@@ -213,6 +213,7 @@ def db_show_student_enrollments(netid, sem):
         return list(mycursor)
     except:
         return 1
+
 
 def db_show_student_enrollments_short(netid, sem):
     mycursor = DB.cursor()
@@ -225,6 +226,7 @@ def db_show_student_enrollments_short(netid, sem):
         return [tuple([row[i] if (i != 3 or len(str(row[i])) <= 20) else f'{row[3][:17]}...' for i in range(len(row))]) for row in list(mycursor)]
     except:
         return 1
+    
     
 def db_del_all_enrollments(netid):
     mycursor = DB.cursor()
