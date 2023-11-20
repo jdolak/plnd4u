@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 import logging
 import threading
 import time
-from retry import retry # type: ignore
+from retry import retry 
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(funcName)s() - %(message)s')
 LOG = logging.getLogger()
@@ -63,3 +63,5 @@ def _db_keep_alive(length):
         time.sleep(length)
 
 _db_establish_connection()
+
+# pyright: reportMissingModuleSource=false

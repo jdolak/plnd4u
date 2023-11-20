@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, jsonify, session, redirect # type: ignore
+from flask import Flask, render_template, request, url_for, jsonify, session, redirect
 import sys
 import time
 
@@ -141,7 +141,10 @@ def about():
 if __name__ == '__main__':
 
     if DEPLOY_ENV == 'prod':
-        from waitress import serve # type: ignore
+        from waitress import serve
         serve(app, host="0.0.0.0", port=80)
     else:
         app.run(debug=True,host='0.0.0.0', port=80)
+
+# pyright: reportMissingModuleSource=false
+# pyright: reportMissingImports=false
