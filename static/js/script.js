@@ -149,7 +149,16 @@ function getEnrollmentsData() {
         method: 'GET',
         dataType: 'json',
         success: function (data) {
-            showInPlan(data.enrollments);
+            showInPlan(data.unlt, "UNLT");
+            showInPlan(data.frfa, "FRFA");
+            showInPlan(data.frsp, "FRSP");
+            showInPlan(data.sofa, "SOFA");
+            showInPlan(data.sosp, "SOSP");
+            showInPlan(data.jufa, "JUFA");
+            showInPlan(data.jusp, "JUSP");
+            showInPlan(data.sefa, "SEFA");
+            showInPlan(data.sesp, "SESP");
+            console.log('success');
         },
         error: function (error) {
             console.error('Error fetching enrollments:', error);
@@ -157,8 +166,29 @@ function getEnrollmentsData() {
     });
 }
 
-function showInPlan(enrollments) {
-    const planCardContainer = document.getElementById("unlisted-courses-plan-card-container");
+function showInPlan(enrollments, semester) {
+
+    let planCardContainer;
+
+    if (semester === "UNLT") {
+        planCardContainer = document.getElementById("unlisted-courses-plan-card-container");
+    } else if (semester === "FRFA") {
+        planCardContainer = document.getElementById("freshman-fall-plan-card-container");
+    } else if (semester === "FRSP") {
+        planCardContainer = document.getElementById("freshman-spring-plan-card-container");
+    } else if (semester === "SOFA") {
+        planCardContainer = document.getElementById("sophomore-fall-plan-card-container");
+    } else if (semester === "SOSP") {
+        planCardContainer = document.getElementById("sophomore-spring-plan-card-container");
+    } else if (semester === "JUFA") {
+        planCardContainer = document.getElementById("junior-fall-plan-card-container");
+    } else if (semester === "JUSP") {
+        planCardContainer = document.getElementById("junior-spring-plan-card-container");
+    } else if (semester === "SEFA") {
+        planCardContainer = document.getElementById("senior-fall-plan-card-container");
+    } else if (semester === "SESP") {
+        planCardContainer = document.getElementById("senior-spring-plan-card-container");
+    }
 
     enrollments.forEach(function (enrollment) {
         const courseCode = enrollment[1];
