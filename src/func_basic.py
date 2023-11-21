@@ -11,7 +11,7 @@ def db_enroll_class(netid, course_id, sem, title):
     already_deleted_list = db_check_class_in_enrollment(netid, course_id, sem, title, 1)
     if(len(already_deleted_list)):
         enrollment_id = already_deleted_list[0][0]
-        return db_undel_enrollment(enrollment_id)
+        return _db_undel_enrollment(enrollment_id)
 
     # if not, create the enrollment
     return db_create_enrollment(netid, course_id, sem, title)
@@ -46,7 +46,7 @@ def db_create_enrollment(netid, course_id, sem, title):
         LOG.error(e)
         return e
 
-def db_undel_enrollment(enrollment_id):
+def _db_undel_enrollment(enrollment_id):
     mycursor = DB.cursor()
     sql = "UPDATE has_enrollment SET deleted = 0 WHERE enrollment_id = %s"
     val = (enrollment_id, )
@@ -132,7 +132,7 @@ def db_search_past_classes(search, filters):
         return e
 
 
-def db_del_enrollment(enrollment_id):
+def _db_del_enrollment(enrollment_id):
     mycursor = DB.cursor()
     sql = "UPDATE has_enrollment SET deleted = 1 WHERE enrollment_id = %s"
     val = (enrollment_id, )
@@ -143,8 +143,19 @@ def db_del_enrollment(enrollment_id):
     except:
         return 1
     
+def db_del_enrollment(netid, course_id, sem, title):
+    try:
+        _db_del_enrollment(db_check_class_in_enrollment(netid, course_id, sem, title, 0)[0][0])
+    except IndexError:
+        LOG.error("Cannot delete: entry not found.")
+        return 1
+    except Exception as e:
+        LOG.error(e)
+        return 1
+    LOG.info(f"Deleted : {course_id}, {title}")
+    return 0
 
-def db_del_enrollment_permanent(enrollment_id):
+def _db_del_enrollment_permanent(enrollment_id):
     mycursor = DB.cursor()
     sql = "DELETE FROM has_enrollment WHERE enrollment_id = %s"
     val = (enrollment_id, )
