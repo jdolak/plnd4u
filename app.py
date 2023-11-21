@@ -127,6 +127,8 @@ def plan():
         course_name = data.get('course_name')
         semester = data.get('semester')
 
+        db_del_enrollment(netid, course_code, semester, course_name)
+
         return jsonify(course_code=course_code, course_name=course_name, semester=semester)
 
     css_url = url_for('static', filename='css/styles.css')
