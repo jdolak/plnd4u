@@ -31,7 +31,7 @@ function sendLoginData() {
         data: JSON.stringify({ 'netid': netid , 'pw' : password}), 
         success: function(response) {
             if (response.status == 0) {
-                window.location.replace("/home");
+                window.location.replace("/plan");
             } else if (response.status == 1){
                 document.getElementById('login-output').innerHTML = "Password does not match"
             } else if (response.status == 3){
@@ -168,27 +168,7 @@ function getEnrollmentsData() {
 
 function showInPlan(enrollments, semester) {
 
-    let planCardContainer;
-
-    if (semester === "UNLT") {
-        planCardContainer = document.getElementById("unlisted-courses-plan-card-container");
-    } else if (semester === "FRFA") {
-        planCardContainer = document.getElementById("freshman-fall-plan-card-container");
-    } else if (semester === "FRSP") {
-        planCardContainer = document.getElementById("freshman-spring-plan-card-container");
-    } else if (semester === "SOFA") {
-        planCardContainer = document.getElementById("sophomore-fall-plan-card-container");
-    } else if (semester === "SOSP") {
-        planCardContainer = document.getElementById("sophomore-spring-plan-card-container");
-    } else if (semester === "JUFA") {
-        planCardContainer = document.getElementById("junior-fall-plan-card-container");
-    } else if (semester === "JUSP") {
-        planCardContainer = document.getElementById("junior-spring-plan-card-container");
-    } else if (semester === "SEFA") {
-        planCardContainer = document.getElementById("senior-fall-plan-card-container");
-    } else if (semester === "SESP") {
-        planCardContainer = document.getElementById("senior-spring-plan-card-container");
-    }
+    const planCardContainer = document.getElementById(semester);
 
     enrollments.forEach(function (enrollment) {
         const courseCode = enrollment[1];
@@ -214,6 +194,13 @@ function showInPlan(enrollments, semester) {
         const removeButton = document.createElement("button");
         removeButton.className = "remove-button";
         removeButton.innerHTML = '<img src="../static/images/remove.svg">';
+        removeButton.addEventListener("click", function() {
+            const semester = this.closest(".plan-card-courses").id;
+            const courseCode = this.closest(".plan-card-single-course").querySelector(".plan-card-single-course-code").textContent;
+            const courseName = this.closest(".plan-card-single-course").querySelector(".plan-card-single-course-name").textContent;
+
+            courseDel(courseCode, courseName, semester);
+        })
     
         courseCardContentText.appendChild(courseCodeElement);
         courseCardContentText.appendChild(courseNameElement);
@@ -305,26 +292,37 @@ function handleKeyPress(event) {
     }
 }
 
-function courseDel() {
-    $.ajax({ 
-        url: '/plan',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({'global_netid': globalNetId, 'course_code': courseCode, 'semester': semester, 'course_name': courseName}),
-        success: function(response) {
-            console.log('success');
-        },
-        error: function(error) {
-            console.log(error);
-        }
-    });
-}
+function courseDel(courseCode, courseName, semester) {
 
-function removeCourse(courseId) {
-    const courseElement = document.getElementById(courseId);
-    if (courseElement) {
-        courseElement.remove();
+    const planCardContainer = document.getElementById(semester);
+
+    const planCards = planCardContainer.getElementsByClassName("plan-card-single-course");
+    for (const planCard of planCards) {
+        const classCode = planCard.querySelector(".plan-card-single-course-code").textContent;
+        const className = planCard.querySelector(".plan-card-single-course-name").textContent;
+
+        if (classCode === courseCode && className === courseName) {
+            planCard.remove();
+            console.log("Found matching card");
+
+            $.ajax({
+                url: '/plan',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({  'global_netid': globalNetId, 'course_code': courseCode, 'semester': semester, 'course_name': courseName }),
+                success: function(response) {
+                    console.log(response.course_name, response.course_code, response.semester);
+                },
+                error: function(error) {
+                    console.log('cannot delete');
+                }
+            })
+
+            return;
+        }
     }
+
+    console.log("No plan card");
 }
 
 

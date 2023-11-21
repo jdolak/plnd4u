@@ -112,7 +112,6 @@ def getdata():
         return jsonify(enrollments=enrollments, unlt=unlt, frfa=frfa, 
                        frsp=frsp, sofa=sofa, sosp=sosp, jufa=jufa, jusp=jusp, sefa=sefa, sesp=sesp)
 
-
 @app.route("/plan", methods=['POST', 'GET'])
 def plan():
     if "netid" not in session:
@@ -121,6 +120,14 @@ def plan():
     
     netid = session['netid']
     enrollments = db_show_student_enrollments(netid,0)
+
+    if request.method == 'POST':
+        data = request.get_json()
+        course_code = data.get('course_code')
+        course_name = data.get('course_name')
+        semester = data.get('semester')
+
+        return jsonify(course_code=course_code, course_name=course_name, semester=semester)
 
     css_url = url_for('static', filename='css/styles.css')
     js_url = url_for('static', filename='js/script.js')
