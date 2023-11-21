@@ -56,9 +56,10 @@ def classes():
                 course_year = data.get('year')
                 course_semester = data.get('semester')
                 course_code = data.get('course')
-                
+                class_name = data.get('class_name')
+
                 sem = f"{course_year[0:2].upper()}{course_semester[0:2].upper()}"
-                db_enroll_class(netid, course_code, sem, course_code)
+                db_enroll_class(netid, course_code, sem, class_name)
 
                 return jsonify(course_year=course_year, course_semester=course_semester, course_code=course_code)
             
