@@ -106,12 +106,12 @@ function searchClassElement(classCourse, className) {
     return eachClass;
 }
 
-function addToPlan(className) {
+function addToPlan(courseCode, className) {
     const overlay = document.getElementById('add-to-plan-overlay-container');
     const content = document.getElementById('add-to-plan-overlay-content');
     const courseHeading = document.querySelector('.add-to-plan-course-heading');
 
-    courseHeading.textContent = className;
+    courseHeading.textContent = courseCode;
 
     overlay.style.display = 'block';
 
@@ -124,7 +124,7 @@ function addToPlan(className) {
             url: '/classes',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({  'action': 'add_to_plan', 'year': year, 'semester': semester, 'course': className, 'global_netid': globalNetId   }),
+            data: JSON.stringify({  'action': 'add_to_plan', 'year': year, 'semester': semester, 'course': courseCode, 'class_name': className, 'global_netid': globalNetId   }),
             success: function(response) {
                 console.log('success');
             },
@@ -240,7 +240,7 @@ function searchClasses() {
                 searchOutputContainer.appendChild(classDiv);
 
                 classDiv.querySelector('.add-button').addEventListener('click', function() {
-                    addToPlan(item[0]);
+                    addToPlan(item[0], item[1]);
                 });
             });
         },
