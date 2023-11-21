@@ -310,7 +310,7 @@ function courseDel() {
         url: '/plan',
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({'global_netid': globalNetId }),
+        data: JSON.stringify({'global_netid': globalNetId, 'course_code': courseCode, 'semester': semester, 'course_name': courseName}),
         success: function(response) {
             console.log('success');
         },
