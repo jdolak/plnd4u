@@ -10,4 +10,5 @@ with open("../data/descriptions.tsv", "w", newline="") as csvfile:
     writer = csv.writer(csvfile, delimiter="\t")
 
     for course in json_data:
-        writer.writerow([course, json_data[course]])
+        desc = " ".join(json_data[course].splitlines())
+        writer.writerow([f'{course}', f'{desc}'])
