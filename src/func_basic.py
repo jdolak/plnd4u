@@ -25,7 +25,7 @@ def db_enroll_class(netid, course_id, sem, title):
 
 def db_check_class_in_enrollment(netid, course_id, sem, title, deleted):
 
-    sql = "SELECT enrollment_id FROM has_enrollment WHERE netid = %s AND course_id = %s AND sem = %s AND title = %s AND deleted = %s"
+    sql = "SELECT enrollment_id FROM has_enrollment WHERE netid = %s AND course_id = %s AND sem = %s AND title LIKE '%s%' AND deleted = %s"
     val = (netid, course_id, sem, title, deleted)
     try:
         mycursor = DB.cursor()
