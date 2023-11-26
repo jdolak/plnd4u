@@ -10,6 +10,7 @@ function addCourse() {
         contentType: 'application/json',
         data: JSON.stringify({  'action': 'add', 'course_name': courseName, 'course_code': courseCode, 'global_netid': globalNetId    }),
         success: function(response) {
+            window.location.reload();
             console.log('success');
         },
         error: function(error) {
