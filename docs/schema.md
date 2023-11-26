@@ -6,40 +6,13 @@
  - Many classes in the dataset have `TBA` for unknown meeting times, `TBD` for unknown profs
  - Data has ~100 instances of courses with same class code and different titles
 
-## Data-Containing Tables (User-Inaccessible)
-```SQL
-path_data(
-    code CHAR(10) NOT NULL,
-    title VARCHAR(200),
-    crn CHAR(5) NOT NULL,
-    meets VARCHAR(75),
-    professor VARCHAR(50),
-    start_date CHAR(10) NOT NULL,
-    deleted INT DEFAULT 0,
-    PRIMARY KEY(crn)
-)
-```
- - This table has the same schema as the .csv data scraped from PATH
- - All data will be inserted into this table, then other tables populated from custom queries of this table
- - After all population has been done, this table will be unnecessary and should be able to be deleted
- - `code`, `crn`, and `start_date` are all primary keys in other tables
- - `meets` has to be 75 characters due to oddly-formatted law research courses
-
-```SQL
-login(
-    netid CHAR(8) NOT NULL, 
-    salt CHAR(32) NOT NULL, 
-    hash CHAR(32) NOT NULL,
-    PRIMARY KEY(netid)
-)
-```
-
 ## Past Course Tables (User-Unmodifiable)
 
 ```SQL
 course(
     course_id CHAR(10) NOT NULL,
     title VARCHAR(200),
+    credits VARCHAR(17),
     deleted INT DEFAULT 0,
     PRIMARY KEY(course_id)
 )
@@ -59,6 +32,7 @@ section(
 ```
  - Section days and times `meets`, e.g. "TTh 3:30-4:45p"
  - 4-letter semester code `sem`, e.g. "FA23"
+ - `meets` has to be 75 characters due to oddly-formatted law research courses
 
 ```SQL
 description(
@@ -168,3 +142,14 @@ has_enrollment(
 )
 ```
  - `sem` does not include years here, instead formatted with grades ("FAFR", "SPJR")
+
+```SQL
+login(
+    netid CHAR(8) NOT NULL, 
+    salt CHAR(32) NOT NULL, 
+    hash CHAR(32) NOT NULL,
+    PRIMARY KEY(netid)
+)
+```
+ - Users cannot directly modify, only through login functions
+ - In this section because this table is not static
