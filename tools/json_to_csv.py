@@ -8,15 +8,14 @@ def convert(source, dest):
         json_data = json.load(fd)
 
     with open(dest, "w", newline="") as csvfile:
-        writer = csv.writer(csvfile, delimiter="\t")
+        writer = csv.writer(csvfile, delimiter=",")
 
         for course in json_data:
             desc = " ".join(json_data[course].splitlines())
-            desc = desc.replace("\t", " ")
             writer.writerow([f'{course}', f'{desc}'])
         
 def main():
-    convert("data/descriptions.json", "data/descriptions.tsv")
+    convert("data/descriptions.json", "data/descriptions.csv")
 
 if __name__=="__main__":
     main()
