@@ -11,11 +11,11 @@ def convert(source, dest):
         writer = csv.writer(csvfile, delimiter=",")
 
         for course in json_data:
-            desc = " ".join(json_data[course].splitlines())
-            writer.writerow([f'{course}', f'{desc}'])
+            coreq = json_data[course]
+            writer.writerow([f'{course}', f'{coreq}'])
         
 def main():
-    convert("data/descriptions.json", "data/descriptions.csv")
+    convert("data/credits.json", "data/credits.csv")
 
 if __name__=="__main__":
     main()
