@@ -117,14 +117,19 @@ function addToPlan(courseCode, className) {
 
     const addButton = document.getElementById('add-to-plan-button');
     addButton.addEventListener('click', function() {
-        const year = document.getElementById('add-course-year').value;
-        const semester = document.getElementById('add-course-semester').value;
+
+        const yearDropdown = document.getElementById('add-course-year');
+        const semesterDropdown = document.getElementById('add-course-semester');
+
+        const year = yearDropdown.value;
+        const semester = semesterDropdown.value;
 
         $.ajax({
             url: '/classes',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({  'action': 'add_to_plan', 'year': year, 'semester': semester, 'course': courseCode, 'class_name': className, 'global_netid': globalNetId   }),
+            async: true,
             success: function(response) {
                 console.log('success');
             },
@@ -132,6 +137,9 @@ function addToPlan(courseCode, className) {
                 console.log(error);
             }
         })
+
+        yearDropdown.selectedIndex = 0;
+        semesterDropdown.selectedIndex = 0;
 
         overlay.style.display = 'none';
     });
