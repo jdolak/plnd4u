@@ -6,9 +6,11 @@ def db_enroll_class(netid, course_id, sem, title):
     LOG.info(f"{netid}, {course_id}, {sem}, {title}")
     # check if enrollment exists
     try:
-        if(len(db_check_class_in_enrollment(netid, course_id, sem, title, 0))):
+        class_check = db_check_class_in_enrollment(netid, course_id, sem, title, 0)
+        if class_check == 1:
             return 1
-
+        if(len(class_check)):
+            return 1
         # check if enrollment exists but has been deleted
         already_deleted_list = db_check_class_in_enrollment(netid, course_id, sem, title, 1)
         if(len(already_deleted_list)):
@@ -32,7 +34,7 @@ def db_check_class_in_enrollment(netid, course_id, sem, title, deleted):
         mycursor.execute(sql, val)
         result = list(mycursor)
     except Exception as e:
-        LOG.error(e)
+        LOG.error(f"{val} : {e}")
         return 1
 
     return(result)
@@ -128,7 +130,6 @@ def db_search_past_classes(search, filters):
         mycursor.execute(sql, val)
         results = [tuple([row[i] if (i != 1 or len(str(row[i])) <= 80) else f'{row[1][:77]}...' for i in range(len(row))]) for row in list(mycursor)]
 
-        LOG.info(sql)
         LOG.info(f"Class searched : {search}")
         if not len(results):
             return 0
@@ -136,7 +137,7 @@ def db_search_past_classes(search, filters):
             return results
         
     except Exception as e:
-        LOG.error(e)
+        LOG.error(f"{val} : {e}")
         return 1
 
 
