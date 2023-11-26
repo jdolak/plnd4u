@@ -3,17 +3,24 @@
 import json
 import csv
 
+CORE_REQS = set(["WKAL", "WKCD", "WKDT", "WKFP", "WKFT", "WKHI", "WKIN", "WKLC", "WKQR", "WKSP", "WKSS", "WKST", "WRIT", "WRRH", "USEM"])
+
 def main():
-    with open("data/json/sp24_overview.json", encoding='utf-8') as fd:
+    with open("data/json/fa23_data.json", encoding='utf-8') as fd:
         json_data = json.load(fd)
-        overview = json_data["results"]
 
-    with open("data/csv/sp24_overview.csv", "w", newline="") as csvfile:
+    with open("data/csv/fa23_attributes.csv", "w", newline="") as csvfile:
         writer = csv.writer(csvfile, delimiter=",")
-        writer.writerow(["code","title","crn","meets","professor","start_date"])
 
-        for cd in overview:
-            writer.writerow([cd["code"],cd["title"],cd["crn"],cd["meets"],cd["instr"],cd["start_date"]])
+        for course in json_data:
+            ad = json_data[course]["attribute_description"]
+
+            if ad == "":
+                continue
+
+            for req in CORE_REQS:
+                if req in ad:
+                    writer.writerow([f'{course}', f'{req}'])
 
 if __name__=="__main__":
     main()
