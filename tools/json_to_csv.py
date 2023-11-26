@@ -3,13 +3,20 @@
 import json
 import csv
 
-with open("data/descriptions.json", encoding='utf-8') as fd:
-    json_data = json.load(fd)
+def convert(source, dest):
+    with open(source, encoding='utf-8') as fd:
+        json_data = json.load(fd)
 
-with open("data/descriptions.tsv", "w", newline="") as csvfile:
-    writer = csv.writer(csvfile, delimiter="\t")
+    with open(dest, "w", newline="") as csvfile:
+        writer = csv.writer(csvfile, delimiter="\t")
 
-    for course in json_data:
-        desc = " ".join(json_data[course].splitlines())
-        desc = desc.replace("\t", " ")
-        writer.writerow([f'{course}', f'{desc}'])
+        for course in json_data:
+            desc = " ".join(json_data[course].splitlines())
+            desc = desc.replace("\t", " ")
+            writer.writerow([f'{course}', f'{desc}'])
+        
+def main():
+    convert("data/descriptions.json", "data/descriptions.tsv")
+
+if __name__=="__main__":
+    main()
