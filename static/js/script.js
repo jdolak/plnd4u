@@ -131,6 +131,7 @@ function addToPlan(courseCode, className) {
             data: JSON.stringify({  'action': 'add_to_plan', 'year': year, 'semester': semester, 'course': courseCode, 'class_name': className, 'global_netid': globalNetId   }),
             async: true,
             success: function(response) {
+                window.location.reload();
                 console.log('success');
             },
             error: function(error) {

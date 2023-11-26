@@ -27,3 +27,7 @@ dump:
 db-clean:
 	python3 src/clean_db.py
 
+restart: down
+	docker compose -f ./docker/docker-compose.yml -p plnd4u up -d
+	
+
