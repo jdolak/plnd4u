@@ -42,7 +42,7 @@ configure: up
 	docker exec plnd4u-db-1 mysql --password=$$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE plnd4u;" || true
 	@echo "Waiting..."
 	@sleep 3
-	docker exec plnd4u-db-1 sh -c 'mysql -u root --password=$$MYSQL_ROOT_PASSWORD plnd4u < /mnt/data/dump2.sql'
+	docker exec plnd4u-db-1 sh -c 'mysql -u root --password=$$MYSQL_ROOT_PASSWORD plnd4u < /mnt/data/dump.sql'
 	
 test:
 	docker exec plnd4u-db-1 sh -c 'cat /mnt/data/dump.sql'
