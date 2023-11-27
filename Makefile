@@ -44,5 +44,16 @@ configure: up
 	@sleep 3
 	docker exec plnd4u-db-1 sh -c 'mysql -u root --password=$$MYSQL_ROOT_PASSWORD plnd4u < /mnt/data/dump.sql'
 	
-test:
-	docker exec plnd4u-db-1 sh -c 'cat /plnd4u/data/dump.sql'
+test: down build
+	@docker compose -f ./docker/docker-compose.yml -p plnd4u-test up -d
+	@echo "Creating test environment..."
+	@sleep 7
+	@docker exec plnd4u-test-db-1 mysql --password=$$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE plnd4u;" || true
+	@echo "Uploading data..."
+	@sleep 3
+	@docker exec plnd4u-test-db-1 sh -c 'mysql -u root --password=$$MYSQL_ROOT_PASSWORD plnd4u < /mnt/data/dump.sql'
+	@echo "Running unit tests..."
+	@python3 ./tests/integration-tests.py
+	@echo "Removeing testing environment"
+	@docker compose -f ./docker/docker-compose.yml -p plnd4u-test down
+
