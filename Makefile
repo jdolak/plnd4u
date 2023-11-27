@@ -1,3 +1,6 @@
+include ./src/.env
+export
+
 all: up
 
 up: build
@@ -29,5 +32,17 @@ db-clean:
 
 restart: down
 	docker compose -f ./docker/docker-compose.yml -p plnd4u up -d
-	
 
+db-sql:
+#	docker exec plnd4u-db-1 -it /bin/mysql -c "--password=$MYSQL_ROOT_PASSWORD --database=plnd4u"
+
+configure: up
+	@echo "Waiting..."
+	@sleep 5
+	docker exec plnd4u-db-1 mysql --password=$$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE plnd4u;" || true
+	@echo "Waiting..."
+	@sleep 3
+	docker exec plnd4u-db-1 sh -c 'mysql -u root --password=$$MYSQL_ROOT_PASSWORD plnd4u < /mnt/data/dump2.sql'
+	
+test:
+	docker exec plnd4u-db-1 sh -c 'cat /mnt/data/dump.sql'
