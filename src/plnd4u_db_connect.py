@@ -28,6 +28,7 @@ else:
 def _db_establish_connection():
     global DB
     global FLASK_DEBUG
+    global LOCATION
     cwd = os.getenv('PWD')
     if cwd == "/plnd4u" or cwd == None:
         DB = mysql.connector.connect(
@@ -40,6 +41,7 @@ def _db_establish_connection():
         )
         db_keep_alive_thread = threading.Thread(target=_db_keep_alive, args=(7200,), daemon=True)
         db_keep_alive_thread.start()
+        LOCATION = "container"
     else:
         DB = mysql.connector.connect(
             host="localhost",
@@ -49,6 +51,7 @@ def _db_establish_connection():
             database="plnd4u",
             auth_plugin='mysql_native_password'
         )
+        LOCATION = "local"
 
 def _db_keep_alive(length):
     while True:
