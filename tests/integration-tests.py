@@ -12,6 +12,9 @@ class basic_func_tests(unittest.TestCase):
 
         self.assertEqual(len(results), 1, "Too many results")
         self.assertEqual(results, [('CSE 30246', 'Database Concepts')], "Results do not match")
+
+    def test_create_user(self):
         
+
 if __name__ == '__main__':
     unittest.main()

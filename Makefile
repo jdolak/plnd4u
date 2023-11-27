@@ -25,7 +25,7 @@ mysql-remote:
 	mysql -h dev.plnd4u.com -P 3306 -u root -p
 
 dump:
-	docker exec plnd4u-db-1 /bin/bash -c "mysql -u root -p plnd4u < /mnt/data/dump.sql"
+	docker exec plnd4u-db-1 sh -c "mysql -u root -p plnd4u < /mnt/data/dump.sql"
 
 db-clean:
 	python3 src/clean_db.py
@@ -45,4 +45,4 @@ configure: up
 	docker exec plnd4u-db-1 sh -c 'mysql -u root --password=$$MYSQL_ROOT_PASSWORD plnd4u < /mnt/data/dump.sql'
 	
 test:
-	docker exec plnd4u-db-1 sh -c 'cat /mnt/data/dump.sql'
+	docker exec plnd4u-db-1 sh -c 'cat /plnd4u/data/dump.sql'

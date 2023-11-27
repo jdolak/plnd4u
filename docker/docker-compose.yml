@@ -13,14 +13,14 @@ services:
 
   db:
     image: mysql
-    command: --secure-file-priv=/plnd4u/data --default-authentication-plugin=mysql_native_password 
+    command: --secure-file-priv=/mnt/data --default-authentication-plugin=mysql_native_password 
     restart: no
     ports: 
       - 3306:3306
     env_file: ../src/.env
     volumes:
       - mysqldata:/var/lib/mysql
-      #- ../data:/mnt/data
+      - ../data/dump.sql:/mnt/data/dump.sql
       - ./my.cnf:/etc/my.cnf
       - ./my.cnf:/etc/mysql/conf.d/my.cnf
     deploy:
