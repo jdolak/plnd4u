@@ -235,7 +235,6 @@ def db_update_student_gradyear(netid, gradyear):
         return 1
     
 def db_show_student_enrollments(netid, sem):
-    
     sql = "SELECT enrollment_id, course_id, sem, title, user_created FROM has_enrollment WHERE netid = %s AND sem = %s AND deleted <> 1"
     val = (netid, sem) 
     try:
@@ -271,4 +270,18 @@ def db_del_all_enrollments(netid):
         return 0
     except:
         LOG.error("Did not delete all enrollments")
+        return 1
+
+def db_show_class_details(course_id):
+    pass
+
+def _db_show_description(course_id):
+    sql = "SELECT description FROM description WHERE course_id = %s AND deleted <> 1"
+    val = (course_id, ) 
+    try:
+        mycursor = DB.cursor()
+        mycursor.execute(sql, val)
+        return list(mycursor)[0]
+    except Exception as e:
+        LOG.error(e)
         return 1

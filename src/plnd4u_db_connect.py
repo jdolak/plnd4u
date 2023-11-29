@@ -30,6 +30,7 @@ def _db_establish_connection():
     global FLASK_DEBUG
     global LOCATION
     cwd = os.getenv('PWD')
+    #if False:
     if cwd == "/plnd4u" or cwd == None:
         DB = mysql.connector.connect(
             host="plnd4u-db-1",

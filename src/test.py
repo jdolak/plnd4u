@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
 from func_basic import *
 
-print(db_search_past_classes('Database Concepts',(1,1,1,1,1,1,1,1,1)))
+print(db_search_past_classes("CSE 30246", (0,0,0,0,0,0,0,0,0)))
+
