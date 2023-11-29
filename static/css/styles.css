@@ -856,5 +856,9 @@ h1, h2, h3, h4, h5, h6, p {
 /* Footer */
 
 #footer {
-    padding: 7% 15%;
+    padding: 7% 15% 0% 15%;
+}
+
+.footer-notes {
+    align-items: center;
 }
