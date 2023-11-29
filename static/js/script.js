@@ -117,8 +117,8 @@ function addToPlan(courseCode, className) {
     overlay.style.display = 'block';
 
     const addButton = document.getElementById('add-to-plan-button');
-    addButton.addEventListener('click', function() {
 
+    const addButtonClickHandler = function() {
         const yearDropdown = document.getElementById('add-course-year');
         const semesterDropdown = document.getElementById('add-course-semester');
 
@@ -138,17 +138,22 @@ function addToPlan(courseCode, className) {
             error: function(error) {
                 console.log(error);
             }
-        })
+        });
 
         yearDropdown.selectedIndex = 0;
         semesterDropdown.selectedIndex = 0;
 
         overlay.style.display = 'none';
-    });
+    };
+
+    addButton.addEventListener('click', addButtonClickHandler);
 
     document.body.addEventListener('click', function(event) {
         if (event.target === overlay && !content.contains(event.target)) {
             overlay.style.display = "none";
+            yearDropdown.selectedIndex = 0;
+            semesterDropdown.selectedIndex = 0;
+            addButton.removeEventListener('click', addButtonClickHandler);
         }
     });
 }
