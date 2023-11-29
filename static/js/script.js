@@ -104,6 +104,14 @@ function searchClassElement(classCourse, className) {
     eachClass.appendChild(textContainer);
     eachClass.appendChild(addButton);
 
+    eachClass.style.cursor = 'pointer';
+
+    eachClass.addEventListener('click', function(event) {
+        if (!event.target.closest('.add-button')) {
+            courseOverviewOverlay();
+        }
+    })
+
     return eachClass;
 }
 
@@ -357,6 +365,19 @@ function createCourseOverlayOff(event) {
     }
 }
 
+function courseOverviewOverlay() {
+    const overlay = document.getElementById('course-overview-overlay-container');
+    const content = document.getElementById('course-overview-overlay-content');
+
+    overlay.style.display = 'block';
+
+    document.body.addEventListener('click', function(event) {
+        if (event.target === overlay && !content.contains(event.target)) {
+            overlay.style.display = 'none';
+        }
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     const button = document.getElementById("semester-filter");
     const overlay = document.getElementById("semester-filter-overlay-container");
@@ -416,5 +437,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
+
 
 
