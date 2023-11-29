@@ -79,6 +79,7 @@ h1, h2, h3, h4, h5, h6, p {
 
 .footer-section {
     background-color: #F8EFD8;
+    display: flex;
 }
 
 /* Nav Bar */
@@ -856,7 +857,7 @@ h1, h2, h3, h4, h5, h6, p {
 /* Footer */
 
 #footer {
-    padding: 7% 15% 0% 15%;
+    padding: 7% 12% 0% 12%;
 }
 
 .footer-notes {
