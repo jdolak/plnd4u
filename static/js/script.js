@@ -108,9 +108,22 @@ function searchClassElement(classCourse, className) {
 
     eachClass.addEventListener('click', function(event) {
         if (!event.target.closest('.add-button')) {
-            courseOverviewOverlay();
-        }
-    })
+
+            $.ajax({
+                url: '/classes',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({  'action': 'view_desc', 'course_code': classCourse, 'course_name': className, 'global_netid': globalNetId    }),
+                success: function(response) {
+                    console.log(classCourse, className);
+                    courseOverviewOverlay(classCourse, className);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        };
+    });
 
     return eachClass;
 }
@@ -365,9 +378,14 @@ function createCourseOverlayOff(event) {
     }
 }
 
-function courseOverviewOverlay() {
+function courseOverviewOverlay(courseCode, courseName) {
     const overlay = document.getElementById('course-overview-overlay-container');
     const content = document.getElementById('course-overview-overlay-content');
+    const courseCodeContent = document.getElementById('course-overview-course-code');
+    const courseNameContent = document.getElementById('course-overview-course-name');
+
+    courseCodeContent.textContent = courseCode;
+    courseNameContent.textContent = courseName;
 
     overlay.style.display = 'block';
 

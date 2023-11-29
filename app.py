@@ -81,6 +81,12 @@ def classes():
 
                 search_output = db_search_past_classes(search_input, filters)
                 return jsonify(search_output=search_output)
+            
+            case 'view_desc':
+                course_code = data.get('course_code')
+                course_name = data.get('course_name')
+                
+                
 
     css_url = url_for('static', filename='css/styles.css')
     js_url = url_for('static', filename='js/script.js')

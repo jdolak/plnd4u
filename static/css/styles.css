@@ -841,6 +841,7 @@ h1, h2, h3, h4, h5, h6, p {
     font-size: 18px;
     font-style: normal;
     font-weight: 600;
+    text-align: left;
 }
 
 .course-overview-description {
