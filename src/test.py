@@ -2,5 +2,4 @@
 
 from func_basic import *
 
-print(db_search_past_classes("CSE 30246", (0,0,0,0,0,0,0,0,0)))
-
+print(db_search_past_classes("CSE 30246", (1,1,1,1,1,1,1,1,1)))
