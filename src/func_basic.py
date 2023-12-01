@@ -68,7 +68,6 @@ def _db_undel_enrollment(enrollment_id):
         return 1 
 
 def db_register_student(netid, name, major_code, gradyear):
-    
 
     sql = "INSERT INTO student (netid, name, major_code, gradyear) VALUES (%s, %s, %s, %s)"
     val = (netid, name, major_code, gradyear)
@@ -235,6 +234,7 @@ def db_update_student_gradyear(netid, gradyear):
         return 1
     
 def db_show_student_enrollments(netid, sem):
+
     sql = "SELECT enrollment_id, course_id, sem, title, user_created FROM has_enrollment WHERE netid = %s AND sem = %s AND deleted <> 1"
     val = (netid, sem) 
     try:
@@ -246,6 +246,7 @@ def db_show_student_enrollments(netid, sem):
         return 1
 
 def db_show_student_enrollments_short(netid, sem):
+
     sql = "SELECT enrollment_id, course_id, sem, title, user_created FROM has_enrollment WHERE netid = %s AND sem = %s AND deleted <> 1"
     val = (netid, sem) 
     try:
@@ -260,6 +261,7 @@ def db_show_student_enrollments_short(netid, sem):
     
     
 def db_del_all_enrollments(netid):
+
     sql = "UPDATE has_enrollment SET deleted = 1 WHERE netid = %s"
     val = (netid, )
     try:
@@ -272,17 +274,98 @@ def db_del_all_enrollments(netid):
         LOG.error("Did not delete all enrollments")
         return 1
 
-def db_show_class_details(course_id):
-    pass
-
 def db_show_description(course_id):
-    sql = "SELECT description FROM description WHERE course_id LIKE %s AND deleted <> 1"
+
+    sql = "SELECT description FROM description WHERE course_id=%s AND deleted <> 1"
     val = (course_id, ) 
     try:
         mycursor = DB.cursor()
         mycursor.execute(sql, val)
-        if(len(list(mycursor))):
-            return list(mycursor)
+        return list(mycursor)
+    except Exception as e:
+        LOG.error(e)
+        return 1
+    
+def db_show_credits(course_id):
+
+    sql = "SELECT credits FROM course WHERE course_id=%s AND deleted <> 1"
+    val = (course_id, ) 
+    try:
+        mycursor = DB.cursor()
+        mycursor.execute(sql, val)
+        return list(mycursor)
+    except Exception as e:
+        LOG.error(e)
+        return 1
+    
+def db_show_credits(course_id):
+
+    sql = "SELECT credits FROM course WHERE course_id=%s AND deleted <> 1"
+    val = (course_id, ) 
+    try:
+        mycursor = DB.cursor()
+        mycursor.execute(sql, val)
+        return list(mycursor)
+    except Exception as e:
+        LOG.error(e)
+        return 1
+    
+def db_show_coreqs(course_id):
+
+    sql = "SELECT coreq_id FROM course WHERE course_id=%s AND deleted <> 1"
+    val = (course_id, ) 
+    try:
+        mycursor = DB.cursor()
+        mycursor.execute(sql, val)
+        return list(mycursor)
+    except Exception as e:
+        LOG.error(e)
+        return 1
+
+def db_show_prereqs(course_id):
+
+    sql = "SELECT prereq_id FROM course_has_prereq WHERE course_id=%s AND deleted <> 1"
+    val = (course_id, ) 
+    try:
+        mycursor = DB.cursor()
+        mycursor.execute(sql, val)
+        return list(mycursor)
+    except Exception as e:
+        LOG.error(e)
+        return 1
+
+def db_show_coreqs(course_id):
+
+    sql = "SELECT coreq_id FROM course_has_coreq WHERE course_id=%s AND deleted <> 1"
+    val = (course_id, ) 
+    try:
+        mycursor = DB.cursor()
+        mycursor.execute(sql, val)
+        return list(mycursor)
+    except Exception as e:
+        LOG.error(e)
+        return 1
+    
+def db_show_core_reqs(course_id):
+
+    sql = "SELECT req_code FROM course_fulfills_core_req WHERE course_id=%s AND deleted <> 1"
+    val = (course_id, ) 
+    try:
+        mycursor = DB.cursor()
+        mycursor.execute(sql, val)
+        return list(mycursor)
+    except Exception as e:
+        LOG.error(e)
+        return 1
+    
+def db_show_section_details(course_id):
+
+    sql = "SELECT sem, prof, meets FROM section WHERE course_id=%s AND deleted <> 1"
+    val = (course_id, ) 
+    try:
+        mycursor = DB.cursor()
+        mycursor.execute(sql, val)
+        return list(mycursor)
     except Exception as e:
         LOG.error(e)
         return 1
