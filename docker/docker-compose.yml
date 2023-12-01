@@ -20,7 +20,8 @@ services:
     env_file: ../src/.env
     volumes:
       - mysqldata:/var/lib/mysql
-      - ../data/dump.sql:/mnt/data/dump.sql
+      #- ../data/dump.sql:/mnt/data/dump.sql
+      - ../data:/mnt/data
       - ./my.cnf:/etc/my.cnf
       - ./my.cnf:/etc/mysql/conf.d/my.cnf
     deploy:
