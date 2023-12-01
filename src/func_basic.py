@@ -274,6 +274,7 @@ def db_del_all_enrollments(netid):
         LOG.error("Did not delete all enrollments")
         return 1
 
+# section details queried using below functions
 def db_show_description(course_id):
 
     sql = "SELECT description FROM description WHERE course_id=%s AND deleted <> 1"
@@ -297,22 +298,10 @@ def db_show_credits(course_id):
     except Exception as e:
         LOG.error(e)
         return 1
-    
-def db_show_credits(course_id):
 
-    sql = "SELECT credits FROM course WHERE course_id=%s AND deleted <> 1"
-    val = (course_id, ) 
-    try:
-        mycursor = DB.cursor()
-        mycursor.execute(sql, val)
-        return list(mycursor)
-    except Exception as e:
-        LOG.error(e)
-        return 1
-    
 def db_show_coreqs(course_id):
 
-    sql = "SELECT coreq_id FROM course WHERE course_id=%s AND deleted <> 1"
+    sql = "SELECT coreq_id FROM course_has_coreq WHERE course_id=%s AND deleted <> 1"
     val = (course_id, ) 
     try:
         mycursor = DB.cursor()
@@ -324,19 +313,7 @@ def db_show_coreqs(course_id):
 
 def db_show_prereqs(course_id):
 
-    sql = "SELECT prereq_id FROM course_has_prereq WHERE course_id=%s AND deleted <> 1"
-    val = (course_id, ) 
-    try:
-        mycursor = DB.cursor()
-        mycursor.execute(sql, val)
-        return list(mycursor)
-    except Exception as e:
-        LOG.error(e)
-        return 1
-
-def db_show_coreqs(course_id):
-
-    sql = "SELECT coreq_id FROM course_has_coreq WHERE course_id=%s AND deleted <> 1"
+    sql = "SELECT prereq_ids FROM course_has_prereq WHERE course_id=%s AND deleted <> 1"
     val = (course_id, ) 
     try:
         mycursor = DB.cursor()
