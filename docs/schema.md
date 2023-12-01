@@ -42,17 +42,17 @@ description(
     PRIMARY KEY(course_id)
 )
 ```
- - Description length could be changed
- - Not yet implemented on prod
 
 ```SQL
 course_has_prereq(
     course_id CHAR(10) NOT NULL,
-    prereq_id CHAR(10) NOT NULL,
+    prereq_ids VARCHAR(250) NOT NULL,
     deleted INT DEFAULT 0,
     PRIMARY KEY(course_id, prereq_id)
 )
 ```
+ - Each tuple represents a requirement that must be fulfilled
+ - If multiple courses fulfill the same requirement, they are combined on the same tuple
 
 ```SQL
 course_has_coreq(
