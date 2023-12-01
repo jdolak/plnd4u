@@ -335,6 +335,44 @@ def db_show_core_reqs(course_id):
         LOG.error(e)
         return 1
     
+def db_show_semesters(course_id):
+
+    sql = "SELECT DISTINCT sem FROM section WHERE course_id=%s AND deleted <> 1"
+    val = (course_id, ) 
+    try:
+        mycursor = DB.cursor()
+        mycursor.execute(sql, val)
+        return list(mycursor)
+    except Exception as e:
+        LOG.error(e)
+        return 1
+    
+def db_show_profs(course_id):
+
+    sql = "SELECT DISTINCT prof FROM section WHERE course_id=%s AND deleted <> 1"
+    val = (course_id, ) 
+    try:
+        mycursor = DB.cursor()
+        mycursor.execute(sql, val)
+        return list(mycursor)
+    except Exception as e:
+        LOG.error(e)
+        return 1
+    
+def db_show_meeting_times(course_id):
+
+    sql = "SELECT DISTINCT meets FROM section WHERE course_id=%s AND deleted <> 1"
+    val = (course_id, ) 
+    try:
+        mycursor = DB.cursor()
+        mycursor.execute(sql, val)
+        return list(mycursor)
+    except Exception as e:
+        LOG.error(e)
+        return 1
+    
+# returns sem/prof/time grouped by semester
+# ask callie if she'd rather display that than individual, unique sem/prof/time values
 def db_show_section_details(course_id):
 
     sql = "SELECT sem, prof, meets FROM section WHERE course_id=%s AND deleted <> 1"

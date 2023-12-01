@@ -86,6 +86,16 @@ def classes():
                 course_code = data.get('course_code')
                 course_name = data.get('course_name')
                 
+                desc = db_show_description(course_code)
+                credits = db_show_credits(course_code)
+                core_reqs = db_show_core_reqs(course_code)
+                recent_sems = db_show_semesters(course_code)
+                profs = db_show_profs(course_code)
+                meeting_times = db_show_meeting_times(course_code)
+                coreqs = db_show_coreqs(course_code)
+                prereqs = db_show_prereqs(course_code)
+
+                return jsonify(desc=desc, credits=credits, core_reqs=core_reqs, recent_sems=recent_sems, profs=profs, meeting_times=meeting_times, coreqs=coreqs, prereqs=prereqs)
                 
 
     css_url = url_for('static', filename='css/styles.css')
