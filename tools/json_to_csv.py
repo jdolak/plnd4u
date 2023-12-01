@@ -3,24 +3,34 @@
 import json
 import csv
 
-CORE_REQS = set(["WKAL", "WKCD", "WKDT", "WKFP", "WKFT", "WKHI", "WKIN", "WKLC", "WKQR", "WKSP", "WKSS", "WKST", "WRIT", "WRRH", "USEM"])
+def produce_line(course, course_dict):
+    output = ""
+    for prereq_major in course_dict:
+        for prereq_code in course_dict[prereq_major]:
+            output = f'{output}{prereq_major} {prereq_code},'
+    return [course, output[:-1]]
+        
 
 def main():
-    with open("data/json/fa23_data.json", encoding='utf-8') as fd:
+    with open("data/json/sp24_extracted_prerequisites.json", encoding='utf-8') as fd:
         json_data = json.load(fd)
 
-    with open("data/csv/fa23_attributes.csv", "w", newline="") as csvfile:
+    with open("data/csv/sp24_prereqs.csv", "w", newline="") as csvfile:
         writer = csv.writer(csvfile, delimiter=",")
 
         for course in json_data:
-            ad = json_data[course]["attribute_description"]
+            course_dict = json_data[course]
 
-            if ad == "":
-                continue
+            if "req1" not in course_dict:
+                writer.writerow(produce_line(course, course_dict))
+            else:
+                for req in course_dict:
+                    writer.writerow(produce_line(course, course_dict[req]))
+                
+                        
+            
+                
 
-            for req in CORE_REQS:
-                if req in ad:
-                    writer.writerow([f'{course}', f'{req}'])
 
 if __name__=="__main__":
     main()
