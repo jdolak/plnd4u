@@ -48,7 +48,7 @@ course_has_prereq(
     course_id CHAR(10) NOT NULL,
     prereq_ids VARCHAR(250) NOT NULL,
     deleted INT DEFAULT 0,
-    PRIMARY KEY(course_id, prereq_id)
+    PRIMARY KEY(course_id, prereq_ids)
 )
 ```
  - Each tuple represents a requirement that must be fulfilled
