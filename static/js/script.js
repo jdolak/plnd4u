@@ -116,7 +116,7 @@ function searchClassElement(classCourse, className) {
                 data: JSON.stringify({  'action': 'view_desc', 'course_code': classCourse, 'course_name': className, 'global_netid': globalNetId    }),
                 success: function(response) {
                     console.log(classCourse, className);
-                    courseOverviewOverlay(classCourse, className);
+                    courseOverviewOverlay(classCourse, className, response.credits, response.desc, response.coreqs, response.prereqs, response.recent_sems, response.profs);
                 },
                 error: function(error) {
                     console.log(error);
@@ -378,14 +378,27 @@ function createCourseOverlayOff(event) {
     }
 }
 
-function courseOverviewOverlay(courseCode, courseName) {
+function courseOverviewOverlay(courseCode, courseName, credits, desc, coreqs, prereqs, sems, profs) {
     const overlay = document.getElementById('course-overview-overlay-container');
     const content = document.getElementById('course-overview-overlay-content');
     const courseCodeContent = document.getElementById('course-overview-course-code');
     const courseNameContent = document.getElementById('course-overview-course-name');
+    const courseCredits = document.getElementById('course-overview-credits');
+    const courseSems = document.getElementById('course-overview-sems');
+    const courseProfs = document.getElementById('course-overview-profs');
+    const coursePrereqs = document.getElementById('course-overview-prereqs');
+    const courseCoreqs = document.getElementById('course-overview-coreqs');
+    const courseDesc = document.getElementById('course-overview-desc');
 
     courseCodeContent.textContent = courseCode;
     courseNameContent.textContent = courseName;
+    courseCredits.textContent = credits;
+    courseSems.textContent = 'Offered: ' + sems.join(', ');
+    courseProfs.textContent = 'Past instructors: ' + profs.join(', ');
+    coursePrereqs.textContent = 'Prerequisite(s): ' + prereqs;
+    courseCoreqs.textContent = 'Corequisite(s): ' + coreqs;
+    courseDesc.textContent = desc.join(' ').replace(/&quot;/g, "'");
+
 
     overlay.style.display = 'block';
 
