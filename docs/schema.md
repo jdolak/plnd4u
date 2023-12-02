@@ -99,8 +99,9 @@ major_requires_course(
 major_requires_core_req(
     major_code CHAR(4) NOT NULL,
     req_code CHAR(5) NOT NULL,
+    req_count INT NOT NULL,
     deleted INT DEFAULT 0,
-    PRIMARY KEY(major_code, req_code)
+    PRIMARY KEY(major_code, req_code, req_count)
 )
 ```
 
@@ -141,7 +142,7 @@ has_enrollment(
     CONSTRAINT uc_enrollment UNIQUE (netid, course_id, sem, title)
 )
 ```
- - `sem` does not include years here, instead formatted with grades ("FAFR", "SPJR")
+ - `sem` does not include years here, instead formatted with grades ("FAFR", "SPJU")
 
 ```SQL
 login(
