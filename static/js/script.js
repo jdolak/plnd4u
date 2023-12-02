@@ -395,10 +395,9 @@ function courseOverviewOverlay(courseCode, courseName, credits, desc, coreqs, pr
     courseCredits.textContent = credits;
     courseSems.textContent = 'Offered: ' + sems.join(', ');
     courseProfs.textContent = 'Past instructors: ' + profs.join(', ');
-    coursePrereqs.textContent = 'Prerequisite(s): ' + prereqs;
-    courseCoreqs.textContent = 'Corequisite(s): ' + coreqs;
+    coursePrereqs.textContent = 'Prerequisite(s): ' + prereqs.join(', ');
+    courseCoreqs.textContent = 'Corequisite(s): ' + coreqs.join(', ');
     courseDesc.textContent = desc.join(' ').replace(/&quot;/g, "'");
-
 
     overlay.style.display = 'block';
 
