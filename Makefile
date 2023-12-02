@@ -34,7 +34,7 @@ restart: down
 	docker compose -f ./docker/docker-compose.yml -p plnd4u up -d
 
 db-sql:
-#	docker exec plnd4u-db-1 -it /bin/mysql -c "--password=$MYSQL_ROOT_PASSWORD --database=plnd4u"
+	docker exec plnd4u-db-1 sh -tic "mysql --password=$$MYSQL_ROOT_PASSWORD --database=plnd4u"
 
 configure: up
 	@echo "Waiting..."

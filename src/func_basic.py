@@ -87,7 +87,8 @@ def db_search_past_classes(search, filters):
     search = f"%{search}%"
 
     levels = ""
-    suffix = ""
+    tables = "course"
+    sem = ""
 
     fall_semester   = filters[0] 
     spring_semester = filters[1] 
@@ -99,18 +100,21 @@ def db_search_past_classes(search, filters):
     major_req       = filters[7]
     major_elective  = filters[8]
 
-    if fall_semester:
-        suffix = suffix
-    if spring_semester:
-        suffix = suffix
+    if (fall_semester ^ spring_semester):
+        tables = tables + ", section"
+        if fall_semester:
+            sem = " AND section.course_id = course.course_id AND section.sem LIKE 'FA__'"
+        else:
+            sem = " AND section.course_id = course.course_id AND section.sem LIKE 'SP__'"
+
     if level_one:
-        levels = levels + " OR course_id LIKE '%1____'"
+        levels = levels + " OR course.course_id LIKE '%1____'"
     if level_two:
-        levels = levels + " OR course_id LIKE '%2____'"
+        levels = levels + " OR course.course_id LIKE '%2____'"
     if level_three:
-        levels = levels + " OR course_id LIKE '%3____'"
+        levels = levels + " OR course.course_id LIKE '%3____'"
     if level_four:
-        levels = levels + " OR course_id LIKE '%4____'"
+        levels = levels + " OR course.course_id LIKE '%4____'"
     """
     if uni_req:
         suffix = f""
@@ -120,7 +124,7 @@ def db_search_past_classes(search, filters):
         suffix = f""
     """
 
-    sql = f"SELECT course_id, title FROM course WHERE deleted <> 1 AND (title LIKE %s or course_id LIKE %s) AND (0=1{levels})"
+    sql = f"SELECT course.course_id, course.title FROM {tables} WHERE course.deleted <> 1 AND (course.title LIKE %s or course.course_id LIKE %s) AND (0=1{levels}){sem}"
     val = (search, search)
 
     try:
