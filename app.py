@@ -154,13 +154,19 @@ def plan():
 
     if request.method == 'POST':
         data = request.get_json()
-        course_code = data.get('course_code')
-        course_name = data.get('course_name')
-        semester = data.get('semester')
+        action = data.get('action')
 
-        db_del_enrollment(netid, course_code, semester, course_name)
+        if action == 'delete':
+            course_code = data.get('course_code')
+            course_name = data.get('course_name')
+            semester = data.get('semester')
 
-        return jsonify(course_code=course_code, course_name=course_name, semester=semester)
+            db_del_enrollment(netid, course_code, semester, course_name)
+
+            return jsonify(course_code=course_code, course_name=course_name, semester=semester)
+        
+        elif action == 'missing_reqs':
+            pass
 
     css_url = url_for('static', filename='css/styles.css')
     js_url = url_for('static', filename='js/script.js')
