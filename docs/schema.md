@@ -99,13 +99,12 @@ major_requires_course(
 ```SQL
 major_requires_core_req(
     major_code CHAR(4) NOT NULL,
-    req_codes VARCHAR(20) NOT NULL,
-    double_count_check INT NOT NULL,
+    req_codes VARCHAR(30) NOT NULL,
+    duplicate_count INT NOT NULL,
     deleted INT DEFAULT 0,
-    PRIMARY KEY(major_code, req_codes, double_count_check)
+    PRIMARY KEY(major_code, req_codes, duplicate_count)
 )
 ```
- - If two requirements have the same value for `double_count_check`, then they cannot be fulfilled by the same course
 
 ```SQL
 course_fulfills_core_req(
