@@ -194,12 +194,27 @@ function getEnrollmentsData() {
             showInPlan(data.jusp, "JUSP");
             showInPlan(data.sefa, "SEFA");
             showInPlan(data.sesp, "SESP");
+            showCredits(data.unlt_credit, "unlt-credit");
+            showCredits(data.frfa_credit, "frfa-credit");
+            showCredits(data.frsp_credit, "frsp-credit");
+            showCredits(data.sofa_credit, "sofa-credit");
+            showCredits(data.sosp_credit, "sosp-credit");
+            showCredits(data.jufa_credit, "jufa-credit");
+            showCredits(data.jusp_credit, "jusp-credit");
+            showCredits(data.sefa_credit, "sefa-credit");
+            showCredits(data.sesp_credit, "sesp-credit");
             console.log('success');
+            console.log(data.unlt_credit, data.frfa_credit);
         },
         error: function (error) {
             console.error('Error fetching enrollments:', error);
         }
     });
+}
+
+function showCredits(credits, semester_id) {
+    const semesterCredit = document.getElementById(semester_id);
+    semesterCredit.textContent = credits + ' Hours';
 }
 
 function showInPlan(enrollments, semester) {
