@@ -431,7 +431,16 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function degreeCompletionOverlayOn() {
-    const overlay = 
+    const overlay = document.getElementById('degree-details-overlay-container');
+    const content = document.getElementById('degree-details-overlay-content');
+
+    overlay.style.display = 'block';
+
+    document.body.addEventListener('click', function(event) {
+        if (event.target === overlay && !content.contains(event.target)) {
+            overlay.style.display = 'none';
+        }
+    });
 }
 
 document.addEventListener("DOMContentLoaded", function() {

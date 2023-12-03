@@ -881,12 +881,16 @@ h1, h2, h3, h4, h5, h6, p {
 
 #degree-details-overlay-content {
     display: inline-flex;
+    position: absolute;
     padding: 32px;
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
     border-radius: 10px;
     background: #FFF;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .degree-details-text-container {
