@@ -388,3 +388,27 @@ def db_show_section_details(course_id):
     except Exception as e:
         LOG.error(e)
         return 1
+    
+def db_show_sem_credits(netid, sem):
+
+    sql = "SELECT credits FROM has_enrollment, course WHERE netid = %s AND sem = %s AND course.course_id = has_enrollment.course_id AND has_enrollment.deleted <> 1 AND course.deleted <> 1;"
+    val = (netid, sem) 
+    try:
+        mycursor = DB.cursor()
+        mycursor.execute(sql, val)
+        credit = list(mycursor)
+
+    except Exception as e:
+        LOG.error(e)
+        return 1
+    
+    return sum([int(i[0].split()[0]) for i in credit])
+
+def db_show_sem_credits_all(netid):
+
+    sems = ["UNLT", "FRFA", "FRSP", "SOFA", "SOSP", "JUFA", "JUSP", "SEFA", "SESP"]
+    arr = []
+
+    for sem in sems:
+        arr.append(db_show_sem_credits(netid, sem))
+    return arr

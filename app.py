@@ -130,8 +130,15 @@ def getdata():
         sefa = db_show_student_enrollments_short(netid, "SEFA")
         sesp = db_show_student_enrollments_short(netid, "SESP")
 
+        credit = db_show_sem_credits_all(netid)
+
         return jsonify(enrollments=enrollments, unlt=unlt, frfa=frfa, 
-                       frsp=frsp, sofa=sofa, sosp=sosp, jufa=jufa, jusp=jusp, sefa=sefa, sesp=sesp)
+                       frsp=frsp, sofa=sofa, sosp=sosp, jufa=jufa, 
+                       jusp=jusp, sefa=sefa, sesp=sesp,
+                       unlt_credit=credit[0], frfa_credit=credit[1],
+                       frsp_credit=credit[2], sofa_credit=credit[3], sosp_credit=credit[4],
+                       jufa_credit=credit[5], jusp_credit=credit[6], sefa_credit=credit[7],
+                       sesp_credit=credit[8])
 
 @app.route("/plan", methods=['POST', 'GET'])
 def plan():
