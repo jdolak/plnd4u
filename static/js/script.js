@@ -363,6 +363,7 @@ function courseDel(courseCode, courseName, semester) {
                 data: JSON.stringify({  'action': 'delete', 'global_netid': globalNetId, 'course_code': courseCode, 'semester': semester, 'course_name': courseName }),
                 success: function(response) {
                     console.log(response.course_name, response.course_code, response.semester);
+                    window.location.reload();
                 },
                 error: function(error) {
                     console.log('cannot delete');
