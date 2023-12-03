@@ -138,8 +138,9 @@ function addToPlan(courseCode, className) {
     overlay.style.display = 'block';
 
     const addButton = document.getElementById('add-to-plan-button');
+    addButton.removeEventListener('click', addButton._eventHandler);
 
-    const addButtonClickHandler = function() {
+    addButton._eventHandler = function() {
         const yearDropdown = document.getElementById('add-course-year');
         const semesterDropdown = document.getElementById('add-course-semester');
 
@@ -153,7 +154,6 @@ function addToPlan(courseCode, className) {
             data: JSON.stringify({  'action': 'add_to_plan', 'year': year, 'semester': semester, 'course': courseCode, 'class_name': className, 'global_netid': globalNetId   }),
             async: true,
             success: function(response) {
-                window.location.reload();
                 console.log('success');
             },
             error: function(error) {
@@ -167,14 +167,14 @@ function addToPlan(courseCode, className) {
         overlay.style.display = 'none';
     };
 
-    addButton.addEventListener('click', addButtonClickHandler);
+    addButton.addEventListener('click', addButton._eventHandler);
 
     document.body.addEventListener('click', function(event) {
         if (event.target === overlay && !content.contains(event.target)) {
             overlay.style.display = "none";
             yearDropdown.selectedIndex = 0;
             semesterDropdown.selectedIndex = 0;
-            addButton.removeEventListener('click', addButtonClickHandler);
+            addButton.removeEventListener('click', addButton._eventHandler);
         }
     });
 }
