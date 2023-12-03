@@ -150,7 +150,6 @@ def getdata():
     netid = session["netid"]
 
     if request.method == "GET":
-        enrollments = db_show_student_enrollments(netid, 0)
 
         unlt = db_show_student_enrollments_short(netid, "UNLT")
         frfa = db_show_student_enrollments_short(netid, "FRFA")
@@ -165,7 +164,6 @@ def getdata():
         credit = db_show_sem_credits_all(netid)
 
         return jsonify(
-            enrollments=enrollments,
             unlt=unlt,
             frfa=frfa,
             frsp=frsp,
