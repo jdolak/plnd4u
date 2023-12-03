@@ -430,6 +430,10 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+function degreeCompletionOverlayOn() {
+    const overlay = 
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     const button = document.getElementById("level-filter");
     const overlay = document.getElementById("level-filter-overlay-container");

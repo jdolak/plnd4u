@@ -329,7 +329,8 @@ h1, h2, h3, h4, h5, h6, p {
 .plan-container-button {
     display: flex;
     align-items: center;
-    padding: 24px 0 0 122px;
+    padding: 24px 122px 0px 122px;
+    justify-content: space-between;
 }
 
 .plan-container-heading {
@@ -572,6 +573,21 @@ h1, h2, h3, h4, h5, h6, p {
 .plan-card-single-course:hover .remove-button {
     display: block;
     opacity: 1;
+}
+
+.degree-completion-button {
+    display: flex;
+    padding: 14px 25px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 5px;
+    border: 3px solid var(--Grey, #1E1E1E);
+    color: #000;
+    font-family: Nunito Sans;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
 
 /* Features */
@@ -852,6 +868,56 @@ h1, h2, h3, h4, h5, h6, p {
     align-self: stretch;
 }
 
+#degree-details-overlay-container {
+    display: none;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 2;
+}
+
+#degree-details-overlay-content {
+    display: inline-flex;
+    padding: 32px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    border-radius: 10px;
+    background: #FFF;
+}
+
+.degree-details-text-container {
+    display: flex;
+    /* width: 353px; */
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.degree-details-text-heading {
+    color: var(--Primary, #0D5044);
+    font-family: Nunito Sans;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.degree-details-text-content {
+    width: 417px;
+    color: #000;
+    align-items: flex-start;
+    align-self: stretch;
+    text-align: left;
+    font-family: Nunito Sans;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
 
 /* Footer */
 
