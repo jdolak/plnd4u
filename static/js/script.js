@@ -345,7 +345,7 @@ function courseDel(courseCode, courseName, semester) {
                 url: '/plan',
                 type: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify({  'global_netid': globalNetId, 'course_code': courseCode, 'semester': semester, 'course_name': courseName }),
+                data: JSON.stringify({  'action': 'delete', 'global_netid': globalNetId, 'course_code': courseCode, 'semester': semester, 'course_name': courseName }),
                 success: function(response) {
                     console.log(response.course_name, response.course_code, response.semester);
                 },
@@ -441,6 +441,20 @@ function degreeCompletionOverlayOn() {
             overlay.style.display = 'none';
         }
     });
+
+    $.ajax({
+        url: '/plan',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({  'action': 'missing_reqs', global_netid: globalNetId }),
+        success: function(response) {
+            console.log(response.core_reqs, response.major_reqs, response.electives);
+        },
+        error: function(error) {
+            console.log('cannot retrieve missing reqs');
+        }
+    })
+
 }
 
 document.addEventListener("DOMContentLoaded", function() {
