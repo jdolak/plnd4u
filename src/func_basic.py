@@ -124,7 +124,7 @@ def db_search_past_classes(search, filters):
         suffix = f""
     """
 
-    sql = f"SELECT course.course_id, course.title FROM {tables} WHERE course.deleted <> 1 AND (course.title LIKE %s or course.course_id LIKE %s) AND (0=1{levels}){sem}"
+    sql = f"SELECT DISTINCT course.course_id, course.title FROM {tables} WHERE course.deleted <> 1 AND (course.title LIKE %s or course.course_id LIKE %s) AND (0=1{levels}){sem}"
     val = (search, search)
 
     try:
