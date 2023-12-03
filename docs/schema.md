@@ -80,6 +80,7 @@ core_req(
     PRIMARY KEY(req_code)
 )
 ```
+ - This table does not need to exist
  - 4-letter `req_code` codes from PATH, e.g. "WRRH" for writing & rhetoric
  - I can also compile all of these if needed
  - Also planning to use this for any requirement fulfilled by many courses, e.g. CSE electives
@@ -98,10 +99,10 @@ major_requires_course(
 ```SQL
 major_requires_core_req(
     major_code CHAR(4) NOT NULL,
-    req_code CHAR(5) NOT NULL,
+    req_codes VARCHAR(20) NOT NULL,
     double_count_check INT NOT NULL,
     deleted INT DEFAULT 0,
-    PRIMARY KEY(major_code, req_code, double_count_check)
+    PRIMARY KEY(major_code, req_codes, double_count_check)
 )
 ```
  - If two requirements have the same value for `double_count_check`, then they cannot be fulfilled by the same course
