@@ -105,6 +105,18 @@ major_requires_core_req(
     PRIMARY KEY(major_code, req_codes, duplicate_count)
 )
 ```
+ - This table is unnecessary as of this update
+
+```SQL
+major_requires_elective(
+    major_code CHAR(4) NOT NULL,
+    elective_code CHAR(4) NOT NULL,
+    duplicate_count INT NOT NULL,
+    deleted INT DEFAULT 0,
+    PRIMARY KEY(major_code, elective_code, duplicate_count)
+)
+```
+ - Unlike core requirements, elective cannot be fulfilled by any course specifically required by one's major
 
 ```SQL
 course_fulfills_core_req(
