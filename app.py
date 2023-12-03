@@ -210,7 +210,13 @@ def plan():
             )
 
         elif action == "missing_reqs":
-            pass
+            core_requirements = db_check_core_requirements(netid)
+            required_courses = db_check_required_courses(netid)
+            electives = db_check_electives(netid)
+
+            return jsonify(
+                core_requirements=core_requirements, required_courses=required_courses, electives=electives
+            )
 
     css_url = url_for("static", filename="css/styles.css")
     js_url = url_for("static", filename="js/script.js")
