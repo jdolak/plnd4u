@@ -122,13 +122,155 @@ def mike_ryan(netid):
 
 def db_check_required_courses(netid):
     """Cross-references a student's major requirements with their enrollments
-    :returns: list of required courses unfulfilled in enrollments"""
-    pass
+
+    RETURN VAULES:
+        "None"      Success -- no requirements missing
+        "Error"     Query error -- check all tables exist in database
+        "c1,c2,..." Requirements missing
+    """
+
+    sql = "SELECT course_id FROM major_requires_course WHERE course_id NOT IN (SELECT course_id FROM has_enrollment WHERE netid=%s AND deleted <> 1) AND major_code IN (SELECT major_code FROM student WHERE netid=%s AND deleted <> 1) AND deleted <> 1"
+    val = (netid, netid) 
+    try:
+        mycursor = DB.cursor()
+        mycursor.execute(sql, val)
+        missing_reqs = [i[0] for i in list(mycursor)]
+    except Exception as e:
+        LOG.error(e)
+        return "Error"
+    
+    if not len(missing_reqs):
+        missing_reqs = "None"
+        
+    return ",".join(missing_reqs)
 
 def db_check_core_requirements(netid):
     """Cross-references a student's core requirements with their enrollments
-    :returns: list of required core reqs unfulfilled in enrollments"""
-    pass
+
+    RETURN VAULES:
+        "None"      Success -- no requirement groups missing
+        "Error"     Error obtaining enrolled courses
+        "r1,r2,..." Requirement groups missing
+    """
+
+    core_reqs = {"WKAL", "WKCD", "WKDT", "WKFP", "WKFT", "WKHI", "WKIN", "WKLC", "WKQR", "WKSP", "WKSS", "WKST", "WRIT", "WRRH", "USEM", "FYS1", "FYS2"}
+    fulfilled = {c : 0 for c in core_reqs}
+    
+    sql = "SELECT req_code FROM has_enrollment AS he, course_fulfills_core_req AS cfcr WHERE he.course_id = cfcr.course_id AND netid = %s"
+    val = (netid, ) 
+    try:
+        mycursor = DB.cursor()
+        mycursor.execute(sql, val)
+        queried_reqs = [i[0] for i in list(mycursor)]
+    except Exception as e:
+        LOG.error(e)
+        return "Error"
+    
+    for q in queried_reqs:
+        if q in core_reqs:
+            fulfilled[q] += 1
+
+    missing_reqs = ""
+
+    # Liberal Arts Requirements -- Six Ways of Knowing
+    if not fulfilled["WKQR"]:
+        missing_reqs = f'{missing_reqs}Liberal Arts 1 - Quantitative Reasoning,'
+    if not fulfilled["WKST"]:
+        missing_reqs = f'{missing_reqs}Liberal Arts 2 - Science & Technology,'
+    if (fulfilled["WKQR"] < 2) and (fulfilled["WKST"] < 2):
+        missing_reqs = f'{missing_reqs}Liberal Arts 3 - Quantitative Reasoning or Science & Technology,'
+    if not (fulfilled["WKAL"] or fulfilled["WKLC"]):
+        missing_reqs = f'{missing_reqs}Liberal Arts 4 - Art & Literature or Advanced Language & Culture,'
+    if not (fulfilled["WKHI"] or fulfilled["WKSS"]):
+        missing_reqs = f'{missing_reqs}Liberal Arts 5 - History or Social Science,'
+    if (not fulfilled["WKIN"]) and ((fulfilled["WKAL"], fulfilled["WKLC"], fulfilled["WKHI"], fulfilled["WKSS"]).count(0) > 1):
+        missing_reqs = f'{missing_reqs}Liberal Arts 6 - Integration or a Way of Knowing not already used in LA4 or LA5,'
+
+    # Philo and Theo Requirements
+    if not fulfilled["WKFP"]:
+        missing_reqs = f'{missing_reqs}Introductory Philosophy,'
+    if not (fulfilled["WKSP"] or fulfilled["WKCD"]):
+        missing_reqs = f'{missing_reqs}Philosophy or Catholicism & the Disciplines,'
+    if not fulfilled["WKFT"]:
+       missing_reqs = f'{missing_reqs}Foundational Theology,'
+    if not fulfilled["WKDT"]:
+       missing_reqs = f'{missing_reqs}Developmental Theology,'
+
+    # Writing Requirements
+    if not fulfilled["USEM"]:
+       missing_reqs = f'{missing_reqs}University Seminar,'
+    if not fulfilled["WRIT"]:
+       missing_reqs = f'{missing_reqs}Writing Intensive,'
+
+    # Moreau
+    if not fulfilled["FYS1"]:
+       missing_reqs = f'{missing_reqs}Moreau First Year Experience Fall,'
+    if not fulfilled["FYS2"]:
+       missing_reqs = f'{missing_reqs}Moreau First Year Experience Spring,'
+
+    if not len(missing_reqs):
+        missing_reqs = "None"
+    return missing_reqs[:-1]
+
+def db_check_electives(netid):
+    """Cross-references a student's elective requirements with their enrollments
+
+    RETURN VAULES:
+        "None"          Success -- no requirements missing
+        "Error: ..."    Error obtaining enrollments that fulfill electives
+        "Error: ..."    Error obtaining needed elective counts
+        "e1,e2,..."     Requirements missing
+    """
+
+    # obtain the student's enrollments which fulfill needed electives
+    # sql = "SELECT pe.course_id, pe.elective_code FROM (SELECT course_id, req_code AS elective_code FROM course_fulfills_core_req cfcr WHERE req_code IN (SELECT elective_code AS req_code FROM major_requires_elective WHERE major_code IN (SELECT major_code FROM student WHERE netid=%s AND deleted <> 1))) pe, (SELECT course_id FROM has_enrollment WHERE netid=%s AND course_id NOT IN (SELECT course_id FROM major_requires_course WHERE major_code in (SELECT major_code FROM student WHERE netid=%s AND deleted <> 1) AND deleted <> 1) and deleted <> 1) nr WHERE pe.course_id = nr.course_id ORDER BY pe.elective_code"
+    # sql = "SELECT a.course_id, a.elective_code FROM (SELECT cfcr.course_id, req_code AS elective_code FROM course_fulfills_core_req cfcr, (SELECT course_id FROM has_enrollment WHERE netid=%s AND course_id NOT IN (SELECT course_id FROM major_requires_course WHERE major_code in (SELECT major_code FROM student WHERE netid=%s AND deleted <> 1) AND deleted <> 1) and deleted <> 1) nr WHERE cfcr.course_id = nr.course_id AND cfcr.deleted <> 1) a, (SELECT course_id, req_code AS elective_code, priority FROM course_fulfills_core_req cfcr, (SELECT elective_code, priority FROM major_requires_elective WHERE major_code IN (SELECT major_code FROM student WHERE netid=%s AND deleted <> 1)) pe WHERE cfcr.req_code=pe.elective_code) b WHERE a.course_id = b.course_id AND a.elective_code = b.elective_code ORDER BY priority DESC"
+    sql = "SELECT enrollments.course_id, elective_code FROM (SELECT course_id, elective_code, priority FROM (SELECT * from major_requires_elective WHERE major_code IN (SELECT major_code FROM student WHERE netid=%s AND deleted <> 1)) reqs, course_fulfills_core_req cfcr WHERE reqs.elective_code = cfcr.req_code AND course_id NOT IN (SELECT course_id FROM major_requires_course WHERE major_code IN (SELECT major_code FROM student WHERE netid=%s AND deleted <> 1))) electives, (SELECT he.course_id, cfcr.req_code FROM has_enrollment he, course_fulfills_core_req cfcr WHERE he.course_id=cfcr.course_id) enrollments WHERE electives.course_id=enrollments.course_id and electives.elective_code=enrollments.req_code ORDER BY priority DESC"
+    val = (netid, netid) 
+    try:
+        mycursor = DB.cursor()
+        mycursor.execute(sql, val)
+        fulfilled_query = list(mycursor)
+    except Exception as e:
+        LOG.error(e)
+        return "Error: enrollments could not be obtained"
+    
+    fulfilled = {}
+    for q in fulfilled_query:
+        if q[0] not in fulfilled:
+            fulfilled[q[0]] = [q[1]]
+        else:
+            fulfilled[q[0]].append(q[1])
+    
+    # obtain number of elective needed for major
+    sql = "SELECT elective_code, duplicate_count FROM major_requires_elective WHERE major_code IN (SELECT major_code FROM student WHERE netid=%s AND deleted <> 1) AND deleted <> 1"
+    val = (netid, ) 
+    try:
+        mycursor = DB.cursor()
+        mycursor.execute(sql, val)
+        needed = {i[0] : i[1] for i in list(mycursor)}
+    except Exception as e:
+        LOG.error(e)
+        return "Error: needed electives could not be obtained"
+    
+    for course in fulfilled:
+        counted = False
+        for e in fulfilled[course]:
+            if counted:
+                continue
+            if (e in needed) and (needed[e] > 0):
+                needed[e] -= 1
+                counted = True
+
+    output = ""
+    for e in needed:
+        if needed[e] > 0:
+            output = f'{output}{needed[e]} {e} elective(s),'
+
+    if not len(output):
+        output = "None"
+    return output[:-1]
+    
 
 # Advanced Function: Validate Requisite Reuirements
 
