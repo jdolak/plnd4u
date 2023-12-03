@@ -104,7 +104,7 @@ major_requires_core_req(
     PRIMARY KEY(major_code, req_code, double_count_check)
 )
 ```
- - If two requirements have different values for `double_count_check`, then they cannot be fulfilled by the same course
+ - If two requirements have the same value for `double_count_check`, then they cannot be fulfilled by the same course
 
 ```SQL
 course_fulfills_core_req(
