@@ -426,29 +426,12 @@ function courseOverviewOverlay(courseCode, courseName, credits, desc, coreqs, pr
     });
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    const button = document.getElementById("semester-filter");
-    const overlay = document.getElementById("semester-filter-overlay-container");
-
-    button.addEventListener("click", function() {
-        const buttonRect = document.getElementById("semester-filter-container").getBoundingClientRect();
-        const containerTop = buttonRect.bottom + window.scrollY;
-        const containerLeft = buttonRect.left + window.scrollX;
-
-        overlay.style.top = `${containerTop}px`;
-        overlay.style.left = `${containerLeft}px`;
-
-        if (overlay.style.display === "block") {
-            overlay.style.display = "none";
-        } else {
-            overlay.style.display = "block";
-        }
-    });
-});
-
 function degreeCompletionOverlayOn() {
     const overlay = document.getElementById('degree-details-overlay-container');
     const content = document.getElementById('degree-details-overlay-content');
+    const coreRequirements = document.getElementById('degree-details-core-reqs');
+    const requiredCourses = document.getElementById('degree-details-major-reqs');
+    const electives = document.getElementById('degree-details-electives');
 
     overlay.style.display = 'block';
 
@@ -464,7 +447,10 @@ function degreeCompletionOverlayOn() {
         contentType: 'application/json',
         data: JSON.stringify({  'action': 'missing_reqs', global_netid: globalNetId }),
         success: function(response) {
-            console.log(response.core_reqs, response.major_reqs, response.electives);
+            console.log(response.core_requirements, response.required_courses, response.electives);
+            coreRequirements.textContent = 'Missing: ' + response.core_requirements;
+            requiredCourses.textContent = 'Missing: ' + response.required_courses;
+            electives.textContent = 'Missing: ' + response.electives;
         },
         error: function(error) {
             console.log('cannot retrieve missing reqs');
@@ -473,45 +459,71 @@ function degreeCompletionOverlayOn() {
 
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    const button = document.getElementById("level-filter");
-    const overlay = document.getElementById("level-filter-overlay-container");
-
-    button.addEventListener("click", function() {
-        const buttonRect = document.getElementById("level-filter-container").getBoundingClientRect();
-        const containerTop = buttonRect.bottom + window.scrollY;
-        const containerLeft = buttonRect.left + window.scrollX;
-
-        overlay.style.top = `${containerTop}px`;
-        overlay.style.left = `${containerLeft}px`;
-
-        if (overlay.style.display === "block") {
-            overlay.style.display = "none";
-        } else {
-            overlay.style.display = "block";
-        }
+if (onClassesPage()) {
+    document.addEventListener("DOMContentLoaded", function() {
+        const button = document.getElementById("semester-filter");
+        const overlay = document.getElementById("semester-filter-overlay-container");
+    
+        button.addEventListener("click", function() {
+            const buttonRect = document.getElementById("semester-filter-container").getBoundingClientRect();
+            const containerTop = buttonRect.bottom + window.scrollY;
+            const containerLeft = buttonRect.left + window.scrollX;
+    
+            overlay.style.top = `${containerTop}px`;
+            overlay.style.left = `${containerLeft}px`;
+    
+            if (overlay.style.display === "block") {
+                overlay.style.display = "none";
+            } else {
+                overlay.style.display = "block";
+            }
+        });
     });
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-    const button = document.getElementById("req-filter");
-    const overlay = document.getElementById("req-filter-overlay-container");
-
-    button.addEventListener("click", function() {
-        const buttonRect = document.getElementById("req-filter-container").getBoundingClientRect();
-        const containerTop = buttonRect.bottom + window.scrollY;
-        const containerLeft = buttonRect.left + window.scrollX;
-
-        overlay.style.top = `${containerTop}px`;
-        overlay.style.left = `${containerLeft}px`;
-
-        if (overlay.style.display === "block") {
-            overlay.style.display = "none";
-        } else {
-            overlay.style.display = "block";
-        }
+    
+    
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        const button = document.getElementById("level-filter");
+        const overlay = document.getElementById("level-filter-overlay-container");
+    
+        button.addEventListener("click", function() {
+            const buttonRect = document.getElementById("level-filter-container").getBoundingClientRect();
+            const containerTop = buttonRect.bottom + window.scrollY;
+            const containerLeft = buttonRect.left + window.scrollX;
+    
+            overlay.style.top = `${containerTop}px`;
+            overlay.style.left = `${containerLeft}px`;
+    
+            if (overlay.style.display === "block") {
+                overlay.style.display = "none";
+            } else {
+                overlay.style.display = "block";
+            }
+        });
     });
-});
+    
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        const button = document.getElementById("req-filter");
+        const overlay = document.getElementById("req-filter-overlay-container");
+    
+        button.addEventListener("click", function() {
+            const buttonRect = document.getElementById("req-filter-container").getBoundingClientRect();
+            const containerTop = buttonRect.bottom + window.scrollY;
+            const containerLeft = buttonRect.left + window.scrollX;
+    
+            overlay.style.top = `${containerTop}px`;
+            overlay.style.left = `${containerLeft}px`;
+    
+            if (overlay.style.display === "block") {
+                overlay.style.display = "none";
+            } else {
+                overlay.style.display = "block";
+            }
+        });
+    });
+}
+
 
 
 
