@@ -402,7 +402,7 @@ def db_show_sem_credits(netid, sem):
         LOG.error(e)
         return 1
     
-    return sum([int(i[0].split()[0]) for i in credit])
+    return sum([float(i[0].split()[0]) for i in credit])
 
 def db_show_sem_credits_all(netid):
 
