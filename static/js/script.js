@@ -448,8 +448,18 @@ function degreeCompletionOverlayOn() {
         data: JSON.stringify({  'action': 'missing_reqs', global_netid: globalNetId }),
         success: function(response) {
             console.log(response.core_requirements, response.required_courses, response.electives);
-            coreRequirements.textContent = 'Missing: ' + response.core_requirements;
-            requiredCourses.textContent = 'Missing: ' + response.required_courses;
+            coreRequirements.innerHTML = 'Missing: <span style="color: black;">' + (response.core_requirements.split(',')).join(', ') + '</span>';
+
+            if (response.core_requirements != 'None') {
+                coreRequirements.getElementsByTagName('span')[0].style.color = 'red';
+            }
+
+            requiredCourses.innerHTML = 'Missing: <span style="color: black;">' + (response.required_courses.split(',')).join(', ') + '</span>';
+
+            if (response.required_courses != 'None') {
+                requiredCourses.getElementsByTagName('span')[0].style.color = 'red';
+            }
+
             electives.textContent = 'Missing: ' + response.electives;
         },
         error: function(error) {
