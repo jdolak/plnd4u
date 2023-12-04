@@ -447,17 +447,19 @@ function degreeCompletionOverlayOn() {
         contentType: 'application/json',
         data: JSON.stringify({  'action': 'missing_reqs', global_netid: globalNetId }),
         success: function(response) {
-            console.log(response.core_requirements, response.required_courses, response.electives);
-            coreRequirements.innerHTML = 'Missing: <span style="color: black;">' + (response.core_requirements.split(',')).join(', ') + '</span>';
 
-            if (response.core_requirements != 'None') {
+            if (response.core_requirements.split(',').join('') != 'None') {
+                coreRequirements.innerHTML = 'Missing: <span style="color: black;">' + (response.core_requirements.split(',')).join(', ') + '</span>';
                 coreRequirements.getElementsByTagName('span')[0].style.color = 'red';
+            } else {
+                coreRequirements.innerHTML = 'Missing: None';
             }
 
-            requiredCourses.innerHTML = 'Missing: <span style="color: black;">' + (response.required_courses.split(',')).join(', ') + '</span>';
-
-            if (response.required_courses != 'None') {
+            if (response.required_courses.split(',').join('') != 'None') {
+                requiredCourses.innerHTML = 'Missing: <span style="color: black;">' + (response.required_courses.split(',')).join(', ') + '</span>';
                 requiredCourses.getElementsByTagName('span')[0].style.color = 'red';
+            } else {
+                requiredCourses.innerHTML = 'Missing: None';
             }
 
             electives.textContent = 'Missing: ' + response.electives;
