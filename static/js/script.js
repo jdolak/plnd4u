@@ -178,7 +178,6 @@ function addToPlan(courseCode, className) {
         }
     });
 }
-
 function getEnrollmentsData() {
     $.ajax({
         url: '/getdata',
@@ -263,10 +262,11 @@ function showInPlan(enrollments, semester) {
     });
 }
 
-
-$(document).ready(function() {
-    getEnrollmentsData();
-});
+if (onPlanPage()) {
+    $(document).ready(function() {
+        getEnrollmentsData();
+    });
+}
 
 function searchClasses() {
     const searchInput = document.getElementById('search-bar').value;
@@ -316,6 +316,10 @@ function searchClasses() {
             console.log(error);
         }
     });
+}
+
+function onPlanPage() {
+    return window.location.href.includes("plan");
 }
 
 function onClassesPage() {
