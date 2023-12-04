@@ -274,8 +274,63 @@ def db_check_electives(netid):
 
 # Advanced Function: Validate Requisite Reuirements
 
-def db_check_course_conflicts(netid, enrollment_id):
+def db_check_corequisites(netid):
     """Cross-references an enrollment's coreqs and prereqs with
     the student's other enrollments
     :returns: false if there exist needed coreqs or prereqs not in has_enrollments"""
-    pass
+
+    missing = {}
+
+    try:
+        with DB.cursor() as mycursor:
+            sql = """
+            SELECT H.netid, H.course_id, R.coreq_id, H.sem 
+            FROM has_enrollment H, course_has_coreq R 
+            WHERE netid = %s AND H.course_id = R.course_id;
+            """
+            mycursor.execute(sql, (netid,))
+            corequisites = list(mycursor)
+
+            for _, code, coreq, sem in corequisites:
+                mycursor.execute("SELECT * from has_enrollment WHERE course_id = %s and sem = %s", (coreq, sem))
+                if not list(mycursor):
+                    missing.setdefault(code, []).append(coreq)
+
+        return missing if missing else None
+
+    except Exception as e:
+        LOG.error(e)
+        return 1
+
+
+def db_check_prerequisites(netid):
+    """Cross-references an enrollment's coreqs and prereqs with
+    the student's other enrollments
+    :returns: false if there exist needed coreqs or prereqs not in has_enrollments"""
+
+    semesters = ["FRFA", "FRSP", "SOFA", "SOSP", "JUFA", "JUSP", "SEFA", "SESP"]
+    missing = {}
+
+    try:
+        with DB.cursor() as mycursor:
+            sql = """
+            SELECT H.netid, H.course_id, R.prereq_ids, H.sem 
+            FROM has_enrollment H, course_has_prereq R 
+            WHERE netid = %s AND H.course_id = R.course_id;
+            """
+            mycursor.execute(sql, (netid,))
+            prerequisites = list(mycursor)
+
+            for _, code, prereqs, sem in prerequisites:
+                for req in prereqs.split(","):
+                    mycursor.execute("SELECT sem from has_enrollment WHERE course_id = %s AND deleted = 0;", (req,))
+                    semesters_taken = [sem[0] for sem in mycursor]
+
+                    if not semesters_taken or semesters.index(semesters_taken[0]) >= semesters.index(sem):
+                        missing.setdefault(code, []).append(req)
+
+        return missing if missing else None
+
+    except Exception as e:
+        LOG.error(e)
+        return 1
