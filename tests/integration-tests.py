@@ -8,21 +8,25 @@ from time import sleep
 sys.path.append('./src')
 from func_adv import *
 
+USER = "test"
+PASS = "test"
+
 class basic_func_tests(unittest.TestCase):
+
+    def test_create_user(self):
+        self.assertEqual(db_register_student(USER, 'test test', 'cse', '2025'), 0, "User registration Failed")
+        self.assertEqual(db_create_login(USER,PASS), 0, "User password creation failed")
+
     def test_class_search(self):
-        results = db_search_past_classes('Database Concepts',(1,1,1,1,1,1,1,1,1))
+        results = db_search_past_classes(USER, 'Database Concepts',(1,1,1,1,1,1,1,1,1))
 
         self.assertEqual(len(results), 1, "Too many results")
         self.assertEqual(results, [('CSE 30246', 'Database Concepts')], "Results do not match")
 
-    def test_create_user(self):
-        self.assertEqual(db_register_student('test', 'test test', 'CSE', '2025'), 0, "User registration Failed")
-        self.assertEqual(db_create_login('test','test'), 0, "User password creation failed")
-
     def test_web_requests(self):
 
-        user = "test"
-        password = "test"
+        user = USER
+        password = PASS
 
         s = requests.Session() 
 
