@@ -163,6 +163,9 @@ def getdata():
 
         credit = db_show_sem_credits_all(netid)
 
+        missing_prerequisites = db_check_prerequisites(netid)
+        missing_corequisites = db_check_corequisites(netid)
+
         return jsonify(
             unlt=unlt,
             frfa=frfa,
@@ -182,6 +185,8 @@ def getdata():
             jusp_credit=credit[6],
             sefa_credit=credit[7],
             sesp_credit=credit[8],
+            missing_prerequisites=missing_prerequisites,
+            missing_corequisites=missing_corequisites,
         )
 
 

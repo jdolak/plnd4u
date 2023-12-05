@@ -1,935 +1,1008 @@
 /* Fonts */
 
 body {
-    font-family: "Nunito Sans", sans-serif;
-    font-weight: 400;
-    text-align: center;
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 400;
+  text-align: center;
 }
 
-h1, h2, h3, h4, h5, h6, p {
-    font-family: "Nunito Sans", sans-serif;
-    font-weight: 700;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 700;
 }
 
 .normal-text {
-    color: black;
-    font-family: Nunito Sans;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    text-decoration: none;
-    text-align: left;
+  color: black;
+  font-family: Nunito Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration: none;
+  text-align: left;
 }
 
 .normal-text-bold {
-    color: black;
-    font-family: Nunito Sans;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    text-decoration: none;
+  color: black;
+  font-family: Nunito Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-decoration: none;
 }
 
 /* Headings */
 
 .home-heading {
-    font-family: "Open Sans", sans-serif;
-    font-weight: 800;
-    font-size: 3.5rem;
-    line-height: 1.5;
-    color: black;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 800;
+  font-size: 3.5rem;
+  line-height: 1.5;
+  color: black;
 }
 
 .home-subheading {
-    font-family: "Nunito Sans", sans-serif;
-    font-weight: 600;
-    font-size: 2rem;
-    line-height: 1.5;
-    color: black;
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 600;
+  font-size: 2rem;
+  line-height: 1.5;
+  color: black;
 }
 
 .page-heading {
-    color: #000;
-    font-family: Open Sans;
-    font-size: 36px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
+  color: #000;
+  font-family: Open Sans;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
 
 .class-heading {
-    color: #000;
-    font-family: Open Sans;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
+  color: #000;
+  font-family: Open Sans;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
 
 /* Sections */
 
 .page-section {
-    background-color: #F6F6F6;
-    z-index: 0;
-    position: relative;
-    align-items: center;
+  background-color: #f6f6f6;
+  z-index: 0;
+  position: relative;
+  align-items: center;
 }
 
 .footer-section {
-    background-color: #F8EFD8;
-    display: flex;
+  background-color: #f8efd8;
+  display: flex;
 }
 
 /* Nav Bar */
 
 .nav-bar {
-    display: flex;
-    padding: 24px 102px;
-    justify-content: space-between;
-    align-items: center;
-    background: white;
-    box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.25);
-    z-index: 1;
-    position: relative;
+  display: flex;
+  padding: 24px 102px;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.25);
+  z-index: 1;
+  position: relative;
 }
 
 .nav-links {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 51px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 51px;
 }
 
 .nav-text {
-    color: #0D5044;
-    font-family: Nunito Sans;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    text-decoration: none;
+  color: #0d5044;
+  font-family: Nunito Sans;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-decoration: none;
 }
 
 /* Home */
 
 .home-container {
-    display: flex;
-    padding: 200px 0px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 28px;
+  display: flex;
+  padding: 200px 0px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 28px;
 }
 
 .home-starter {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
 }
 
 .home-text {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
 }
 
 /* About Page */
 
 .about-text {
-    color: black;
-    font-family: Nunito Sans;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    padding: 80px;
-    text-align: left;
-    text-decoration: none;
+  color: black;
+  font-family: Nunito Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding: 80px;
+  text-align: left;
+  text-decoration: none;
 }
 
 /* Register */
 
 .register-container {
-    display: flex;
-    padding: 69px 487px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 32px;
+  display: flex;
+  padding: 69px 487px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
 }
 
 .register-container-2 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
 }
 
 .register-container-3 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
 }
 
 .register-text-fields {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 32px;
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
 
 .register-redirect {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Log In */
 
 .login-container {
-    display: flex;
-    padding: 69px 487px;
-    flex-direction: column;
-    align-items: center;
-    gap: 32px;
+  display: flex;
+  padding: 69px 487px;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
 }
 
 .login-container-2 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
 }
 
 .login-container-3 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
 }
 
 .login-text-fields {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
 }
 
 /* Class Database */
 
 .classes-container {
-    display: flex;
-    padding: 4px 122px 8px 122px;
-    align-items: flex-start;
+  display: flex;
+  padding: 4px 122px 8px 122px;
+  align-items: flex-start;
 }
 
 .classes-container-2 {
-    display: flex;
-    padding: 32px 0px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 32px;
+  display: flex;
+  padding: 32px 0px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 32px;
 }
 
 .classes-container-3 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 32px;
 }
 
 .search-filter-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
 }
 
 .search-container {
-    display: flex;
-    align-items: flex-start;
-    gap: 32px;
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
 }
 
 .search-bar-icon {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .filter-container {
-    display: flex;
-    align-items: center;
-    gap: 48px;
+  display: flex;
+  align-items: center;
+  gap: 48px;
 }
 
 .class-filter {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
 }
 
 .class-database-container {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 24px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
 }
 
 .each-class {
-    display: flex;
-    width: 220px;
-    height: 220px;
-    padding: 24px;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 8px;
-    background: #60E1AF;
+  display: flex;
+  width: 220px;
+  height: 220px;
+  padding: 24px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+  background: #60e1af;
 }
 
 .class-text-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 8px;
-    align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
+  align-self: stretch;
 }
 
 /* Your Plan */
 
 .plan-container {
-    display: flex;
-    width: 1440px;
-    height: auto;
-    flex-direction: column;
-    flex-shrink: 0;
+  display: flex;
+  width: 1440px;
+  height: auto;
+  flex-direction: column;
+  flex-shrink: 0;
 }
 
 .plan-container-2 {
-    display: flex;
-    height: auto;
-    padding: 30px 244px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
+  display: flex;
+  height: auto;
+  padding: 30px 244px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
 }
 
 .plan-container-button {
-    display: flex;
-    align-items: center;
-    padding: 24px 122px 0px 122px;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  padding: 24px 122px 0px 122px;
+  justify-content: space-between;
 }
 
 .plan-container-heading {
-    display: flex;
-    padding: 36px 0px 0px 122px;
-    align-items: center;
-    gap: 16px;
+  display: flex;
+  padding: 36px 0px 0px 122px;
+  align-items: center;
+  gap: 16px;
 }
 
 .plan-content {
-    display: flex;
-    height: auto;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    flex-shrink: 0;
+  display: flex;
+  height: auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  flex-shrink: 0;
 }
 
 .two-year-plan {
-    display: flex;
-    align-items: flex-start;
-    width: 952px;
-    gap: 120px;
+  display: flex;
+  align-items: flex-start;
+  width: 952px;
+  gap: 120px;
 }
 
 .plan-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    width: 416px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 416px;
 }
 
 .plan-card-heading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
 .plan-card-year-text {
-    color: #000;
-    font-family: Open Sans;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+  color: #000;
+  font-family: Open Sans;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 .plan-card-semester-text {
-    color: #000;
-    font-family: Nunito Sans;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+  color: #000;
+  font-family: Nunito Sans;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 .plan-card-all-semesters {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
 }
 
 .plan-card-semester {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-    width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 200px;
 }
 
 .plan-card-description {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
 }
 
 .plan-card-courses {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+}
+
+.modal-text {
+  padding: 10px;
+}
+
+.modal-container-header {
+  padding: 20px 16px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  margin-top: 0;
+  /* align-items: center; */
+  font-weight: 10px;
+  font-size: 3vh;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  border: 1px solid #888;
+  width: 350px;
+  height: 350px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  /* justify-content: center;
+  align-items: center; */
 }
 
 .plan-card-single-course {
-    display: flex;
-    width: 200px;
-    padding: 12px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    border-radius: 6px;
-    background: var(--Secondary, #60E1AF);
+  display: flex;
+  width: 200px;
+  padding: 12px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  border-radius: 6px;
+  background: var(--Secondary, #60e1af);
+}
+
+.plan-card-single-course-red {
+  background: var(--Secondary, #f17f70);
+  animation: shake 0.92s ease-in-out 0.2s;
+  animation-iteration-count: 1;
+}
+
+.plan-card-single-course-yellow {
+  background: var(--Secondary, #ffd15e);
+  animation: shake 0.92s ease-in-out 0.2s;
+  animation-iteration-count: 1;
+}
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .plan-card-single-course-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    align-self: stretch;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
 }
 
 .plan-card-single-course-text {
-    display: flex;
-    padding-right: 0px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 1px;
+  display: flex;
+  padding-right: 0px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1px;
 }
 
 .plan-card-single-course-code {
-    color: #000;
-    font-family: Nunito Sans;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    margin: 0;
+  color: #000;
+  font-family: Nunito Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
 }
 
 .plan-card-single-course-name {
-    color: #000;
-    font-family: Nunito Sans;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin: 0;
+  color: #000;
+  font-family: Nunito Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0;
 }
-
 
 /* Buttons */
 
 .home-button {
-    display: inline-flex;
-    padding: 17px 118px;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    border-radius: 10px;
-    background: var(--Accent-3, #FFD15E);
-    color: black;
-    font-family: Nunito Sans;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: normal;
-    text-decoration: none;
+  display: inline-flex;
+  padding: 17px 118px;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 10px;
+  background: var(--Accent-3, #ffd15e);
+  color: black;
+  font-family: Nunito Sans;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: normal;
+  text-decoration: none;
 }
 
 .register-button {
-    color: #000;
-    font-family: Nunito Sans;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    display: flex;
-    padding: 16px 120px;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    border-radius: 8px;
-    background: var(--Accent-3, #FFD15E);
-    text-decoration: none;
-    border: none;
+  color: #000;
+  font-family: Nunito Sans;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  display: flex;
+  padding: 16px 120px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  background: var(--Accent-3, #ffd15e);
+  text-decoration: none;
+  border: none;
 }
 
 .search-bar {
-    display: flex;
-    width: 466px;
-    height: 51px;
-    padding: 7px 13px 8px;
-    justify-content: flex-end;
-    align-items: center;
-    border-radius: 5px;
-    border: 3px solid var(--Primary, #0D5044);
+  display: flex;
+  width: 466px;
+  height: 51px;
+  padding: 7px 13px 8px;
+  justify-content: flex-end;
+  align-items: center;
+  border-radius: 5px;
+  border: 3px solid var(--Primary, #0d5044);
 }
 
 .create-course {
-    color: #000;
-    font-family: Nunito Sans;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    padding: 14px 25px;
-    width: 271px;
-    height: 53px;
-    align-items: flex-start;
-    gap: 10px;
-    border: none;
-    border-radius: 5px;
-    background: var(--Accent-3, #FFD15E);
-    text-decoration: none;
+  color: #000;
+  font-family: Nunito Sans;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  padding: 14px 25px;
+  width: 271px;
+  height: 53px;
+  align-items: flex-start;
+  gap: 10px;
+  border: none;
+  border-radius: 5px;
+  background: var(--Accent-3, #ffd15e);
+  text-decoration: none;
 }
 
 .filter-icon {
-    width: 20px;
-    align-self: stretch;
+  width: 20px;
+  align-self: stretch;
 }
 
 .filter-button {
-    border: none;
-    background-color: #F6F6F6;
+  border: none;
+  background-color: #f6f6f6;
 }
 
 .search-icon {
-    border: none;
-    background-color: #F6F6F6;
+  border: none;
+  background-color: #f6f6f6;
 }
 
 .add-button {
-    display: flex;
-    padding: 6px 12px;
-    justify-content: space-between;
-    align-items: center;
-    align-self: stretch;
-    border-radius: 5px;
-    border: 3px solid var(--Primary, #0D5044);
-    background-color: transparent;
-    color: var(--Primary, #0D5044);
-    font-family: Nunito Sans;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
+  display: flex;
+  padding: 6px 12px;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  border-radius: 5px;
+  border: 3px solid var(--Primary, #0d5044);
+  background-color: transparent;
+  color: var(--Primary, #0d5044);
+  font-family: Nunito Sans;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
 
 .remove-button {
-    background: none;
-    border: none;
-    display: none;
-    transition: opacity 0.3s;
+  background: none;
+  border: none;
+  display: none;
+  transition: opacity 0.3s;
 }
 
 .plan-card-single-course:hover .remove-button {
-    display: block;
-    opacity: 1;
+  display: block;
+  opacity: 1;
 }
 
 .degree-completion-button {
-    display: flex;
-    padding: 14px 25px;
-    align-items: flex-start;
-    gap: 10px;
-    border-radius: 5px;
-    border: 3px solid var(--Grey, #0D5044);
-    color: #0D5044;
-    font-family: Nunito Sans;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    background-color: white;
+  display: flex;
+  padding: 14px 25px;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 5px;
+  border: 3px solid var(--Grey, #0d5044);
+  color: #0d5044;
+  font-family: Nunito Sans;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  background-color: white;
 }
 
 /* Features */
 
 .text-frame {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
 }
 
 .text-select {
-    display: flex;
-    align-items: flex-start;
-    gap: 23px;
+  display: flex;
+  align-items: flex-start;
+  gap: 23px;
 }
 
 .text-label {
-    color: #000;
-    font-family: Nunito Sans;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+  color: #000;
+  font-family: Nunito Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .text-input {
-    width: 467px;
-    height: 40px;
-    border-radius: 5px;
-    border: 1.5px solid var(--Primary, #0D5044);
-    padding: 0px 8px;
+  width: 467px;
+  height: 40px;
+  border-radius: 5px;
+  border: 1.5px solid var(--Primary, #0d5044);
+  padding: 0px 8px;
 }
 
 .text-option {
-    width: 225px;
-    height: 40px;
-    border-radius: 5px;
-    border: 1.5px solid var(--Primary, #0D5044);
-    padding: 0px 8px;
+  width: 225px;
+  height: 40px;
+  border-radius: 5px;
+  border: 1.5px solid var(--Primary, #0d5044);
+  padding: 0px 8px;
 }
 
 .text-filter {
-    color: #000;
-    font-family: Nunito Sans;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+  color: #000;
+  font-family: Nunito Sans;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 /* Overlays */
 
 #unlisted-course-overlay-container {
-    display: none;
-    position: fixed;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
-    z-index: 2;
+  display: none;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
 }
 
 #unlisted-course-overlay-content {
-    top: 50%;
-    left: 50%;
-    display: flex;
-    position: absolute;
-    width: 394px;
-    padding: 32px;
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-    border-radius: 10px;
-    background: #F6F6F6;
-    transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+  display: flex;
+  position: absolute;
+  width: 394px;
+  padding: 32px;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  border-radius: 10px;
+  background: #f6f6f6;
+  transform: translate(-50%, -50%);
 }
 
 .unlisted-text-fields {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
 }
 
 .unlisted-text-input {
-    width: 330px;
-    height: 40px;
-    border-radius: 5px;
-    border: 1.5px solid var(--Primary, #0D5044);
-    padding: 0px 8px;
+  width: 330px;
+  height: 40px;
+  border-radius: 5px;
+  border: 1.5px solid var(--Primary, #0d5044);
+  padding: 0px 8px;
 }
 
 .unlisted-add-button {
-    border: none;
-    display: flex;
-    padding: 14px 25px;
-    align-items: flex-start;
-    gap: 10px;
-    border-radius: 5px;
-    background: var(--Accent-3, #FFD15E);
-    color: #000;
-    font-family: Nunito Sans;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
+  border: none;
+  display: flex;
+  padding: 14px 25px;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 5px;
+  background: var(--Accent-3, #ffd15e);
+  color: #000;
+  font-family: Nunito Sans;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
 
 #semester-filter-overlay-container {
-    display: none;
-    position: absolute;
-    z-index: 1;
+  display: none;
+  position: absolute;
+  z-index: 1;
 }
 
 .semester-filter {
-    display: flex;
-    width: 220px;
-    flex-direction: column;
-    align-items: flex-start;
-    border: 1px solid var(--Grey-300, #D7D7D7);
-    background: #FFF;
-    box-sizing: border-box;
+  display: flex;
+  width: 220px;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid var(--Grey-300, #d7d7d7);
+  background: #fff;
+  box-sizing: border-box;
 }
 
 .semester-filter-list {
-    display: flex;
-    width: 100%;
-    padding: 8px 16px;
-    align-items: center;
-    gap: 8px;
-    border-bottom: 1px solid var(--gray-300, #DEE2E6);
-    background: var(--default-white, #FFF);
-    box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  padding: 8px 16px;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--gray-300, #dee2e6);
+  background: var(--default-white, #fff);
+  box-sizing: border-box;
 }
 
 .semester-filter-list:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .checkbox-text {
-    color: var(--gray-800, #343A40);
-    font-family: Nunito Sans;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+  color: var(--gray-800, #343a40);
+  font-family: Nunito Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .checkbox {
-    width: 16px;
-    height: 16px;
-    flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
 #level-filter-overlay-container {
-    display: none;
-    position: absolute;
-    z-index: 1;
+  display: none;
+  position: absolute;
+  z-index: 1;
 }
 
 #req-filter-overlay-container {
-    display: none;
-    position: absolute;
-    z-index: 1;
+  display: none;
+  position: absolute;
+  z-index: 1;
 }
 
 #add-to-plan-overlay-container {
-    display: none;
-    position: fixed;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
-    z-index: 2;
+  display: none;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
 }
 
 #add-to-plan-overlay-content {
-    top: 50%;
-    left: 50%;
-    display: flex;
-    position: absolute;
-    width: 394px;
-    padding: 32px;
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-    border-radius: 10px;
-    background: #F6F6F6;
-    transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+  display: flex;
+  position: absolute;
+  width: 394px;
+  padding: 32px;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  border-radius: 10px;
+  background: #f6f6f6;
+  transform: translate(-50%, -50%);
 }
 
 .add-to-plan-text-option {
-    width: 325px;
-    height: 40px;
-    border-radius: 5px;
-    border: 1.5px solid var(--Primary, #0D5044);
-    padding: 0px 8px;
-    gap: 32px;
+  width: 325px;
+  height: 40px;
+  border-radius: 5px;
+  border: 1.5px solid var(--Primary, #0d5044);
+  padding: 0px 8px;
+  gap: 32px;
 }
 
 .add-to-plan-course-container {
-    align-items: center;
-    gap: 32px;
+  align-items: center;
+  gap: 32px;
 }
 
 .add-to-plan-course-heading {
-    color: #000;
-    font-family: Open Sans;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+  color: #000;
+  font-family: Open Sans;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 #course-overview-overlay-container {
-    display: none;
-    position: fixed;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
-    z-index: 2;
+  display: none;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
 }
 
 #course-overview-overlay-content {
-    display: inline-flex;
-    position: absolute;
-    padding: 32px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    width: 417px;
-    height: 569px;
-    border-radius: 10px;
-    background: #FFF;
-    overflow: hidden;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  display: inline-flex;
+  position: absolute;
+  padding: 32px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 417px;
+  height: 569px;
+  border-radius: 10px;
+  background: #fff;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .course-overview-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    overflow-y: auto;
-    max-height: 100%
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  overflow-y: auto;
+  max-height: 100%;
 }
 
 .course-overview-heading {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
 }
 
 .course-overview-heading-text {
-    color: var(--Primary, #0D5044);
-    /* Plan Headings */
-    font-family: Nunito Sans;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 600;
-    text-align: left;
+  color: var(--Primary, #0d5044);
+  /* Plan Headings */
+  font-family: Nunito Sans;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  text-align: left;
 }
 
 .course-overview-description {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  align-self: stretch;
 }
 
 #degree-details-overlay-container {
-    display: none;
-    position: fixed;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
-    z-index: 2;
+  display: none;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
 }
 
 #degree-details-overlay-content {
-    display: inline-flex;
-    position: absolute;
-    padding: 32px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    border-radius: 10px;
-    background: #FFF;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  display: inline-flex;
+  position: absolute;
+  padding: 32px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  border-radius: 10px;
+  background: #fff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .degree-details-text-container {
-    display: flex;
-    /* width: 353px; */
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+  display: flex;
+  /* width: 353px; */
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
 }
 
 .degree-details-text-heading {
-    color: var(--Primary, #0D5044);
-    font-family: Nunito Sans;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+  color: var(--Primary, #0d5044);
+  font-family: Nunito Sans;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 .degree-details-text-content {
-    width: 417px;
-    color: #000;
-    align-items: flex-start;
-    align-self: stretch;
-    text-align: left;
-    font-family: Nunito Sans;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+  width: 417px;
+  color: #000;
+  align-items: flex-start;
+  align-self: stretch;
+  text-align: left;
+  font-family: Nunito Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 /* Footer */
 
 #footer {
-    padding: 7% 12% 0% 12%;
+  padding: 7% 12% 0% 12%;
 }
 
 .footer-notes {
-    align-items: center;
+  align-items: center;
 }
