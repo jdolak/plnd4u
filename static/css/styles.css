@@ -455,21 +455,25 @@ p {
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(5px);
+    /* backdrop-filter: blur(5px); */
 }
 
 .modal-text {
-    padding: 10px;
+    padding: 32px;
 }
 
 .modal-container-header {
-    padding: 20px 16px;
+    padding: 32px 32px;
     border-bottom: 1px solid #ddd;
     display: flex;
     margin-top: 0;
     /* align-items: center; */
-    font-weight: 10px;
-    font-size: 3vh;
+    color: var(--Primary, #0d5044);
+    font-family: Nunito Sans;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
 }
 
 .modal-content {
@@ -479,7 +483,7 @@ p {
     width: 350px;
     height: 350px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    display: flex;
+    display: flex-start;
     /* justify-content: center;
   align-items: center; */
 }
@@ -496,13 +500,13 @@ p {
 }
 
 .plan-card-single-course-red {
-    background: var(--Secondary, #f17f70);
+    background: var(--Secondary, #FFBCC3);
     animation: shake 0.92s ease-in-out 0.2s;
     animation-iteration-count: 1;
 }
 
 .plan-card-single-course-yellow {
-    background: var(--Secondary, #ffd15e);
+    background: var(--Secondary, #FFDCBC);
     animation: shake 0.92s ease-in-out 0.2s;
     animation-iteration-count: 1;
 }
