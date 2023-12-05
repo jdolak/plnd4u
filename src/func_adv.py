@@ -284,16 +284,18 @@ def db_check_corequisites(netid):
     try:
         with DB.cursor() as mycursor:
             sql = """
-            SELECT H.netid, H.course_id, R.coreq_id, H.sem 
+            SELECT H.netid, H.course_id, R.coreq_id, H.sem, H.deleted
             FROM has_enrollment H, course_has_coreq R 
             WHERE netid = %s AND H.course_id = R.course_id;
             """
             mycursor.execute(sql, (netid,))
-            corequisites = list(mycursor)
+            corequisites = [value for value in list(mycursor) if value[-1] == 0]
 
-            for _, code, coreq, sem in corequisites:
-                mycursor.execute("SELECT * from has_enrollment WHERE course_id = %s and sem = %s", (coreq, sem))
-                if not list(mycursor):
+            for _, code, coreq, sem, _ in corequisites:
+                mycursor.execute("SELECT * from has_enrollment WHERE course_id = %s and sem = %s and deleted = 0;", (coreq, sem))
+
+                cursor_list = list(mycursor)
+                if not cursor_list:
                     missing.setdefault(code, []).append(coreq)
 
         return missing if missing else None
