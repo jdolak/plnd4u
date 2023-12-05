@@ -139,7 +139,7 @@ h1, h2, h3, h4, h5, h6, p {
 
 /* About Page */
 
-.about-text {
+/* .about-text {
     color: black;
     font-family: Nunito Sans;
     font-size: 14px;
@@ -150,9 +150,13 @@ h1, h2, h3, h4, h5, h6, p {
     text-align: left;
     text-decoration: none;
     
-}
+} */
 
 .about-container {
+    gap: 24px;
+}
+
+.about-container-2 {
     gap: 16px;
 }
 
