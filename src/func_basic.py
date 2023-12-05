@@ -84,12 +84,25 @@ def db_register_student(netid, name, major_code, gradyear):
         return 1
 
 
-def db_search_past_classes(search, filters):
-    search = f"%{search}%"
+def db_search_past_classes(netid, search, filters):
+    
+    # obtain major of student separately to simplify following queries
+    sql = "SELECT major_code FROM student WHERE netid=%s AND deleted <> 1"
+    val = (netid, )
+    try:
+        mycursor = DB.cursor()
+        mycursor.execute(sql, val)
+        major_code = list(mycursor)[0][0]
+    except Exception as e:
+        LOG.error(e)
+        return 1
 
+    search = f"%{search}%"
     levels = ""
     tables = "course"
     sem = ""
+    reqs = ""
+    core_reqs = ("WKAL", "WKCD", "WKDT", "WKFP", "WKFT", "WKHI", "WKIN", "WKLC", "WKQR", "WKSP", "WKSS", "WKST", "WRIT", "WRRH", "USEM", "FYS1", "FYS2")
 
     fall_semester = filters[0]
     spring_semester = filters[1]
@@ -101,6 +114,7 @@ def db_search_past_classes(search, filters):
     major_req = filters[7]
     major_elective = filters[8]
 
+    # form queries based on filters
     if fall_semester ^ spring_semester:
         tables = tables + ", section"
         if fall_semester:
@@ -120,16 +134,19 @@ def db_search_past_classes(search, filters):
         levels = levels + " OR course.course_id LIKE '%3____'"
     if level_four:
         levels = levels + " OR course.course_id LIKE '%4____'"
-    """
-    if uni_req:
-        suffix = f""
-    if major_req:
-        suffix = f""
-    if major_elective:
-        suffix = f""
-    """
 
-    sql = f"SELECT DISTINCT course.course_id, course.title FROM {tables} WHERE course.deleted <> 1 AND (course.title LIKE %s or course.course_id LIKE %s) AND (0=1{levels}){sem} ORDER BY course.course_id"
+    if uni_req or major_elective:
+        tables = tables + ", course_fulfills_core_req cfcr"
+    if uni_req:
+        reqs = f"{reqs} AND course.course_id=cfcr.course_id AND req_code IN {core_reqs}"
+    if major_req:
+        tables = tables + ", major_requires_course mrc"
+        reqs = f"{reqs} AND major_code=\"{major_code}\" AND course.course_id=mrc.course_id"
+    if major_elective:
+        reqs = f"{reqs} AND course.course_id=cfcr.course_id AND req_code IN (SELECT elective_code FROM major_requires_elective WHERE major_code=\"{major_code}\")"
+
+    # execute search query
+    sql = f"SELECT DISTINCT course.course_id, course.title FROM {tables} WHERE course.deleted <> 1 AND (course.title LIKE %s or course.course_id LIKE %s) AND (0=1{levels}){sem}{reqs} ORDER BY course.course_id"
     val = (search, search)
 
     try:
@@ -156,7 +173,7 @@ def db_search_past_classes(search, filters):
 
     except Exception as e:
         LOG.error(f"{val} : {e}")
-        return 1
+        return 2
 
 
 def _db_del_enrollment(enrollment_id):
