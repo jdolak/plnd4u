@@ -149,6 +149,11 @@ h1, h2, h3, h4, h5, h6, p {
     padding: 80px;
     text-align: left;
     text-decoration: none;
+    
+}
+
+.about-container {
+    gap: 16px;
 }
 
 /* Register */
