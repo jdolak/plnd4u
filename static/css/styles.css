@@ -154,10 +154,22 @@ h1, h2, h3, h4, h5, h6, p {
 
 .about-container {
     gap: 24px;
+    align-items: flex-start;
+    padding: 80px;
+    text-align: left;
 }
 
 .about-container-2 {
     gap: 16px;
+}
+
+.team-members {
+    color: black;
+    font-family: Nunito Sans;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
 
 /* Register */
