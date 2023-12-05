@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import os
+from dotenv import load_dotenv
 import hashlib
 from hmac import compare_digest
 import secrets
@@ -23,11 +25,14 @@ def db_create_login(netid, password):
         LOG.error(f"Invalid password: {password} : {e}")
         return 1
     
-    # generate salt and salted hash
+    # generate salted hash
+    load_dotenv()
+    pepper_bytes = os.getenv('PEPPER').encode()
     salt_bytes = secrets.token_bytes(32)
     h = hashlib.new("sha256")
     h.update(password_bytes)
     h.update(salt_bytes)
+    h.update(pepper_bytes)
 
     # store netid, hex strings of salt and hash in db
     mycursor = DB.cursor()
@@ -69,6 +74,8 @@ def db_check_login(netid, password_attempt):
         return 3
     
     # if salt hash pair found, convert to bytes
+    load_dotenv()
+    pepper_bytes = os.getenv('PEPPER').encode()
     salt_bytes = bytes.fromhex(result[0][0])
     hash_correct = bytes.fromhex(result[0][1])
 
@@ -83,6 +90,7 @@ def db_check_login(netid, password_attempt):
     h = hashlib.new("sha256")
     h.update(password_attempt_bytes)
     h.update(salt_bytes)
+    h.update(pepper_bytes)
     hash_attempt = h.digest()
 
     if not compare_digest(hash_attempt, hash_correct):
