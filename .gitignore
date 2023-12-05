@@ -2,3 +2,4 @@
 **/.env
 **/__pycache__
 src/func_test.py
+**/test.py
