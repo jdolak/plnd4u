@@ -87,15 +87,7 @@ def db_register_student(netid, name, major_code, gradyear):
 def db_search_past_classes(netid, search, filters):
     
     # obtain major of student separately to simplify following queries
-    sql = "SELECT major_code FROM student WHERE netid=%s AND deleted <> 1"
-    val = (netid, )
-    try:
-        mycursor = DB.cursor()
-        mycursor.execute(sql, val)
-        major_code = list(mycursor)[0][0]
-    except Exception as e:
-        LOG.error(e)
-        return 1
+    
 
     search = f"%{search}%"
     levels = ""
@@ -113,6 +105,17 @@ def db_search_past_classes(netid, search, filters):
     uni_req = filters[6]
     major_req = filters[7]
     major_elective = filters[8]
+
+    if major_elective or major_req:
+        sql = "SELECT major_code FROM student WHERE netid=%s AND deleted <> 1"
+        val = (netid, )
+        try:
+            mycursor = DB.cursor()
+            mycursor.execute(sql, val)
+            major_code = list(mycursor)[0][0]
+        except Exception as e:
+            LOG.error(e)
+            return 1
 
     # form queries based on filters
     if fall_semester ^ spring_semester:
@@ -167,6 +170,7 @@ def db_search_past_classes(netid, search, filters):
 
         LOG.info(f"Class searched : {search}")
         if not len(results):
+            LOG.info("No results")
             return 0
         else:
             return results

@@ -18,7 +18,7 @@ class basic_func_tests(unittest.TestCase):
         self.assertEqual(db_create_login(USER,PASS), 0, "User password creation failed")
 
     def test_class_search(self):
-        results = db_search_past_classes(USER, 'Database Concepts',(1,1,1,1,1,1,1,1,1))
+        results = db_search_past_classes(USER, 'Database Concepts',(1,1,1,1,1,1,0,0,0))
 
         self.assertEqual(len(results), 1, "Too many results")
         self.assertEqual(results, [('CSE 30246', 'Database Concepts')], "Results do not match")
