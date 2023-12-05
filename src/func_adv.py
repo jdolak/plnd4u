@@ -156,7 +156,7 @@ def db_check_core_requirements(netid):
     core_reqs = {"WKAL", "WKCD", "WKDT", "WKFP", "WKFT", "WKHI", "WKIN", "WKLC", "WKQR", "WKSP", "WKSS", "WKST", "WRIT", "WRRH", "USEM", "FYS1", "FYS2"}
     fulfilled = {c : 0 for c in core_reqs}
     
-    sql = "SELECT req_code FROM has_enrollment AS he, course_fulfills_core_req AS cfcr WHERE he.course_id = cfcr.course_id AND netid = %s"
+    sql = "SELECT req_code FROM has_enrollment AS he, course_fulfills_core_req AS cfcr WHERE he.course_id = cfcr.course_id AND netid = %s AND he.deleted <> 1 AND cfcr.deleted <> 1"
     val = (netid, ) 
     try:
         mycursor = DB.cursor()
