@@ -213,7 +213,7 @@ function getEnrollmentsData() {
 
 function showCredits(credits, semester_id) {
     const semesterCredit = document.getElementById(semester_id);
-    semesterCredit.textContent = credits + ' Hours';
+    semesterCredit.textContent = credits + ' Hour(s)';
 }
 
 function showInPlan(enrollments, semester) {
@@ -416,8 +416,8 @@ function courseOverviewOverlay(courseCode, courseName, credits, desc, coreqs, pr
     courseSems.textContent = 'Offered: ' + sems.join(', ');
     courseProfs.textContent = 'Past instructors: ' + profs.join(', ');
 
-    var joinedPrereqs = prereqs.map(innerArray => innerArray[0].split(',').join(', '));
-    coursePrereqs.textContent = 'Prerequisite(s): ' + joinedPrereqs.join(', ');
+    var joinedPrereqs = prereqs.map(innerArray => '(' + innerArray[0].split(',').join(' or ') + ')');
+    coursePrereqs.textContent = 'Prerequisite(s): ' + joinedPrereqs.join(' AND ');
     courseCoreqs.textContent = 'Corequisite(s): ' + coreqs.join(', ');
     courseDesc.textContent = desc.join(' ').replace(/&quot;/g, "'");
 
@@ -466,7 +466,12 @@ function degreeCompletionOverlayOn() {
                 requiredCourses.innerHTML = 'Missing: None';
             }
 
-            electives.textContent = 'Missing: ' + response.electives;
+            if (response.electives.split(',').join('') != 'None') {
+                electives.innerHTML = 'Missing: <span style="color: black;">' + (response.electives.split(',')).join(', ') + '</span>';
+                electives.getElementsByTagName('span')[0].style.color = 'red';
+            } else {
+                electives.innerHTML = 'Missing: None';
+            }
         },
         error: function(error) {
             console.log('cannot retrieve missing reqs');
