@@ -231,10 +231,8 @@ def db_check_electives(netid):
     """
 
     # obtain the student's enrollments which fulfill needed electives
-    # sql = "SELECT pe.course_id, pe.elective_code FROM (SELECT course_id, req_code AS elective_code FROM course_fulfills_core_req cfcr WHERE req_code IN (SELECT elective_code AS req_code FROM major_requires_elective WHERE major_code IN (SELECT major_code FROM student WHERE netid=%s AND deleted <> 1))) pe, (SELECT course_id FROM has_enrollment WHERE netid=%s AND course_id NOT IN (SELECT course_id FROM major_requires_course WHERE major_code in (SELECT major_code FROM student WHERE netid=%s AND deleted <> 1) AND deleted <> 1) and deleted <> 1) nr WHERE pe.course_id = nr.course_id ORDER BY pe.elective_code"
-    # sql = "SELECT a.course_id, a.elective_code FROM (SELECT cfcr.course_id, req_code AS elective_code FROM course_fulfills_core_req cfcr, (SELECT course_id FROM has_enrollment WHERE netid=%s AND course_id NOT IN (SELECT course_id FROM major_requires_course WHERE major_code in (SELECT major_code FROM student WHERE netid=%s AND deleted <> 1) AND deleted <> 1) and deleted <> 1) nr WHERE cfcr.course_id = nr.course_id AND cfcr.deleted <> 1) a, (SELECT course_id, req_code AS elective_code, priority FROM course_fulfills_core_req cfcr, (SELECT elective_code, priority FROM major_requires_elective WHERE major_code IN (SELECT major_code FROM student WHERE netid=%s AND deleted <> 1)) pe WHERE cfcr.req_code=pe.elective_code) b WHERE a.course_id = b.course_id AND a.elective_code = b.elective_code ORDER BY priority DESC"
-    sql = "SELECT enrollments.course_id, elective_code FROM (SELECT course_id, elective_code, priority FROM (SELECT * from major_requires_elective WHERE major_code IN (SELECT major_code FROM student WHERE netid=%s AND deleted <> 1)) reqs, course_fulfills_core_req cfcr WHERE reqs.elective_code = cfcr.req_code AND course_id NOT IN (SELECT course_id FROM major_requires_course WHERE major_code IN (SELECT major_code FROM student WHERE netid=%s AND deleted <> 1))) electives, (SELECT he.course_id, cfcr.req_code FROM has_enrollment he, course_fulfills_core_req cfcr WHERE he.course_id=cfcr.course_id) enrollments WHERE electives.course_id=enrollments.course_id and electives.elective_code=enrollments.req_code ORDER BY priority DESC"
-    val = (netid, netid) 
+    sql = "SELECT he.course_id, mrc.elective_code FROM has_enrollment AS he, course_fulfills_core_req AS cfcr, major_requires_elective AS mrc, student AS s WHERE s.netid=%s AND s.major_code=mrc.major_code AND cfcr.req_code=mrc.elective_code AND cfcr.course_id=he.course_id AND he.deleted <> 1 AND s.deleted <> 1 ORDER BY mrc.priority DESC"
+    val = (netid, ) 
     try:
         mycursor = DB.cursor()
         mycursor.execute(sql, val)
@@ -300,7 +298,10 @@ def db_check_corequisites(netid):
             corequisites = [value for value in list(mycursor) if value[-1] == 0]
 
             for _, code, coreq, sem, _ in corequisites:
-                mycursor.execute("SELECT * from has_enrollment WHERE course_id = %s and sem = %s and deleted = 0;", (coreq, sem))
+                if sem == "UNLT":
+                    continue
+                
+                mycursor.execute("SELECT * from has_enrollment WHERE course_id = %s and sem = %s and deleted <> 1;", (coreq, sem))
 
                 cursor_list = list(mycursor)
                 if not cursor_list:
@@ -318,7 +319,7 @@ def db_check_prerequisites(netid):
     the student's other enrollments
     :returns: false if there exist needed coreqs or prereqs not in has_enrollments"""
 
-    semesters = ["FRFA", "FRSP", "SOFA", "SOSP", "JUFA", "JUSP", "SEFA", "SESP"]
+    semesters = ["UNLT", "FRFA", "FRSP", "SOFA", "SOSP", "JUFA", "JUSP", "SEFA", "SESP"]
     missing = {}
 
     try:
@@ -332,12 +333,19 @@ def db_check_prerequisites(netid):
             prerequisites = list(mycursor)
 
             for _, code, prereqs, sem in prerequisites:
-                for req in prereqs.split(","):
-                    mycursor.execute("SELECT sem from has_enrollment WHERE course_id = %s AND deleted = 0;", (req,))
-                    semesters_taken = [sem[0] for sem in mycursor]
+                satisfied = False
+                if sem == "UNLT":
+                    continue
 
-                    if not semesters_taken or semesters.index(semesters_taken[0]) >= semesters.index(sem):
-                        missing.setdefault(code, []).append(req)
+                for req in prereqs.split(","):
+                    mycursor.execute("SELECT sem from has_enrollment WHERE course_id = %s AND deleted <> 1;", (req,))
+                    semesters_taken = [sem[0] for sem in mycursor]
+                    print(semesters_taken)
+
+                    if semesters_taken and not(semesters.index(semesters_taken[0]) >= semesters.index(sem)):
+                        satisfied = True
+                if not satisfied:
+                    missing.setdefault(code, []).append(prereqs.replace(",", " or "))
 
         return missing if missing else None
 
