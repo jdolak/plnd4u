@@ -136,11 +136,11 @@ def db_search_past_classes(netid, search, filters):
         levels = levels + " OR course.course_id LIKE '%4____'"
 
     if uni_req or major_elective:
-        tables = tables + ", course_fulfills_core_req cfcr"
+        tables = tables + ", course_fulfills_core_req AS cfcr"
     if uni_req:
         reqs = f"{reqs} AND course.course_id=cfcr.course_id AND req_code IN {core_reqs}"
     if major_req:
-        tables = tables + ", major_requires_course mrc"
+        tables = tables + ", major_requires_course AS mrc"
         reqs = f"{reqs} AND major_code=\"{major_code}\" AND course.course_id=mrc.course_id"
     if major_elective:
         reqs = f"{reqs} AND course.course_id=cfcr.course_id AND req_code IN (SELECT elective_code FROM major_requires_elective WHERE major_code=\"{major_code}\")"

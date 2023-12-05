@@ -108,7 +108,7 @@ def classes():
                     major_elective,
                 )
 
-                search_output = db_search_past_classes(search_input, filters)
+                search_output = db_search_past_classes(netid, search_input, filters)
                 return jsonify(search_output=search_output)
 
             case "view_desc":
