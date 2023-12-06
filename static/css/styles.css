@@ -38,6 +38,16 @@ p {
     text-decoration: none;
 }
 
+.register-here-text {
+    color: black;
+    font-family: Nunito Sans;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-decoration: none; 
+}
+
 /* Headings */
 
 .home-heading {
@@ -390,6 +400,8 @@ p {
     align-items: center;
     gap: 20px;
     width: 416px;
+    border-radius: 8px;
+    padding: 16px;
 }
 
 .plan-card-heading {
