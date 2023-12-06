@@ -383,7 +383,7 @@ p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 40px;
+    gap: 120px;
     flex-shrink: 0;
 }
 
