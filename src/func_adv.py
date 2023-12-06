@@ -149,6 +149,7 @@ def db_check_required_courses(netid):
     
     if not len(missing_reqs):
         missing_reqs = "None"
+        return missing_reqs
         
     return ",".join(missing_reqs)
 
@@ -217,7 +218,7 @@ def db_check_core_requirements(netid):
        missing_reqs = f'{missing_reqs}Moreau First Year Experience Spring,'
 
     if not len(missing_reqs):
-        missing_reqs = "None"
+        missing_reqs = "None,"
     return missing_reqs[:-1]
 
 def db_check_electives(netid):
@@ -274,7 +275,7 @@ def db_check_electives(netid):
             output = f'{output}{needed[e]} {e} elective(s),'
 
     if not len(output):
-        output = "None"
+        output = "None,"
     return output[:-1]
     
 
