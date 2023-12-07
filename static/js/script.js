@@ -401,7 +401,7 @@ function showInPlan(enrollments, semester, corequisites, prerequisites) {
 
         if (corequisites != null) {
             if (courseCode in corequisites) {
-                courseCard.classList.add("plan-card-single-course-yellow");
+                courseCard.classList.add("plan-card-single-course-red");
                 courseCard.style.cursor = "pointer";
             }
         }
@@ -413,17 +413,22 @@ function showInPlan(enrollments, semester, corequisites, prerequisites) {
             }
         }
 
+        const modalButton = document.createElement("div");
+        modalButton.className = "modal-button";
+
         if (corequisites != null || prerequisites != null) {
             if (corequisites) {
                 if (courseCode in corequisites) {
-                    courseCard.addEventListener("click", function () {
+                    modalButton.style.cursor = "pointer";
+                    modalButton.addEventListener("click", function () {
                         showModal(courseCode, corequisites, prerequisites);
                     });
                 }
             }
             if (prerequisites) {
                 if (courseCode in prerequisites) {
-                    courseCard.addEventListener("click", function () {
+                    modalButton.style.cursor = "pointer";
+                    modalButton.addEventListener("click", function () {
                         showModal(courseCode, corequisites, prerequisites);
                     });
                 }
@@ -448,6 +453,7 @@ function showInPlan(enrollments, semester, corequisites, prerequisites) {
         courseCardContentText.appendChild(courseCodeElement);
         courseCardContentText.appendChild(courseNameElement);
         courseCardContent.appendChild(courseCardContentText);
+        courseCardContent.appendChild(modalButton);
         courseCardContent.appendChild(removeButton);
         courseCard.appendChild(courseCardContent);
 

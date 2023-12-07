@@ -45,7 +45,7 @@ p {
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-    text-decoration: none; 
+    text-decoration: none;
 }
 
 /* Headings */
@@ -501,6 +501,7 @@ p {
 }
 
 .plan-card-single-course {
+    position: relative;
     display: flex;
     width: 200px;
     padding: 12px;
@@ -512,13 +513,13 @@ p {
 }
 
 .plan-card-single-course-red {
-    background: var(--Secondary, #FFBCC3);
+    background: var(--Secondary, #ffbcc3);
     animation: shake 0.92s ease-in-out 0.2s;
     animation-iteration-count: 1;
 }
 
 .plan-card-single-course-yellow {
-    background: var(--Secondary, #FFDCBC);
+    background: var(--Secondary, #ffdcbc);
     animation: shake 0.92s ease-in-out 0.2s;
     animation-iteration-count: 1;
 }
@@ -545,6 +546,7 @@ p {
     justify-content: space-between;
     align-items: center;
     align-self: stretch;
+    padding-right: 5px;
 }
 
 .plan-card-single-course-text {
@@ -699,6 +701,17 @@ p {
     font-weight: 700;
     line-height: normal;
     background-color: white;
+}
+
+.modal-button {
+    position: absolute; /* Position relative to parent */
+    top: 0; /* Align to the top of the parent */
+    left: 0; /* Align to the left of the parent */
+    width: 60%; /* 80% of parent's width */
+    height: 100%; /* Full height of the parent */
+    background-color: transparent; /* For visibility, change as needed */
+    border: none;
+    z-index: 1; /* Ensures it is on top of the parent div */
 }
 
 /* Features */
