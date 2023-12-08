@@ -192,7 +192,7 @@ def db_check_core_requirements(netid):
         missing_reqs = f'{missing_reqs}Liberal Arts 4 - Art & Literature or Advanced Language & Culture,'
     if not (fulfilled["WKHI"] or fulfilled["WKSS"]):
         missing_reqs = f'{missing_reqs}Liberal Arts 5 - History or Social Science,'
-    if (not fulfilled["WKIN"]) and ((fulfilled["WKAL"], fulfilled["WKLC"], fulfilled["WKHI"], fulfilled["WKSS"]).count(0) > 1):
+    if not (fulfilled["WKIN"] or (fulfilled["WKAL"] and fulfilled["WKLC"]) or (fulfilled["WKHI"] and fulfilled["WKSS"])):
         missing_reqs = f'{missing_reqs}Liberal Arts 6 - Integration or a Way of Knowing not already used in LA4 or LA5,'
 
     # Philo and Theo Requirements
