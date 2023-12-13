@@ -4,12 +4,13 @@ pipeline {
     stages {
         stage("Checkout") {
             steps {
-                git branch: 'main', credentialsId: '38f5d72c-0cfa-4568-a0b7-5e9f9d9ad86b', url: 'git@github.com:jdolak/plnd4u.git'
+                git branch: 'main', credentialsId: 'ci-key', url: 'git@github.com:jdolak/plnd4u.git'
             }
         }
         stage("Setup Test Env") {
             steps {
                 sh 'echo "MYSQL_ROOT_PASSWORD=test" > ./src/.env'
+                sh 'echo "PEPPER=test" >> ./src/.env'
                 sh 'pip install -r ./docker/requirements.txt'
             }
         }
@@ -23,15 +24,15 @@ pipeline {
                 sh 'python3 ./tests/integration-tests.py'
             }
         }
-        stage("Clean up") {
-            steps {
-                sh 'make down'
-            }
-        }
         stage("Deploy") {
             steps {
                 sh 'make deploy'
             }
+        }
+    }
+    post {
+        always {
+            sh 'make down'
         }
     }
 }
