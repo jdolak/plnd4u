@@ -14,6 +14,10 @@ LOG = logging.getLogger()
 load_dotenv()
 DB_PASSWD = os.getenv('MYSQL_ROOT_PASSWORD')
 DEPLOY_ENV = os.getenv('DEPLOY_ENV')
+PORT = os.getenv('PORT')
+
+if not PORT:
+    PORT = 80
 
 if DEPLOY_ENV == 'prod':
     FLASK_DEBUG = False

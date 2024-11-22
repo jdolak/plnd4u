@@ -4,7 +4,7 @@ export
 all: up
 
 up: build
-	docker compose -f ./docker/docker-compose.yml -p plnd4u up -d
+	docker compose --env-file ./src/.env -f ./docker/docker-compose.yml -p plnd4u up -d
 
 build:
 	docker build -t plnd4u-image .
