@@ -6,6 +6,10 @@ import requests
 import os
 from time import sleep
 
+from dotenv import load_dotenv
+
+load_dotenv('../src/.env')
+
 sys.path.append('./src')
 from func_adv import *
 
