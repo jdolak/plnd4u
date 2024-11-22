@@ -3,6 +3,7 @@
 import unittest
 import sys
 import requests
+import os
 from time import sleep
 
 sys.path.append('./src')
@@ -10,6 +11,8 @@ from func_adv import *
 
 USER = "test"
 PASS = "test"
+
+HOST_PORT = os.getenv('HOST_PORT')
 
 class basic_func_tests(unittest.TestCase):
 
@@ -30,11 +33,11 @@ class basic_func_tests(unittest.TestCase):
 
         s = requests.Session() 
 
-        url = "http://localhost/login"
+        url = f"http://localhost:{HOST_PORT}/login"
         json={'netid':user ,'pw': password}
         self.assertEqual(str(s.post(url, json=json)), "<Response [200]>", "Failed login")
 
-        url = "http://localhost/classes"
+        url = f"http://localhost:{HOST_PORT}/classes"
         json = {'action': 'add_to_plan', 'year': 'Freshman', 'semester': 'Fall', 'course': 'CSE 20311', 'class_name': 'Fundamentals of Computing', 'global_netid': ''}
         self.assertEqual(str(s.post(url, json=json)), "<Response [200]>", "Failed adding course to Freshman Year")
 
@@ -50,7 +53,7 @@ class basic_func_tests(unittest.TestCase):
         self.assertEqual(fr_classes[0][1], "CSE 20311", "Class enrolled not CSE 20311")
         self.assertEqual(un_classes[0][3], "test", "Unlisted test class not enrolled")
 
-        url = "http://localhost/plan"
+        url = f"http://localhost:{HOST_PORT}/plan"
         json={'global_netid': '', 'course_code': 'CSE 20311', 'semester': 'FRFA', 'course_name': 'Fundamentals of C...'}
         self.assertEqual(str(s.post(url, json=json)), "<Response [200]>", "Error removing freshman year class")
         json={'global_netid': '', 'course_code': 'test', 'semester': 'UNLT', 'course_name': 'test'}
