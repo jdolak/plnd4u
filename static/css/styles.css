@@ -96,6 +96,9 @@ p {
 .footer-section {
     background-color: #f8efd8;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 2
 }
 
 /* Nav Bar */
@@ -211,7 +214,7 @@ p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 48px;
+    gap: 20px;
 }
 
 .register-text-fields {
@@ -743,15 +746,15 @@ p {
     height: 40px;
     border-radius: 5px;
     border: 1.5px solid var(--Primary, #0d5044);
-    padding: 0px 8px;
+    padding: 0px 4px;
 }
 
 .text-option {
-    width: 225px;
+    width: 467px;
     height: 40px;
     border-radius: 5px;
     border: 1.5px solid var(--Primary, #0d5044);
-    padding: 0px 8px;
+    padding: 0px 4px;
 }
 
 .text-filter {

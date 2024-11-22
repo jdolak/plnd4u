@@ -57,9 +57,9 @@ function sendLoginData() {
 }
 
 function sendRegisterData() {
-    const first_name = document.getElementById("first_name").value;
-    const last_name = document.getElementById("last_name").value;
-    const grad = document.getElementById("grad").value;
+    //const first_name = document.getElementById("first_name").value;
+    //const last_name = document.getElementById("last_name").value;
+    //const grad = document.getElementById("grad").value;
     const major = document.getElementById("major").value;
     const netid = document.getElementById("netid").value;
     const pw = document.getElementById("pw").value;
@@ -68,9 +68,9 @@ function sendRegisterData() {
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({
-            first_name: first_name,
-            last_name: last_name,
-            grad: grad,
+            //first_name: first_name,
+            //last_name: last_name,
+            //grad: grad,
             major: major,
             netid: netid,
             pw: pw,

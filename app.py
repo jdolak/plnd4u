@@ -25,9 +25,9 @@ def register():
 
         status = register_student(
             netid,
-            f"{data.get('first_name')} {data.get('last_name')}",
+            "None", #f"{data.get('first_name')} {data.get('last_name')}",
             data.get("major"),
-            data.get("grad"),
+            0000, #data.get("grad"),
             data.get("pw"),
         )
 
