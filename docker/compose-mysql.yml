@@ -1,8 +1,9 @@
-version: '3.1'
+---
 
 services: 
   flask-python:
     image: jdolakk/plnd4u
+    env_file: ../src/.env
     ports:
       - ${HOST_PORT}:${PORT}
     restart: on-failure

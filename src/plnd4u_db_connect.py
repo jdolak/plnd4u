@@ -2,7 +2,6 @@
 
 import os
 import mysql.connector
-from dotenv import load_dotenv
 import logging
 import threading
 import time
@@ -14,24 +13,30 @@ from sqlalchemy.ext.automap import automap_base
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(funcName)s() - %(message)s')
 LOG = logging.getLogger()
 
-load_dotenv()
 DB_PASSWD = os.getenv('MYSQL_ROOT_PASSWORD')
 DEPLOY_ENV = os.getenv('DEPLOY_ENV')
 PORT = os.getenv('PORT')
 DB_PROVIDER = os.getenv('DB_PROVIDER')
+PEPPER = os.getenv('PEPPER')
 
 if not PORT:
     PORT = 80
 
-if DEPLOY_ENV == 'prod':
-    FLASK_DEBUG = False
+if DEPLOY_ENV == 'dev':
+    FLASK_DEBUG = True
 else:
     if not DEPLOY_ENV:
-        DEPLOY_ENV = 'dev'
-    FLASK_DEBUG = True
+        DEPLOY_ENV = 'prod'
+    FLASK_DEBUG = False
 
 if not DB_PROVIDER in ('mysql', 'sqlite'):
     DB_PROVIDER = 'sqlite'
+
+if not PEPPER:
+    PEPPER = 'cGVwcGVyCg'
+
+if not DB_PASSWD:
+    PEPPER = 'root'
 
 
 @retry(delay=0.5, backoff=2)

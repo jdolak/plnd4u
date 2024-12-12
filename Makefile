@@ -3,14 +3,17 @@ export
 
 all: up
 
-up: build
-	docker compose --env-file ./src/.env -f ./docker/docker-compose.yml -p plnd4u up -d
+up-mysql: build
+	docker compose --env-file ./src/.env -f ./docker/compose-mysql.yml -p plnd4u up -d
+
+up:
+	docker compose --env-file ./src/.env -f ./docker/compose-sqlite.yml -p plnd4u up -d
 
 build:
 	docker build -t jdolakk/plnd4u .
 
 down:
-	docker compose -f ./docker/docker-compose.yml -p plnd4u down
+	docker compose -p plnd4u down
 
 deploy:
 	ansible-playbook ./docker/playbook-up.yaml
@@ -31,7 +34,7 @@ db-clean:
 	python3 src/clean_db.py
 
 restart: down
-	docker compose -f ./docker/docker-compose.yml -p plnd4u up -d
+	docker compose -f ./docker/compose-sqlite.yml -p plnd4u up -d
 
 db-sql:
 	docker exec plnd4u-db-1 sh -tic "mysql --password=$$MYSQL_ROOT_PASSWORD --database=plnd4u"
@@ -44,8 +47,8 @@ configure: up
 	@sleep 3
 	docker exec plnd4u-db-1 sh -c 'mysql -u root --password=$$MYSQL_ROOT_PASSWORD plnd4u < /mnt/data/dump.sql'
 	
-test: build
-	@docker compose -f ./docker/docker-compose.yml -p plnd4u up -d
+test-mysql: build
+	@docker compose -f ./docker/compose-mysql.yml -p plnd4u up -d
 	@echo "Creating test environment..."
 	@sleep 7
 	@docker exec plnd4u-db-1 mysql --password=$$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE plnd4u;" 2> /dev/null || true

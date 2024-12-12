@@ -1,0 +1,17 @@
+---
+services: 
+  plnd4u-flask:
+    image: jdolakk/plnd4u
+    env_file: ../src/.env
+    ports:
+      - ${HOST_PORT}:${PORT}
+    restart: on-failure
+    deploy:
+      resources:    
+        limits:
+          memory: 200MB
+    volumes:
+      - plnd4u-data:/plnd4u/data/sqlite
+
+volumes:
+  plnd4u-data:
