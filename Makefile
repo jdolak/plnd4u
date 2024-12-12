@@ -55,3 +55,7 @@ test: build
 	@echo "Running unit tests..."
 	@python3 ./tests/integration-tests.py
 
+install: docker/requirements.txt
+	python3 -m venv ./.venv
+	./.venv/bin/python3 -m pip install -r ./docker/requirements.txt
+
