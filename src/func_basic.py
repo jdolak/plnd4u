@@ -32,7 +32,7 @@ def db_enroll_class(netid, course_id, sem, title):
 def db_check_class_in_enrollment(netid, course_id, sem, title, deleted):
     title = f"{title[0:(len(title)-3)]}%"
     #sql = "SELECT enrollment_id FROM has_enrollment WHERE netid = ? AND course_id = ? AND sem = ? AND title LIKE ? AND deleted = ?"
-    # val = (netid, course_id, sem, title, deleted)
+    val = (netid, course_id, sem, title, deleted)
     try:
         # mycursor = DB.cursor()
         # mycursor.execute(sql, val)
@@ -367,6 +367,7 @@ def db_show_student_enrollments(netid, sem):
             HasEnrollment.deleted != 1  # Exclude deleted records
         ).all()
         
+        result = map(list, result)
         return list(result)
     
     except Exception as e:
@@ -445,6 +446,7 @@ def db_show_description(course_id):
             Description.course_id == course_id,
             Description.deleted != 1).all()
         
+        result = map(list, result)
         return list(result)
     except Exception as e:
         LOG.error(e)
@@ -461,8 +463,9 @@ def db_show_credits(course_id):
         
         result = g.db_session.query(Course.credits).filter(
             Course.course_id == course_id,
-            Course.deleted != 1).all() 
+            Course.deleted != 1).all()
         
+        result = map(list, result)
         return list(result)
     except Exception as e:
         LOG.error(e)
@@ -481,6 +484,7 @@ def db_show_coreqs(course_id):
             CourseHasCoreq.course_id == course_id,
             CourseHasCoreq.deleted != 1).all() 
 
+        result = map(list, result)
         return list(result)
     
     except Exception as e:
@@ -499,6 +503,7 @@ def db_show_prereqs(course_id):
             CourseHasPrereq.course_id == course_id,
             CourseHasPrereq.deleted != 1).all()
          
+        result = map(list, result)
         return list(result)
     except Exception as e:
         LOG.error(e)
@@ -517,6 +522,7 @@ def db_show_core_reqs(course_id):
             CourseFulfillsCoreReq.course_id == course_id,
             CourseFulfillsCoreReq.deleted != 1).all() 
 
+        result = map(list, result)
         return list(result)
     except Exception as e:
         LOG.error(e)
@@ -534,6 +540,7 @@ def db_show_semesters(course_id):
         result = g.db_session.query(Section.sem).filter(
             Section.course_id == course_id, Section.deleted != 1).distinct().all()
 
+        result = map(list, result)
         return list(result)
     except Exception as e:
         LOG.error(e)
@@ -551,6 +558,7 @@ def db_show_profs(course_id):
         result = g.db_session.query(Section.prof).filter(
             Section.course_id == course_id, Section.deleted != 1 ).distinct().all()  
 
+        result = map(list, result)
         return list(result)
     except Exception as e:
         LOG.error(e)
@@ -567,7 +575,8 @@ def db_show_meeting_times(course_id):
 
         result = g.db_session.query(Section.meets).filter(
             Section.course_id == course_id, Section.deleted != 1 ).distinct().all() 
-        
+
+        result = map(list, result) 
         return list(result)
     except Exception as e:
         LOG.error(e)
@@ -586,7 +595,8 @@ def db_show_section_details(course_id):
 
         result = g.db_session.query(Section.sem, Section.prof, Section.meets).filter(
             Section.course_id == course_id, Section.deleted != 1 ).all()
-         
+        
+        result = map(list, result)
         return list(result)
     except Exception as e:
         LOG.error(e)

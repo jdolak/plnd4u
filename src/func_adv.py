@@ -322,7 +322,7 @@ def db_check_corequisites(netid):
                 
                 #mycursor.execute("SELECT * from has_enrollment WHERE course_id = %s and sem = %s and deleted <> 1;", (coreq, sem))
                 sql = text("SELECT * from has_enrollment WHERE course_id = :course_id and sem = :sem and deleted <> 1;")
-                result = g.db_session(sql, {"course_id": coreq, "sem" : sem})
+                result = g.db_session.execute(sql, {"course_id": coreq, "sem" : sem})
                 cursor_list = list(result)
                 if not cursor_list:
                     missing.setdefault(code, []).append(coreq)
@@ -362,7 +362,7 @@ def db_check_prerequisites(netid):
                 for req in prereqs.split(","):
                     # mycursor.execute("SELECT sem from has_enrollment WHERE course_id = %s AND deleted <> 1;", (req,))
                     g.db_session.execute(text("SELECT sem from has_enrollment WHERE course_id = :req AND deleted <> 1;"), {"req": req})
-                    semesters_taken = [sem[0] for sem in mycursor]
+                    semesters_taken = [sem[0] for sem in result]
                     print(semesters_taken)
 
                     if semesters_taken and not(semesters.index(semesters_taken[0]) >= semesters.index(sem)):
