@@ -1,32 +1,49 @@
 pipeline {
     agent any
-    
+    environment {
+       PATH="/run/current-system/sw/bin"
+    }
     stages {
         stage("Checkout") {
             steps {
-                git branch: 'main', credentialsId: 'ci-key', url: 'git@github.com:jdolak/plnd4u.git'
+                git branch: 'main', url: 'https://github.com/jdolak/plnd4u.git'
             }
         }
         stage("Setup Test Env") {
             steps {
+                sh 'docker volume rm plnd4u_mysqldata || true'
+                sh 'docker volume rm plnd4u_plnd4u-data || true'
                 sh 'echo "MYSQL_ROOT_PASSWORD=test" > ./src/.env'
                 sh 'echo "PEPPER=test" >> ./src/.env'
-                sh 'pip install -r ./docker/requirements.txt'
+                sh 'echo "DEPLOY_ENV=prod" >> ./src/.env'
+                sh 'echo "PORT=80" >> ./src/.env'
+                sh 'echo "HOST_PORT=9124" >> ./src/.env'
+                
+                sh 'python3 -m venv ./.venv'
+                sh './.venv/bin/python3 -m pip install -r ./docker/requirements.txt'
+                sh './.venv/bin/python3 -m pip install requests'
+                sh '. ./.venv/bin/activate'
             }
         }
         stage("Build") {
             steps {
-                sh 'make configure'
+                sh 'make up'
+                //sh 'sleep 5'
+                //sh 'make configure'
             }
         }
         stage("Test") {
             steps {
-                sh 'python3 ./tests/integration-tests.py'
+                sh 'which python3'
+                sh  ''' . ./.venv/bin/activate
+                        python3 ./tests/integration-tests.py
+                    '''
             }
         }
         stage("Deploy") {
             steps {
-                sh 'make deploy'
+                //sh 'make deploy'
+                sh 'echo "skipping for now"'
             }
         }
     }

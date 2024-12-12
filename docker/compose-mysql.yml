@@ -19,6 +19,8 @@ services:
     ports: 
       - 3306:3306
     env_file: ../src/.env
+    environment:
+      - DB_PROVIDER=mysql
     volumes:
       - mysqldata:/var/lib/mysql
       - ../data/dump.sql:/mnt/data/dump.sql
