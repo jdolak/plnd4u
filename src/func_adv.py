@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import hashlib
 from hmac import compare_digest
 import secrets
+from flask import g
 from func_basic import *
 
 # Advanced Function: Secure login
@@ -35,13 +36,15 @@ def db_create_login(netid, password):
     h.update(pepper_bytes)
 
     # store netid, hex strings of salt and hash in db
-    mycursor = DB.cursor()
+    #mycursor = DB.cursor()
 
-    sql = "INSERT INTO login(netid, salt, hash) VALUES (%s, %s, %s)"
-    val = (netid, salt_bytes.hex(), h.hexdigest())
+    #sql = "INSERT INTO login(netid, salt, hash) VALUES (%s, %s, %s)"
+    sql = text("INSERT INTO login(netid, salt, hash) VALUES (:netid, :salt, :hash)")
+    #val = (netid, salt_bytes.hex(), h.hexdigest())
     try:
-        mycursor.execute(sql, val)
-        DB.commit()
+        result = g.db_session.execute(sql, {"netid": netid, "salt" : salt_bytes.hex(), "hash" : h.hexdigest()})
+        #mycursor.execute(sql, val)
+        #DB.commit()
         return 0
     except Exception as e:
         LOG.error(f"Failed to create login : {e}")
@@ -57,13 +60,18 @@ def db_check_login(netid, password_attempt):
     """
     
     # obtain salt and hash from DB if they exist
-    mycursor = DB.cursor()
+    #mycursor = DB.cursor()
 
-    sql = "SELECT salt, hash FROM login WHERE netid = %s"
-    val = (netid,)
+    #sql = "SELECT salt, hash FROM login WHERE netid = %s"
+    sql = text("SELECT salt, hash FROM login WHERE netid = :netid")
+    #val = (netid,)
     try:
-        mycursor.execute(sql, val)
-        result = list(mycursor)
+        #mycursor.execute(sql, val)
+        result = g.db_session.execute(sql, {"netid": netid})
+        #result = g.db_session.query(Login.salt, Login.hash).filter(Login.netid == netid).all()
+        result = list(result)
+        LOG.info(f"login list : {result}")
+
     except Exception as e:
         LOG.error(e)
         return 2
@@ -137,12 +145,14 @@ def db_check_required_courses(netid):
         "c1,c2,..." Requirements missing
     """
 
-    sql = "SELECT course_id FROM major_requires_course WHERE course_id NOT IN (SELECT course_id FROM has_enrollment WHERE netid=%s AND deleted <> 1) AND major_code IN (SELECT major_code FROM student WHERE netid=%s AND deleted <> 1) AND deleted <> 1"
-    val = (netid, netid) 
+    #sql = "SELECT course_id FROM major_requires_course WHERE course_id NOT IN (SELECT course_id FROM has_enrollment WHERE netid=%s AND deleted <> 1) AND major_code IN (SELECT major_code FROM student WHERE netid=%s AND deleted <> 1) AND deleted <> 1"
+    sql = text("SELECT course_id FROM major_requires_course WHERE course_id NOT IN (SELECT course_id FROM has_enrollment WHERE netid=:netid AND deleted <> 1) AND major_code IN (SELECT major_code FROM student WHERE netid=:netid AND deleted <> 1) AND deleted <> 1")
+    #val = (netid, netid) 
     try:
-        mycursor = DB.cursor()
-        mycursor.execute(sql, val)
-        missing_reqs = [i[0] for i in list(mycursor)]
+        #mycursor = DB.cursor()
+        #mycursor.execute(sql, val)
+        result = g.db_session.execute(sql, {"netid": netid})
+        missing_reqs = [i[0] for i in list(result)]
     except Exception as e:
         LOG.error(e)
         return "Error"
@@ -165,12 +175,14 @@ def db_check_core_requirements(netid):
     core_reqs = {"WKAL", "WKCD", "WKDT", "WKFP", "WKFT", "WKHI", "WKIN", "WKLC", "WKQR", "WKSP", "WKSS", "WKST", "WRIT", "WRRH", "USEM", "FYS1", "FYS2"}
     fulfilled = {c : 0 for c in core_reqs}
     
-    sql = "SELECT req_code FROM has_enrollment AS he, course_fulfills_core_req AS cfcr WHERE he.course_id = cfcr.course_id AND netid = %s AND he.deleted <> 1 AND cfcr.deleted <> 1"
+    #sql = "SELECT req_code FROM has_enrollment AS he, course_fulfills_core_req AS cfcr WHERE he.course_id = cfcr.course_id AND netid = %s AND he.deleted <> 1 AND cfcr.deleted <> 1"
+    sql = text("SELECT req_code FROM has_enrollment AS he, course_fulfills_core_req AS cfcr WHERE he.course_id = cfcr.course_id AND netid = :netid AND he.deleted <> 1 AND cfcr.deleted <> 1")
     val = (netid, ) 
     try:
-        mycursor = DB.cursor()
-        mycursor.execute(sql, val)
-        queried_reqs = [i[0] for i in list(mycursor)]
+        #mycursor = DB.cursor()
+        #mycursor.execute(sql, val)
+        result = g.db_session.execute(sql, {"netid": netid})
+        queried_reqs = [i[0] for i in list(result)]
     except Exception as e:
         LOG.error(e)
         return "Error"
@@ -232,12 +244,14 @@ def db_check_electives(netid):
     """
 
     # obtain the student's enrollments which fulfill needed electives
-    sql = "SELECT he.course_id, mrc.elective_code FROM has_enrollment AS he, course_fulfills_core_req AS cfcr, major_requires_elective AS mrc, student AS s WHERE s.netid=%s AND s.major_code=mrc.major_code AND cfcr.req_code=mrc.elective_code AND cfcr.course_id=he.course_id AND he.deleted <> 1 AND s.deleted <> 1 ORDER BY mrc.priority DESC"
-    val = (netid, ) 
+    # sql = "SELECT he.course_id, mrc.elective_code FROM has_enrollment AS he, course_fulfills_core_req AS cfcr, major_requires_elective AS mrc, student AS s WHERE s.netid=%s AND s.major_code=mrc.major_code AND cfcr.req_code=mrc.elective_code AND cfcr.course_id=he.course_id AND he.deleted <> 1 AND s.deleted <> 1 ORDER BY mrc.priority DESC"
+    sql = text("SELECT he.course_id, mrc.elective_code FROM has_enrollment AS he, course_fulfills_core_req AS cfcr, major_requires_elective AS mrc, student AS s WHERE s.netid=:netid AND s.major_code=mrc.major_code AND cfcr.req_code=mrc.elective_code AND cfcr.course_id=he.course_id AND he.deleted <> 1 AND s.deleted <> 1 ORDER BY mrc.priority DESC")
+    #val = (netid, ) 
     try:
-        mycursor = DB.cursor()
-        mycursor.execute(sql, val)
-        fulfilled_query = list(mycursor)
+        #mycursor = DB.cursor()
+        #mycursor.execute(sql, val)
+        result = g.db_session.execute(sql, {"netid": netid})
+        fulfilled_query = list(result)
     except Exception as e:
         LOG.error(e)
         return "Error: enrollments could not be obtained"
@@ -250,12 +264,14 @@ def db_check_electives(netid):
             fulfilled[q[0]].append(q[1])
     
     # obtain number of elective needed for major
-    sql = "SELECT elective_code, duplicate_count FROM major_requires_elective WHERE major_code IN (SELECT major_code FROM student WHERE netid=%s AND deleted <> 1) AND deleted <> 1"
-    val = (netid, ) 
+    #sql = "SELECT elective_code, duplicate_count FROM major_requires_elective WHERE major_code IN (SELECT major_code FROM student WHERE netid=%s AND deleted <> 1) AND deleted <> 1"
+    sql = text("SELECT elective_code, duplicate_count FROM major_requires_elective WHERE major_code IN (SELECT major_code FROM student WHERE netid=:netid AND deleted <> 1) AND deleted <> 1")
+    #val = (netid, ) 
     try:
-        mycursor = DB.cursor()
-        mycursor.execute(sql, val)
-        needed = {i[0] : i[1] for i in list(mycursor)}
+        #mycursor = DB.cursor()
+        #mycursor.execute(sql, val)
+        result = g.db_session.execute(sql, {"netid": netid})
+        needed = {i[0] : i[1] for i in list(result)}
     except Exception as e:
         LOG.error(e)
         return "Error: needed electives could not be obtained"
@@ -289,22 +305,25 @@ def db_check_corequisites(netid):
     missing = {}
 
     try:
-        with DB.cursor() as mycursor:
-            sql = """
+        if True:
+        #with DB.cursor() as mycursor:
+            sql = text("""
             SELECT H.netid, H.course_id, R.coreq_id, H.sem, H.deleted
             FROM has_enrollment H, course_has_coreq R 
-            WHERE netid = %s AND H.course_id = R.course_id;
-            """
-            mycursor.execute(sql, (netid,))
-            corequisites = [value for value in list(mycursor) if value[-1] == 0]
+            WHERE netid = :netid AND H.course_id = R.course_id;
+            """)
+            #mycursor.execute(sql, (netid,))
+            result = g.db_session.execute(sql, {"netid": netid})
+            corequisites = [value for value in list(result) if value[-1] == 0]
 
             for _, code, coreq, sem, _ in corequisites:
                 if sem == "UNLT":
                     continue
                 
-                mycursor.execute("SELECT * from has_enrollment WHERE course_id = %s and sem = %s and deleted <> 1;", (coreq, sem))
-
-                cursor_list = list(mycursor)
+                #mycursor.execute("SELECT * from has_enrollment WHERE course_id = %s and sem = %s and deleted <> 1;", (coreq, sem))
+                sql = text("SELECT * from has_enrollment WHERE course_id = :course_id and sem = :sem and deleted <> 1;")
+                result = g.db_session(sql, {"course_id": coreq, "sem" : sem})
+                cursor_list = list(result)
                 if not cursor_list:
                     missing.setdefault(code, []).append(coreq)
 
@@ -324,14 +343,16 @@ def db_check_prerequisites(netid):
     missing = {}
 
     try:
-        with DB.cursor() as mycursor:
-            sql = """
+        if True:
+        #with DB.cursor() as mycursor:
+            sql = text("""
             SELECT H.netid, H.course_id, R.prereq_ids, H.sem 
             FROM has_enrollment H, course_has_prereq R 
-            WHERE netid = %s AND H.course_id = R.course_id;
-            """
-            mycursor.execute(sql, (netid,))
-            prerequisites = list(mycursor)
+            WHERE netid = :netid AND H.course_id = R.course_id;
+            """)
+            #mycursor.execute(sql, (netid,))
+            result = g.db_session.execute(sql, {"netid": netid})
+            prerequisites = list(result)
 
             for _, code, prereqs, sem in prerequisites:
                 satisfied = False
@@ -339,7 +360,8 @@ def db_check_prerequisites(netid):
                     continue
 
                 for req in prereqs.split(","):
-                    mycursor.execute("SELECT sem from has_enrollment WHERE course_id = %s AND deleted <> 1;", (req,))
+                    # mycursor.execute("SELECT sem from has_enrollment WHERE course_id = %s AND deleted <> 1;", (req,))
+                    g.db_session.execute(text("SELECT sem from has_enrollment WHERE course_id = :req AND deleted <> 1;"), {"req": req})
                     semesters_taken = [sem[0] for sem in mycursor]
                     print(semesters_taken)
 

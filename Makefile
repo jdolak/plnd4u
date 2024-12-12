@@ -7,7 +7,7 @@ up: build
 	docker compose --env-file ./src/.env -f ./docker/docker-compose.yml -p plnd4u up -d
 
 build:
-	docker build -t plnd4u-image .
+	docker build -t jdolakk/plnd4u .
 
 down:
 	docker compose -f ./docker/docker-compose.yml -p plnd4u down
@@ -54,4 +54,8 @@ test: build
 	@docker exec plnd4u-db-1 sh -c 'mysql -u root --password=$$MYSQL_ROOT_PASSWORD plnd4u < /mnt/data/dump.sql' 2> /dev/null
 	@echo "Running unit tests..."
 	@python3 ./tests/integration-tests.py
+
+install: docker/requirements.txt
+	python3 -m venv ./.venv
+	./.venv/bin/python3 -m pip install -r ./docker/requirements.txt
 

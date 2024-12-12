@@ -4,36 +4,52 @@
 
  PLND4U is a four-year planner that allows students to search courses that have been taught in past semesters at Notre Dame, and assign them to openings in their personal eight-semester plan. PLND4U will consider the major requirements of its user, as well as the prerequisites/corequisites of the selected courses, and inform the user if their four-year plan is valid.
 
-### Usefulness
-
-PLND4U will allow student to create a roadmap of their upcoming years at Notre Dame. This will allow for more academic confidence and help students navigate into potential concentrations and fields they enjoy. Currently, PATH class search allows you to create plans for Notre Dame classes for a single semester. Additionally, there are third party site that you can use to make 4 year plans. However, there does not exist a platform which both are combined together to create a catered experience.
-
-### Realness
-
-Data will include information on courses offered and user inputed data. Information on course include class title, class code, CRN, Professors, and prerequisites. We would like to obtain an existing database for courses offered in the past. However, if we do not have access to this we can scrape class data from the PATH class search html file.
-
-### Functionality
-
-#### Basic Functions
-
-1. Adding and updating courses to your 4 year plan will insert, update, and delete records to the database 
-2. Searching for past classes will search the database and list the results
-   * This will include a join as data will be joined between the previous courses database, and the user's plan database
-
-#### Advanced Functions
-
-* Auto creating a plan based off of required courses for your major and alerting if you do not meet the requirements
-* Color coding and auto suggesting courses based on pre and corerequisites
-
 ## Getting Started
-Visit the [dev wiki](docs/dev-wiki.md)
 
-## Team Members
+### Prerequisites
 
-Jachob Dolak <jdolak@nd.edu>
+PLND4U runs as a container and Docker is required before installing. Information on how to do that can be found [here](https://docs.docker.com/get-started/get-docker/).
 
-Sam Martin <smarti39@nd.edu>
+### Quick start:
 
-Andrew Myers <amyers9@nd.edu>
+For a quick start we will launch PLND4U on port 80 and using sqlite.
 
-Calista Suwita <csuwita@nd.edu>
+1. Pull our docker image:
+```
+docker pull jdolakk/plnd4u
+```
+
+2. To make the sqlite data persistant we must add a docker volume:
+```
+docker volume create plnd4u-data
+```
+
+3. Launch the container:
+```
+docker run -v plnd4u-data:/plnd4u/data/sqlite
+```
+
+4. Visit the website on port 80:  
+http://localhost
+
+### More Options
+
+For building the docker image, manual installation, or more options, vistit the [dev wiki](docs/dev-wiki.md)
+
+## Contributing
+
+Feel free to contribute to this project by creating an issue or pull request. For infomation about this codebase and how to get started, vist the [dev wiki](docs/dev-wiki.md)
+
+New feature requests are also welcome.  
+
+For any help, questions, or just to say hi, join our [discord server](https://discord.gg/wjR9znjZYS).
+
+
+
+
+## Authors
+
+Jachob Dolak [Maintainer]  
+Sam Martin  
+Andrew Myers  
+Calista Suwita

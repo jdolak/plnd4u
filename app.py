@@ -1,9 +1,15 @@
-from flask import Flask, render_template, request, url_for, jsonify, session, redirect
+from flask import Flask, render_template, request, url_for, jsonify, session, redirect, g
 import sys
 import time
+from sqlalchemy.orm import sessionmaker, scoped_session
+
 
 sys.path.append("/plnd4u/src")
 from func_adv import *
+
+SessionFactory = sessionmaker(bind=ENGINE)
+Session = scoped_session(SessionFactory)
+
 
 app = Flask(__name__)
 app.secret_key = str(time.time())
@@ -260,6 +266,20 @@ def about():
     js_url = url_for("static", filename="js/script.js")
 
     return render_template("about.html", css_url=css_url, js_url=js_url)
+
+@app.before_request
+def start_session():
+    g.db_session = Session()
+
+@app.teardown_request
+def cleanup_session(exception=None):
+    try:
+        if exception:
+            g.db_session.rollback()
+        else:
+            g.db_session.commit()
+    finally:
+        g.db_session.close()
 
 
 if __name__ == "__main__":
