@@ -32,11 +32,8 @@ def db_enroll_class(netid, course_id, sem, title):
 def db_check_class_in_enrollment(netid, course_id, sem, title, deleted):
     title = f"{title[0:(len(title)-3)]}%"
     #sql = "SELECT enrollment_id FROM has_enrollment WHERE netid = ? AND course_id = ? AND sem = ? AND title LIKE ? AND deleted = ?"
-    # val = (netid, course_id, sem, title, deleted)
+    val = (netid, course_id, sem, title, deleted)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        #result = list(mycursor)
         result = g.db_session.query(HasEnrollment.enrollment_id).filter(
             and_(
                 HasEnrollment.netid == netid,
@@ -58,9 +55,6 @@ def _db_create_enrollment(netid, course_id, sem, title):
     #sql = "INSERT INTO has_enrollment (enrollment_id, netid, course_id, sem, title) SELECT COUNT(*), ?, ?, ?, ? FROM has_enrollment"
     #val = (netid, course_id, sem, title)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        #DB.commit()
         
         count = g.db_session.query(func.count(HasEnrollment.enrollment_id)).scalar()
 
@@ -86,9 +80,6 @@ def _db_undel_enrollment(enrollment_id):
     #sql = "UPDATE has_enrollment SET deleted = 0 WHERE enrollment_id = ?"
     #val = (enrollment_id,)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        # DB.commit()
         g.db_session.query(HasEnrollment).filter(HasEnrollment.enrollment_id == enrollment_id).update(
             {'deleted': 0}, synchronize_session='fetch')
     except Exception as e:
@@ -101,9 +92,6 @@ def db_register_student(netid, name, major_code, gradyear):
     val = [(netid, name, major_code, gradyear)]
     try:
         LOG.info(str(list(map(type, val[0]))))
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        # DB.commit()
 
         new_student = Student(
             netid=netid,
@@ -148,8 +136,6 @@ def db_search_past_classes(netid, search, filters):
         sql = "SELECT major_code FROM student WHERE netid=:netid AND deleted <> 1"
         # val = (netid, )
         try:
-            # mycursor = DB.cursor()
-            # mycursor.execute(sql, val)
             with Session(ENGINE) as session:
                 result = g.db_session.execute(text(sql),{"netid": netid})
                 g.db_session.commit()
@@ -192,12 +178,10 @@ def db_search_past_classes(netid, search, filters):
     # execute search query
     #sql = f"SELECT DISTINCT course.course_id, course.title FROM {tables} WHERE course.deleted <> 1 AND (course.title LIKE ? or course.course_id LIKE ?) AND (0=1{levels}){sem}{reqs} ORDER BY course.course_id"
     sql = text(f"SELECT DISTINCT course.course_id, course.title FROM {tables} WHERE course.deleted <> 1 AND (course.title LIKE :query or course.course_id LIKE :query) AND (0=1{levels}){sem}{reqs} ORDER BY course.course_id")
-    # val = (search, search)
+    val = (search, search)
 
     try:
-        # mycursor = DB.cursor()
         # list comprehension to shorten course titles to max 80 chars
-        # mycursor.execute(sql, val)
 
         result = g.db_session.execute(sql, {"query": search})
         g.db_session.commit()
@@ -231,9 +215,6 @@ def _db_del_enrollment(enrollment_id):
     #sql = "UPDATE has_enrollment SET deleted = 1 WHERE enrollment_id = ?"
     #val = (enrollment_id,)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        # DB.commit()
 
         g.db_session.query(HasEnrollment).filter(
             HasEnrollment.enrollment_id == enrollment_id).update({'deleted': 1}, synchronize_session='fetch') 
@@ -263,9 +244,6 @@ def _db_del_enrollment_permanent(enrollment_id):
     #sql = "DELETE FROM has_enrollment WHERE enrollment_id = ?"
     #val = (enrollment_id,)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        # DB.commit()
 
         g.db_session.query(HasEnrollment).filter(
             HasEnrollment.enrollment_id == enrollment_id).delete(synchronize_session='fetch')
@@ -281,9 +259,6 @@ def db_del_student(netid):
     #sql = "UPDATE student SET deleted = 1 WHERE netid = ?"
     #val = (netid,)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        # DB.commit()
 
         g.db_session.query(Student).filter(
             Student.netid == netid).update({'deleted': 1}, synchronize_session='fetch') 
@@ -298,9 +273,6 @@ def db_del_student_permanent(netid):
     #sql = "DELETE FROM student WHERE netid = ?"
     # val = (netid,)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        # DB.commit()
         
         g.db_session.query(Student).filter(
             Student.netid == netid).delete(synchronize_session='fetch')
@@ -316,9 +288,6 @@ def db_update_student_major(netid, major_code):
     #sql = "UPDATE student SET major_code = ? WHERE netid = ?"
     # val = (major_code, netid)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        # DB.commit()
 
         g.db_session.query(Student).filter(
             Student.netid == netid).update({'major_code': major_code}, synchronize_session='fetch') 
@@ -334,9 +303,6 @@ def db_update_student_gradyear(netid, gradyear):
     #sql = "UPDATE student SET gradyear = ?  WHERE netid = ?"
     # val = (gradyear, netid)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        # DB.commit()
 
         g.db_session.query(Student).filter(
             Student.netid == netid).update({'gradyear': gradyear}, synchronize_session='fetch')
@@ -352,9 +318,6 @@ def db_show_student_enrollments(netid, sem):
     #sql = "SELECT enrollment_id, course_id, sem, title, user_created FROM has_enrollment WHERE netid = ? AND sem = ? AND deleted <> 1"
     # val = (netid, sem)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        # return list(mycursor)
         result = g.db_session.query(
             HasEnrollment.enrollment_id,
             HasEnrollment.course_id,
@@ -367,6 +330,7 @@ def db_show_student_enrollments(netid, sem):
             HasEnrollment.deleted != 1  # Exclude deleted records
         ).all()
         
+        result = map(list, result)
         return list(result)
     
     except Exception as e:
@@ -378,10 +342,8 @@ def db_show_student_enrollments_short(netid, sem):
     # sql = "SELECT enrollment_id, course_id, sem, title, user_created FROM has_enrollment WHERE netid = ? AND sem = ? AND deleted <> 1"
     # val = (netid, sem)
     try:
-        # mycursor = DB.cursor()
         # list comprehension to shorten course titles to max 20 chars
         # jachob dared me to do it
-        # mycursor.execute(sql, val)
 
         result = g.db_session.query(
             HasEnrollment.enrollment_id,
@@ -417,9 +379,6 @@ def db_del_all_enrollments(netid):
     # sql = "UPDATE has_enrollment SET deleted = 1 WHERE netid = ?"
     # val = (netid,)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        #DB.commit()
 
         g.db_session.query(HasEnrollment).filter(
             HasEnrollment.netid == netid).update({'deleted': 1}, synchronize_session='fetch') 
@@ -437,14 +396,12 @@ def db_show_description(course_id):
     # sql = "SELECT description FROM description WHERE course_id=? AND deleted <> 1"
     # val = (course_id,)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        # return list(mycursor)
         
         result = g.db_session.query(Description.description).filter(
             Description.course_id == course_id,
             Description.deleted != 1).all()
         
+        result = map(list, result)
         return list(result)
     except Exception as e:
         LOG.error(e)
@@ -455,14 +412,12 @@ def db_show_credits(course_id):
     # sql = "SELECT credits FROM course WHERE course_id=? AND deleted <> 1"
     # val = (course_id,)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        #return list(mycursor)
         
         result = g.db_session.query(Course.credits).filter(
             Course.course_id == course_id,
-            Course.deleted != 1).all() 
+            Course.deleted != 1).all()
         
+        result = map(list, result)
         return list(result)
     except Exception as e:
         LOG.error(e)
@@ -473,14 +428,12 @@ def db_show_coreqs(course_id):
     # sql = "SELECT coreq_id FROM course_has_coreq WHERE course_id=? AND deleted <> 1"
     # val = (course_id,)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        # return list(mycursor)
         
         result = g.db_session.query(CourseHasCoreq.coreq_id).filter(
             CourseHasCoreq.course_id == course_id,
             CourseHasCoreq.deleted != 1).all() 
 
+        result = map(list, result)
         return list(result)
     
     except Exception as e:
@@ -492,13 +445,11 @@ def db_show_prereqs(course_id):
     # sql = "SELECT prereq_ids FROM course_has_prereq WHERE course_id=? AND deleted <> 1"
     # val = (course_id,)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        #return list(mycursor)
         result = g.db_session.query(CourseHasPrereq.prereq_ids).filter(
             CourseHasPrereq.course_id == course_id,
             CourseHasPrereq.deleted != 1).all()
          
+        result = map(list, result)
         return list(result)
     except Exception as e:
         LOG.error(e)
@@ -509,14 +460,12 @@ def db_show_core_reqs(course_id):
     # sql = "SELECT req_code FROM course_fulfills_core_req WHERE course_id=? AND deleted <> 1"
     # val = (course_id,)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        # return list(mycursor)
 
         result = g.db_session.query(CourseFulfillsCoreReq.req_code).filter(
             CourseFulfillsCoreReq.course_id == course_id,
             CourseFulfillsCoreReq.deleted != 1).all() 
 
+        result = map(list, result)
         return list(result)
     except Exception as e:
         LOG.error(e)
@@ -527,13 +476,11 @@ def db_show_semesters(course_id):
     # sql = "SELECT DISTINCT sem FROM section WHERE course_id=? AND deleted <> 1"
     # val = (course_id,)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        # return list(mycursor)
 
         result = g.db_session.query(Section.sem).filter(
             Section.course_id == course_id, Section.deleted != 1).distinct().all()
 
+        result = map(list, result)
         return list(result)
     except Exception as e:
         LOG.error(e)
@@ -544,13 +491,11 @@ def db_show_profs(course_id):
     # sql = "SELECT DISTINCT prof FROM section WHERE course_id=? AND deleted <> 1"
     # val = (course_id,)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        # return list(mycursor)
 
         result = g.db_session.query(Section.prof).filter(
             Section.course_id == course_id, Section.deleted != 1 ).distinct().all()  
 
+        result = map(list, result)
         return list(result)
     except Exception as e:
         LOG.error(e)
@@ -561,13 +506,11 @@ def db_show_meeting_times(course_id):
     # sql = "SELECT DISTINCT meets FROM section WHERE course_id=? AND deleted <> 1"
     # val = (course_id,)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        # return list(mycursor)
 
         result = g.db_session.query(Section.meets).filter(
             Section.course_id == course_id, Section.deleted != 1 ).distinct().all() 
-        
+
+        result = map(list, result) 
         return list(result)
     except Exception as e:
         LOG.error(e)
@@ -580,13 +523,11 @@ def db_show_section_details(course_id):
     # sql = "SELECT sem, prof, meets FROM section WHERE course_id=? AND deleted <> 1"
     # val = (course_id,)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
-        # return list(mycursor)
 
         result = g.db_session.query(Section.sem, Section.prof, Section.meets).filter(
             Section.course_id == course_id, Section.deleted != 1 ).all()
-         
+        
+        result = map(list, result)
         return list(result)
     except Exception as e:
         LOG.error(e)
@@ -597,8 +538,6 @@ def db_show_sem_credits(netid, sem):
     # sql = "SELECT credits FROM has_enrollment, course WHERE netid = ? AND sem = ? AND course.course_id = has_enrollment.course_id AND has_enrollment.deleted <> 1 AND course.deleted <> 1;"
     # val = (netid, sem)
     try:
-        # mycursor = DB.cursor()
-        # mycursor.execute(sql, val)
         # credit = list(mycursor)
         result = g.db_session.query(Course.credits).join(
             HasEnrollment, HasEnrollment.course_id == Course.course_id
