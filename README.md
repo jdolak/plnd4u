@@ -26,7 +26,7 @@ docker volume create plnd4u-data
 
 3. Launch the container:
 ```
-docker run -v plnd4u-data:/plnd4u/data/sqlite
+docker run -d -p 80:80 -v plnd4u-data:/plnd4u/data/sqlite
 ```
 
 4. Visit the website on port 80:  
